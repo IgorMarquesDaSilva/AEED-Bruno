@@ -21,7 +21,13 @@
                     <li><?php echo $estrutura; ?></li>
                 <?php } ?>
             </ul>
-            <a href="index.php?pagina=pilha">Aprender sobre Pilha</a>
+            <a href="index.php?pagina=tad">TAD – Tipo Abstrato de Dados</a>
+            <p>
+            <a href="index.php?pagina=lisimples">Listas Simplesmente Encadeadas</a>
+            </p>
+            <p>
+            <a href="index.php?pagina=lisdupla">Listas Duplamente Encadeadas</a>
+            </p>
         </main>
     </body>
 </html>

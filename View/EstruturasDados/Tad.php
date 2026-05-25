@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo $conteudo["titulo"]; ?></title>
         <link rel="stylesheet" href="View/Assets/css/style.css">
-        <link rel="stylesheet" href="View/Assets/css/pilha.css">
+        <link rel="stylesheet" href="View/Assets/css/tad.css">
     </head>
     <body>
         <header>
             <h1><?php echo $conteudo["titulo"]; ?></h1>
         </header>
         
-        <main class="conteudo-pilha">
+        <main class="conteudo-tad">
             <a href="index.php">Voltar para o Inicio</a>
 
             <h2>Definicao</h2>

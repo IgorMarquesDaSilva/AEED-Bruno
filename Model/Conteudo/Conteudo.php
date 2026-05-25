@@ -3,9 +3,9 @@
 class Conteudo{
     public function listarEstruturas(){
         return[
-            "Pilha",
-            "Fila",
-            "Lista"
+            "TAD – Tipo Abstrato de Dados",
+            "Listas Simplesmente Encadeadas",
+            "Listas Duplamente Encadeadas"
         ];
     }
 }
