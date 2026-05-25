@@ -1,0 +1,11 @@
+.lista-estruturas {
+    padding: 0;
+    list-style: none;
+}
+
+.lista-estruturas li {
+    margin-bottom: 10px;
+    padding: 12px;
+    border-left: 4px solid #1f4e79;
+    background-color: white;
+}

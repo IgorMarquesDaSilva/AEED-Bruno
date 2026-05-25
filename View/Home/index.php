@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo $titulo; ?></title>
         <link rel="stylesheet" href="View/Assets/css/style.css">
+        <link rel="stylesheet" href="View/Assets/css/home.css">
     </head>
     <body>
         <header>
@@ -15,11 +16,12 @@
             <p><?php echo $descricao; ?></p>
 
             <h2>Conteudos iniciais</h2>
-            <ul>
+            <ul class="lista-estruturas">
                 <?php foreach ($estruturas as $estrutura){?>
                     <li><?php echo $estrutura; ?></li>
                 <?php } ?>
             </ul>
+            <a href="index.php?pagina=pilha">Aprender sobre Pilha</a>
         </main>
     </body>
 </html>
