@@ -9,7 +9,12 @@ if (isset($_GET["pagina"]) && $_GET["pagina"] == "tad") {
 } elseif (isset($_GET["pagina"]) && $_GET["pagina"] == "lisimples") {
     $controller = new EstruturaController();
     $controller->lisimples();
-} else {
+}
+elseif (isset($_GET["pagina"]) && $_GET["pagina"] == "lisdupla") {
+    $controller = new EstruturaController();
+    $controller->lisdupla();
+}
+else {
     $controller = new HomeController();
     $controller->index();
 }
