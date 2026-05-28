@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     box-sizing: border-box;
 }
@@ -81,3 +82,40 @@ body {
     color: #555;
     background: #e8edf5;
 }
+=======
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #222;
+    background-color: #f4f6f8;
+}
+
+header {
+    padding: 24px;
+    color: white;
+    background-color: #1f4e79;
+}
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    width: 80%;
+    max-width: 800px;
+    margin: 32px auto;
+}
+
+h2 {
+    color: #1f4e79;
+}
+
+a {
+    color: #1f4e79;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+>>>>>>> 967a45838177a3bd75be3194f6cd8990dc6399cf
