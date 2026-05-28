@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($titulo ?? 'Estruturas de Dados'); ?></title>
     <link rel="stylesheet" href="View/Assets/css/style.css">
+    <link rel="stylesheet" href="View/Assets/css/home.css">
 </head>
 <body>
-    <header class="topo">
-        <h1>Estruturas de Dados em C#</h1>
-        <nav>
-            <a href="index.php">Inicio</a>
-        </nav>
-    </header>
+<header class="topo">
+    <div class="topo-conteudo">
+        <a class="logo" href="index.php">ED em C#</a>
 
-    <main class="container">
+        <nav class="menu">
+            <a href="index.php">Início</a>
+            <a href="index.php?pagina=tad">TAD</a>
+            <a href="index.php?pagina=lisimples">Lista Simples</a>
+            <a href="index.php?pagina=lisdupla">Lista Dupla</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
