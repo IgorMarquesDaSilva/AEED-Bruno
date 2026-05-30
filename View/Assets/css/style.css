@@ -64,6 +64,33 @@ a {
     color: #123554;
 }
 
+.menu-sair {
+    border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.acoes-aula {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.sair-aula {
+    display: inline-block;
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sair-aula:hover {
+    background-color: #ffffff;
+    color: #123554;
+}
+
 .container {
     width: min(1120px, calc(100% - 40px));
     margin: 0 auto;

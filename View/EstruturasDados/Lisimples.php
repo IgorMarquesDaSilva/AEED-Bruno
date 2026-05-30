@@ -11,7 +11,10 @@
 <body class="pagina-lisimples">
     <header class="cabecalho-aula">
         <div class="cabecalho-conteudo">
-            <a class="voltar" href="index.php">Voltar para o início</a>
+            <div class="acoes-aula">
+                <a class="voltar" href="index.php">Voltar para o início</a>
+                <a class="sair-aula" href="index.php?pagina=logout">Sair</a>
+            </div>
 
             <p class="rotulo">Estruturas de Dados</p>
             <h1><?php echo htmlspecialchars($conteudo["titulo"]); ?></h1>
@@ -49,7 +52,7 @@
         </section>
 
         <section id="conceito" class="secao">
-            <h2>O que é uma lista duplamente encadeada?</h2>
+            <h2>O que é uma lista simplesmente encadeada?</h2>
 
             <p><?php echo htmlspecialchars($conteudo["definicao"]); ?></p>
 

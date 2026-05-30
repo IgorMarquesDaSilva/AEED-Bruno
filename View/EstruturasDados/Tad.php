@@ -11,7 +11,10 @@
 <body class="pagina-tad">
     <header class="cabecalho-aula">
         <div class="cabecalho-conteudo">
-            <a class="voltar" href="index.php">Voltar para o início</a>
+            <div class="acoes-aula">
+                <a class="voltar" href="index.php">Voltar para o início</a>
+                <a class="sair-aula" href="index.php?pagina=logout">Sair</a>
+            </div>
 
             <p class="rotulo">Estruturas de Dados</p>
             <h1><?php echo htmlspecialchars($conteudo["titulo"]); ?></h1>

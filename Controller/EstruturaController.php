@@ -2,9 +2,12 @@
 require_once __DIR__ . '/../Model/EstruturasDados/Tad.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Lisimples.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Lisdupla.php';
+require_once __DIR__ . '/LoginController.php';
 
 class EstruturaController{
     public function tad(){
+        LoginController::verificarLogin();
+
         $tad = new Tad();
         $conteudo = $tad->obterConteudo();
 
@@ -12,6 +15,8 @@ class EstruturaController{
     }
 
     public function lisimples(){
+        LoginController::verificarLogin();
+
         $lisimples = new Lisimples();
         $conteudo = $lisimples->obterConteudo();
 
@@ -19,6 +24,8 @@ class EstruturaController{
     }
     
     public function lisdupla(){
+        LoginController::verificarLogin();
+
         $lisdupla = new Lisdupla();
         $conteudo = $lisdupla->obterConteudo();
 

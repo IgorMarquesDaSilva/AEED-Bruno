@@ -1,15 +1,24 @@
 <?php 
 require_once __DIR__ . '/Controller/HomeController.php';
 require_once __DIR__ . '/Controller/EstruturaController.php';
+require_once __DIR__ . '/Controller/LoginController.php';
  
-if (isset($_GET["pagina"]) && $_GET["pagina"] == "tad") {
+$pagina = $_GET["pagina"] ?? "home";
+
+if ($pagina == "login") {
+    $controller = new LoginController();
+    $controller->login();
+} elseif ($pagina == "logout") {
+    $controller = new LoginController();
+    $controller->logout();
+} elseif ($pagina == "tad") {
     $controller = new EstruturaController();
     $controller->tad();
-} elseif (isset($_GET["pagina"]) && $_GET["pagina"] == "lisimples") {
+} elseif ($pagina == "lisimples") {
     $controller = new EstruturaController();
     $controller->lisimples();
 }
-elseif (isset($_GET["pagina"]) && $_GET["pagina"] == "lisdupla") {
+elseif ($pagina == "lisdupla") {
     $controller = new EstruturaController();
     $controller->lisdupla();
 }
