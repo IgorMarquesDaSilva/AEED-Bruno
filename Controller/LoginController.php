@@ -44,8 +44,8 @@ class LoginController
         $email = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['email'] ?? '');
-            $senha = $_POST['senha'] ?? '';
+           $email = trim(isset($_POST['email']) ? $_POST['email'] : '');
+           $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
 
             if ($email === '' || $senha === '') {
                 $erro = 'Informe o e-mail e a senha.';

@@ -1,0 +1,132 @@
+.pagina-cadastro {
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(20, 51, 79, 0.94), rgba(15, 118, 110, 0.86)),
+        #14334f;
+}
+
+.cadastro-container {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 32px 18px;
+}
+
+.cadastro-painel {
+    width: min(100%, 430px);
+    padding: 34px;
+    border: 1px solid #d9e1e8;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 22px 54px rgba(8, 25, 42, 0.28);
+}
+
+.cadastro-tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.cadastro-painel h1 {
+    margin: 0 0 10px;
+    color: #123554;
+    font-size: 34px;
+    line-height: 1.15;
+}
+
+.cadastro-painel > p {
+    margin: 0 0 24px;
+    color: #526779;
+    line-height: 1.5;
+}
+
+.cadastro-erro {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-left: 4px solid #b42318;
+    border-radius: 5px;
+    background-color: #fff2f0;
+    color: #8a1f14;
+    font-weight: 700;
+}
+
+.cadastro-sucesso {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-left: 4px solid #0f766e;
+    border-radius: 5px;
+    background-color: #e9f4f3;
+    color: #0a4f48;
+    font-weight: 700;
+}
+
+.cadastro-formulario {
+    display: grid;
+    gap: 10px;
+}
+
+.cadastro-formulario label {
+    color: #123554;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.cadastro-formulario input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cfd9e2;
+    border-radius: 6px;
+    color: #162432;
+    font: inherit;
+}
+
+.cadastro-formulario input:focus {
+    border-color: #0f766e;
+    outline: 3px solid rgba(15, 118, 110, 0.16);
+}
+
+.cadastro-formulario button {
+    margin-top: 10px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 6px;
+    background-color: #0f766e;
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+}
+
+.cadastro-formulario button:hover {
+    background-color: #123554;
+}
+
+.cadastro-login {
+    margin: 20px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid #d9e1e8;
+    color: #526779;
+    font-size: 14px;
+}
+
+.cadastro-login a {
+    color: #0f766e;
+    font-weight: 800;
+}
+
+.cadastro-login a:hover {
+    color: #123554;
+}
+
+@media (max-width: 520px) {
+    .cadastro-painel {
+        padding: 26px 22px;
+    }
+
+    .cadastro-painel h1 {
+        font-size: 28px;
+    }
+}

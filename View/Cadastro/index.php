@@ -27,10 +27,10 @@
                     type="email"
                     id="email"
                     name="email"
-                   value="<?php echo htmlspecialchars(isset($email) ? $email : ''); ?>"
+                     value="<?php echo htmlspecialchars(isset($email) ? $email : ''); ?>"
                     placeholder="admin@aeed.com"
                     required
-                >
+
 
                 <label for="senha">Senha</label>
                 <input

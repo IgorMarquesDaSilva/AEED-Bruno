@@ -7,21 +7,23 @@ class Lisimples
         return [
             "titulo" => "Lista Simplesmente Encadeada",
 
-            "introducao" => "Uma lista simplesmente encadeada organiza elementos em nós conectados por uma única direção. Cada nó armazena um valor e uma referência para o próximo nó. Diferente da lista duplamente encadeada, cada nó conhece apenas o próximo elemento.",
+            "introducao" => "Uma lista simplesmente encadeada organiza elementos em nós conectados por uma única direção. Cada nó armazena um valor e uma referência para o próximo nó. Diferente de um array, os elementos não ocupam posições contíguas na memória — eles crescem e encolhem dinamicamente conforme a necessidade.",
 
             "objetivos" => [
-                "Entender como os nós se conectam em um único sentido.",
-                "Aprender as principais operações de inserção e remoção.",
-                "Comparar lista simplesmente encadeada e lista duplamente encadeada.",
-                "Visualizar exemplos implementados em C#."
+                "Compreender o que é uma lista simplesmente encadeada e como ela difere de um array convencional.",
+                "Entender a estrutura de um nó e os papéis da cabeça (início) e da cauda (fim) da lista.",
+                "Implementar as operações de inserção, remoção e busca com controle correto dos ponteiros.",
+                "Analisar a complexidade de tempo (Big O) de cada operação e seus impactos práticos.",
+                "Comparar a lista simplesmente encadeada com a lista duplamente encadeada e identificar quando usar cada uma.",
+                "Escrever e interpretar código C# com implementação real de lista encadeada genérica."
             ],
 
-            "definicao" => "Uma lista simplesmente encadeada é uma estrutura de dados linear e dinâmica. Cada nó armazena um valor e uma referência: ela aponta apenas para o próximo nó. O acesso é sempre a partir do início (cabeça) em direção ao fim.",
+            "definicao" => "Uma lista simplesmente encadeada é uma estrutura de dados linear e dinâmica formada por uma sequência de nós. Cada nó armazena um valor e uma única referência: ela aponta apenas para o próximo nó. O acesso é sempre a partir do início (cabeça) em direção ao fim, seguindo os ponteiros Proximo.",
 
             "contexto" => [
                 "Listas aparecem no cotidiano quando organizamos compras, contatos, músicas ou páginas visitadas. Em programação, a ideia é armazenar elementos e permitir operações como inserir, buscar, percorrer e remover.",
-                "Em um vetor, os elementos ocupam posições consecutivas e o tamanho costuma precisar ser planejado. Em uma lista encadeada, os nós são criados conforme a necessidade e ficam conectados por referências.",
-                "Na lista simplesmente encadeada, cada nó aponta apenas para o próximo. Na lista duplamente encadeada, acrescentamos a referência anterior, permitindo caminhar nos dois sentidos."
+                "Em um vetor, os elementos ocupam posições consecutivas na memória e o tamanho costuma precisar ser planejado com antecedência. Em uma lista encadeada, os nós são criados conforme a necessidade e ficam conectados por referências — não precisam estar próximos na memória.",
+                "Na lista simplesmente encadeada, cada nó aponta apenas para o próximo. Na lista duplamente encadeada, acrescentamos a referência anterior, permitindo caminhar nos dois sentidos. A versão simples usa menos memória, mas perde a navegação inversa."
             ],
 
             "representacao" => "[Valor | Próximo] -> [Valor | Próximo] -> [Valor | Próximo] -> null",
@@ -29,19 +31,19 @@ class Lisimples
             "anatomia" => [
                 [
                     "termo" => "Nó",
-                    "explicacao" => "Elemento da lista que guarda um valor e uma referência para o próximo nó."
+                    "explicacao" => "Elemento da lista que guarda um valor e uma referência para o próximo nó. É o bloco construtivo da estrutura. Quando não há próximo, a referência é null."
                 ],
                 [
                     "termo" => "Cabeça ou Início",
-                    "explicacao" => "Primeiro nó da lista. É o ponto de entrada obrigatório para qualquer operação."
+                    "explicacao" => "Primeiro nó da lista. É o ponto de entrada obrigatório para qualquer operação. Se a lista estiver vazia, o início é null."
                 ],
                 [
                     "termo" => "Cauda ou Fim",
-                    "explicacao" => "Último nó da lista. Sua referência Proximo sempre deve ser null."
+                    "explicacao" => "Último nó da lista. Sua referência Proximo sempre deve ser null, sinalizando o término da cadeia. Mantê-la permite inserção no final em O(1)."
                 ],
                 [
-                    "termo" => "Ligação",
-                    "explicacao" => "Cada nó aponta para o próximo usando a referência Proximo. A navegação é sempre em um único sentido: do início para o fim."
+                    "termo" => "Ligação (Proximo)",
+                    "explicacao" => "Cada nó aponta para o próximo usando a referência Proximo. A navegação é sempre em um único sentido — do início para o fim. Não há como voltar sem percorrer a lista desde o início novamente."
                 ]
             ],
 
@@ -50,37 +52,60 @@ class Lisimples
                 "O último nó é chamado de fim ou cauda da lista.",
                 "O primeiro nó não possui anterior — a lista não guarda essa referência.",
                 "O último nó não possui próximo: sua referência Proximo é null.",
-                "A navegação acontece sempre do início para o fim, seguindo os ponteiros Proximo."
+                "A navegação acontece sempre do início para o fim, seguindo os ponteiros Proximo.",
+                "Não é possível acessar um elemento diretamente por índice como em um array — é preciso percorrer desde o início."
             ],
 
-            "importancia" => "A lista simplesmente encadeada é importante quando o sistema precisa inserir e remover elementos dinamicamente sem desperdício de memória, e a navegação em um único sentido é suficiente.",
+            "importancia" => "A lista simplesmente encadeada é importante quando o sistema precisa inserir e remover elementos dinamicamente sem desperdício de memória, e a navegação em um único sentido é suficiente. Ela serve de base para pilhas, filas e outras estruturas mais complexas.",
 
             "aplicacoes" => [
-                "Filas de impressão ou de processos.",
+                "Filas de impressão ou de processos do sistema operacional.",
                 "Histórico de ações com desfazer (pilha implementada como lista).",
                 "Listas de tarefas percorridas sempre do início ao fim.",
-                "Implementação de outras estruturas como pilhas e filas."
+                "Implementação de pilhas e filas como estruturas de alto nível.",
+                "Gerenciamento de memória livre em sistemas embarcados.",
+                "Representação de adjacências em grafos (lista de adjacência)."
             ],
 
             "operacoes" => [
                 [
                     "nome" => "Inserir no início",
-                    "descricao" => "O novo nó passa a ser o primeiro e aponta para o antigo início.",
+                    "descricao" => "O novo nó passa a ser o primeiro e aponta para o antigo início. Não é necessário percorrer nada.",
                     "complexidade" => "O(1)"
                 ],
                 [
                     "nome" => "Inserir no final",
-                    "descricao" => "Mantendo uma referência para o fim, o novo nó é conectado diretamente ao último.",
-                    "complexidade" => "O(1) com referência ao fim, O(n) sem ela"
+                    "descricao" => "Mantendo uma referência para o fim, o novo nó é conectado diretamente ao último. Sem essa referência, é necessário percorrer a lista inteira.",
+                    "complexidade" => "O(1) com ref. ao fim"
                 ],
                 [
-                    "nome" => "Buscar um valor",
-                    "descricao" => "Os nós são percorridos desde o início até encontrar o valor desejado.",
+                    "nome" => "Inserir no meio",
+                    "descricao" => "Percorre a lista até a posição desejada e ajusta os ponteiros ao redor do novo nó. O custo vem do percurso.",
                     "complexidade" => "O(n)"
                 ],
                 [
-                    "nome" => "Remover um nó",
-                    "descricao" => "É necessário localizar o nó anterior ao que será removido para religar a cadeia.",
+                    "nome" => "Remover do início",
+                    "descricao" => "Avança o início para o segundo nó. É a operação de remoção mais eficiente da lista.",
+                    "complexidade" => "O(1)"
+                ],
+                [
+                    "nome" => "Remover do final",
+                    "descricao" => "Exige percorrer até o penúltimo nó para desconectar o fim. Mesmo com referência ao tail, o custo é linear.",
+                    "complexidade" => "O(n)"
+                ],
+                [
+                    "nome" => "Remover por valor",
+                    "descricao" => "Percorre a lista comparando valores até encontrar o alvo e religa o nó anterior diretamente ao seguinte.",
+                    "complexidade" => "O(n)"
+                ],
+                [
+                    "nome" => "Buscar um valor",
+                    "descricao" => "Os nós são percorridos desde o início até encontrar o valor desejado. Não há acesso aleatório — busca binária não é possível.",
+                    "complexidade" => "O(n)"
+                ],
+                [
+                    "nome" => "Percorrer a lista",
+                    "descricao" => "Visita todos os nós do início ao fim para exibir, somar, contar ou qualquer operação que dependa de todos os elementos.",
                     "complexidade" => "O(n)"
                 ]
             ],
@@ -93,17 +118,17 @@ class Lisimples
                         "Criar o novo nó com o valor informado.",
                         "Fazer Proximo do novo nó apontar para o Inicio atual.",
                         "Atualizar Inicio para o novo nó.",
-                        "Se a lista estava vazia, atualizar também Fim."
+                        "Se a lista estava vazia, atualizar também Fim para o mesmo nó."
                     ]
                 ],
                 [
                     "titulo" => "Inserção no final",
                     "complexidade" => "O(1) com referência ao fim",
                     "passos" => [
-                        "Criar o novo nó.",
+                        "Criar o novo nó com o valor informado.",
                         "Fazer Proximo do antigo Fim apontar para o novo nó.",
                         "Atualizar Fim para o novo nó.",
-                        "Se a lista estava vazia, Inicio recebe o mesmo nó."
+                        "Se a lista estava vazia, Inicio e Fim recebem o mesmo nó."
                     ]
                 ],
                 [
@@ -111,9 +136,9 @@ class Lisimples
                     "complexidade" => "O(n)",
                     "passos" => [
                         "Percorrer a lista até localizar o nó anterior à posição desejada.",
-                        "Fazer Proximo do novo nó apontar para o nó seguinte.",
+                        "Fazer Proximo do novo nó apontar para o nó seguinte ao anterior.",
                         "Fazer Proximo do nó anterior apontar para o novo nó.",
-                        "A ligação é feita em um único sentido."
+                        "Se o novo nó ficou após o último, atualizar Fim."
                     ]
                 ]
             ],
@@ -122,46 +147,46 @@ class Lisimples
                 [
                     "titulo" => "Remoção no início",
                     "passos" => [
-                        "Guardar ou localizar o primeiro nó.",
-                        "Fazer Inicio apontar para o segundo nó.",
-                        "Se a lista ficou vazia, Fim também passa a ser null.",
-                        "O antigo primeiro nó é descartado."
+                        "Guardar o valor do primeiro nó, se necessário.",
+                        "Fazer Inicio apontar para o segundo nó (Inicio.Proximo).",
+                        "Se a lista ficou vazia (Inicio virou null), Fim também passa a ser null.",
+                        "O antigo primeiro nó deixa de ser referenciado e é coletado pelo GC."
                     ]
                 ],
                 [
                     "titulo" => "Remoção no final",
                     "passos" => [
-                        "Percorrer a lista até o nó anterior ao último.",
+                        "Percorrer a lista até o nó anterior ao último (nó cujo Proximo == Fim).",
                         "Fazer Proximo desse nó anterior receber null.",
                         "Atualizar Fim para esse nó anterior.",
-                        "Se a lista ficou vazia, Inicio também passa a ser null."
+                        "Se a lista ficou com apenas um nó e ele foi removido, Inicio também passa a ser null."
                     ]
                 ],
                 [
-                    "titulo" => "Remoção no meio",
+                    "titulo" => "Remoção no meio por valor",
                     "passos" => [
                         "Percorrer a lista até encontrar o nó anterior ao que será removido.",
                         "Fazer Proximo do anterior apontar diretamente para o nó seguinte ao removido.",
                         "O nó removido deixa de fazer parte da cadeia.",
-                        "Não é possível fazer isso em O(1) pois o anterior não está referenciado no nó."
+                        "Não é possível fazer isso em O(1) pois o anterior não está referenciado no próprio nó — é a principal limitação frente à lista duplamente encadeada."
                     ]
                 ]
             ],
 
             "buscaPercurso" => [
                 [
-                    "titulo" => "Busca",
-                    "descricao" => "Começa pelo Inicio e compara os valores até encontrar o procurado ou chegar ao fim.",
+                    "titulo" => "Busca por valor",
+                    "descricao" => "Começa pelo Inicio e compara os valores nó a nó até encontrar o procurado ou chegar ao fim da lista. Retorna o nó ou null se não encontrar.",
                     "complexidade" => "O(n)"
                 ],
                 [
                     "titulo" => "Percurso para frente",
-                    "descricao" => "Começa em Inicio e utiliza Proximo em cada repetição até Proximo ser null.",
+                    "descricao" => "Começa em Inicio e utiliza Proximo em cada iteração até Proximo ser null. Usado para exibir, contar, somar ou qualquer operação sobre todos os elementos.",
                     "complexidade" => "O(n)"
                 ],
                 [
                     "titulo" => "Percurso para trás",
-                    "descricao" => "Não é possível de forma direta, pois não há referência para o anterior. Requer percorrer do início e guardar o caminho, ou usar uma lista duplamente encadeada.",
+                    "descricao" => "Não é possível de forma direta, pois não há referência para o anterior. Requer percorrer do início guardando o caminho em uma pilha auxiliar, ou utilizar uma lista duplamente encadeada.",
                     "complexidade" => "O(n) com estrutura auxiliar"
                 ]
             ],
@@ -169,23 +194,33 @@ class Lisimples
             "comparacao" => [
                 [
                     "criterio" => "Referências por nó",
-                    "simplesmente" => "Somente para o próximo",
-                    "duplamente" => "Para o anterior e para o próximo"
+                    "simples" => "Somente para o próximo",
+                    "dupla" => "Para o anterior e para o próximo"
                 ],
                 [
                     "criterio" => "Navegação",
-                    "simplesmente" => "Apenas para frente",
-                    "duplamente" => "Para frente e para trás"
+                    "simples" => "Apenas para frente",
+                    "dupla" => "Para frente e para trás"
                 ],
                 [
-                    "criterio" => "Memória",
-                    "simplesmente" => "Utiliza menos memória",
-                    "duplamente" => "Utiliza mais memória"
+                    "criterio" => "Uso de memória",
+                    "simples" => "Menor — um ponteiro por nó",
+                    "dupla" => "Maior — dois ponteiros por nó"
                 ],
                 [
-                    "criterio" => "Remoção",
-                    "simplesmente" => "Exige percorrer para encontrar o anterior",
-                    "duplamente" => "O anterior já está referenciado"
+                    "criterio" => "Remoção no meio",
+                    "simples" => "Exige percorrer para encontrar o nó anterior: O(n)",
+                    "dupla" => "O anterior já está referenciado no próprio nó: O(1) após localizar"
+                ],
+                [
+                    "criterio" => "Inserção no início",
+                    "simples" => "O(1)",
+                    "dupla" => "O(1)"
+                ],
+                [
+                    "criterio" => "Complexidade de implementação",
+                    "simples" => "Menor — menos ponteiros para gerenciar",
+                    "dupla" => "Maior — dois ponteiros precisam ser atualizados em cada operação"
                 ]
             ],
 
@@ -194,8 +229,8 @@ class Lisimples
                     "titulo" => "Videoaula sobre Lista Simplesmente Encadeada",
                     "descricao" => "Vídeo complementar sobre lista simplesmente encadeada para apoiar o estudo das operações.",
                     "fonte" => "YouTube - vídeo complementar",
-                    "url" => "https://www.youtube.com/embed/WApQfQwDPSM",
-                    "link" => "https://www.youtube.com/watch?v=WApQfQwDPSM"
+                    "url" => "https://www.youtube.com/watch?v=Uk8v7gB2rHk",
+                    "link" => "https://youtu.be/Uk8v7gB2rHk?si=ZAxxiHEFQIZB05bw"
                 ]
             ],
 
@@ -421,13 +456,13 @@ CSHARP
             ],
 
             "exercicios" => [
-                "Desenhe uma lista com os valores 7, 10, 12 e 51, mostrando apenas o ponteiro Proximo em cada nó.",
-                "Use InserirNoInicio e InserirNoFinal para criar uma lista de três disciplinas.",
-                "Implemente RemoverNoInicio e RemoverNoFinal sem usar o método Buscar.",
-                "Altere InserirOrdenado para armazenar números inteiros em ordem crescente.",
-                "Implemente um método que percorra a lista ao contrário usando uma pilha auxiliar.",
-                "Monte uma lista de tarefas e implemente um método que exiba apenas as tarefas de índice par.",
-                "Explique por que a remoção de um nó no meio em uma lista simplesmente encadeada exige O(n) e não O(1)."
+                "Desenhe uma lista com os valores 7, 10, 12 e 51, representando os nós com [Valor | Proximo] e mostrando que o último aponta para null.",
+                "Use InserirNoInicio e InserirNoFinal para criar uma lista de três disciplinas e exiba o resultado percorrendo com ExibirDoInicio.",
+                "Implemente RemoverNoInicio e RemoverNoFinal sem usar o método Buscar. Teste com uma lista de cinco elementos.",
+                "Altere InserirOrdenado para armazenar números inteiros em ordem crescente em vez de strings.",
+                "Implemente um método ContarNos que percorra a lista e retorne o número de elementos sem usar nenhuma propriedade de tamanho.",
+                "Implemente um método que percorra a lista ao contrário usando uma pilha auxiliar (Stack<string>) e exiba os valores em ordem inversa.",
+                "Explique por escrito por que a remoção de um nó no meio em uma lista simplesmente encadeada exige O(n) e como a lista duplamente encadeada resolve esse problema."
             ]
         ];
     }

@@ -11,10 +11,7 @@
 <body class="pagina-lisimples">
     <header class="cabecalho-aula">
         <div class="cabecalho-conteudo">
-            <div class="acoes-aula">
-                <a class="voltar" href="index.php">Voltar para o início</a>
-                <a class="sair-aula" href="index.php?pagina=logout">Sair</a>
-            </div>
+            <a class="voltar" href="index.php">Voltar para o início</a>
 
             <p class="rotulo">Estruturas de Dados</p>
             <h1><?php echo htmlspecialchars($conteudo["titulo"]); ?></h1>
@@ -91,8 +88,8 @@
         <section id="anatomia" class="secao">
             <h2>Nó, cabeça e cauda</h2>
             <p>
-                Assim como na lista simplesmente encadeada, a estrutura é formada por
-                nós. A diferença está na ligação adicional para o elemento anterior.
+                A lista simplesmente encadeada é formada por nós conectados em cadeia.
+                Cada nó conhece apenas o próximo — não há referência para o anterior.
             </p>
 
             <div class="grade-anatomia">
@@ -125,8 +122,9 @@
         <section id="insercoes" class="secao">
             <h2>Inserção passo a passo</h2>
             <p>
-                A inserção tem a mesma ideia apresentada para a lista simples,
-                mas agora é necessário cuidar também da referência Anterior.
+                Existem três formas de inserir elementos em uma lista simplesmente encadeada.
+                O ponto crítico é sempre atualizar o ponteiro <strong>Proximo</strong> na ordem correta,
+                para não perder a referência ao restante da lista.
             </p>
 
             <div class="etapas">
@@ -150,8 +148,9 @@
         <section id="remocoes" class="secao">
             <h2>Remoção passo a passo</h2>
             <p>
-                Na remoção, o ponto central é manter os dois sentidos da lista
-                conectados depois que um nó deixa de existir.
+                Na remoção, o ponto central é ajustar o ponteiro <strong>Proximo</strong>
+                do nó anterior para que ele salte o nó removido e aponte diretamente
+                para o seguinte. O nó antigo deixa de fazer parte da cadeia.
             </p>
 
             <div class="etapas">
