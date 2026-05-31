@@ -1,28 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($conteudo["titulo"]); ?></title>
+<?php require_once "View/Shared/header.php"; ?>
 
-    <link rel="stylesheet" href="View/Assets/css/style.css">
-    <link rel="stylesheet" href="View/Assets/css/lisimples.css">
-</head>
-<body class="pagina-lisimples">
-    <header class="cabecalho-aula">
-        <div class="cabecalho-conteudo">
-            <a class="voltar" href="index.php">Voltar para o início</a>
+        <section class="aula-hero">
+            <div>
+                <span class="rotulo">Estrutura linear</span>
+                <h1><?php echo htmlspecialchars($conteudo["titulo"]); ?></h1>
+                <p class="introducao">
+                    <?php echo htmlspecialchars($conteudo["introducao"]); ?>
+                </p>
+            </div>
 
-            <p class="rotulo">Estruturas de Dados</p>
-            <h1><?php echo htmlspecialchars($conteudo["titulo"]); ?></h1>
-            <p class="introducao">
-                <?php echo htmlspecialchars($conteudo["introducao"]); ?>
-            </p>
-        </div>
-    </header>
+            <div class="aula-resumo">
+                <strong>Lista simples</strong>
+                <span>Um ponteiro por nó</span>
+                <a href="#codigo">Ver exemplos em C#</a>
+            </div>
+        </section>
 
-    <main class="conteudo-lisimples">
-        <nav class="indice">
+        <div class="aula-layout">
+            <nav class="indice">
             <h2>Nesta aula</h2>
 
             <a href="#objetivos">Objetivos</a>
@@ -38,7 +33,7 @@
             <a href="#exercicios">Exercícios</a>
         </nav>
 
-        <section id="objetivos" class="secao">
+            <section id="objetivos" class="secao">
             <h2>Objetivos da aula</h2>
 
             <ul class="lista-topicos">
@@ -261,10 +256,6 @@
                 <?php } ?>
             </ol>
         </section>
-    </main>
+            </div>
 
-    <footer class="rodape-aula">
-        <p>Ambiente de Ensino de Estruturas de Dados</p>
-    </footer>
-</body>
-</html>
+<?php require_once "View/Shared/footer.php"; ?>

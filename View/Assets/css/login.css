@@ -101,6 +101,21 @@
     font-size: 14px;
 }
 
+.login-cadastro {
+    margin: 12px 0 0;
+    color: #526779;
+    font-size: 14px;
+}
+
+.login-cadastro a {
+    color: #0f766e;
+    font-weight: 800;
+}
+
+.login-cadastro a:hover {
+    color: #123554;
+}
+
 @media (max-width: 520px) {
     .login-painel {
         padding: 26px 22px;

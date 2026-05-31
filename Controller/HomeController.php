@@ -12,6 +12,9 @@ class HomeController
         $titulo = 'Estruturas de Dados em C#';
         $descricao = 'Projeto inicial para apresentar conceitos basicos de estruturas de dados usando o padrao MVC.';
         $estruturas = $conteudo->listarEstruturas();
+        $bodyClass = 'pagina-home';
+        $mainClass = 'container';
+        $cssPagina = ['View/Assets/css/home.css'];
 
         require __DIR__ . '/../View/Home/index.php';
     }

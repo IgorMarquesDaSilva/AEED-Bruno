@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($titulo ?? 'Estruturas de Dados'); ?></title>
-    <link rel="stylesheet" href="View/Assets/css/style.css">
-    <link rel="stylesheet" href="View/Assets/css/home.css">
+    <?php
+        $cssBase = 'View/Assets/css/style.css';
+        $caminhoCssBase = __DIR__ . '/../../' . $cssBase;
+        $versaoCssBase = file_exists($caminhoCssBase) ? filemtime($caminhoCssBase) : 1;
+    ?>
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($cssBase . '?v=' . $versaoCssBase); ?>">
+    <?php foreach (($cssPagina ?? []) as $css) { ?>
+        <?php
+            $caminhoCssPagina = __DIR__ . '/../../' . $css;
+            $versaoCssPagina = file_exists($caminhoCssPagina) ? filemtime($caminhoCssPagina) : 1;
+        ?>
+        <link rel="stylesheet" href="<?php echo htmlspecialchars($css . '?v=' . $versaoCssPagina); ?>">
+    <?php } ?>
 </head>
-<body>
+<body class="<?php echo htmlspecialchars($bodyClass ?? ''); ?>">
 <header class="topo">
     <div class="topo-conteudo">
         <a class="logo" href="index.php">ED em C#</a>
@@ -22,4 +33,4 @@
     </div>
 </header>
 
-<main class="container">
+<main class="<?php echo htmlspecialchars($mainClass ?? 'container'); ?>">

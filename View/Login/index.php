@@ -44,8 +44,9 @@
                 <button type="submit">Entrar</button>
             </form>
 
-            <p class="login-ajuda">
-                Usuario inicial: <strong>admin@aeed.com</strong> | Senha: <strong>123456</strong>
+            <p class="login-cadastro">
+                Ainda nao tem conta?
+                <a href="index.php?pagina=cadastro">Criar cadastro</a>
             </p>
         </section>
     </main>

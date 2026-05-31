@@ -10,6 +10,10 @@ class EstruturaController{
 
         $tad = new Tad();
         $conteudo = $tad->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-tad';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/tad.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Tad.php';
     }
@@ -19,6 +23,10 @@ class EstruturaController{
 
         $lisimples = new Lisimples();
         $conteudo = $lisimples->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-lisimples';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/lisimples.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Lisimples.php';
     }
@@ -28,6 +36,10 @@ class EstruturaController{
 
         $lisdupla = new Lisdupla();
         $conteudo = $lisdupla->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-lisdupla';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/Lisdupla.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Lisdupla.php';
     }

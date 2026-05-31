@@ -2,7 +2,7 @@
 require_once __DIR__ . '/Controller/HomeController.php';
 require_once __DIR__ . '/Controller/EstruturaController.php';
 require_once __DIR__ . '/Controller/LoginController.php';
-require_once __DIR__ . '/Controller/CadastroController.php';
+require_once __DIR__ . '/Controller/Cadastrocontroller.php';
  
 $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : "home";
 

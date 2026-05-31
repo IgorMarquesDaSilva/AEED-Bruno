@@ -98,15 +98,56 @@ a {
 }
 
 .rodape {
-    padding: 22px;
+    padding: 32px 20px;
     border-top: 1px solid #d9e1e8;
-    background-color: #ffffff;
-    color: #526779;
-    text-align: center;
+    background-color: #102230;
+    color: #dbeafe;
+}
+
+.rodape-conteudo {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 0.9fr;
+    gap: 24px;
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    align-items: start;
+}
+
+.rodape-marca strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #ffffff;
+    font-size: 22px;
 }
 
 .rodape p {
     margin: 0;
+    line-height: 1.5;
+}
+
+.rodape-marca p,
+.rodape-info {
+    color: #b8c7d5;
+}
+
+.rodape-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rodape-links a {
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.rodape-links a:hover {
+    border-color: #5eead4;
+    color: #5eead4;
 }
 
 @media (max-width: 780px) {
@@ -117,5 +158,9 @@ a {
 
     .menu {
         flex-wrap: wrap;
+    }
+
+    .rodape-conteudo {
+        grid-template-columns: 1fr;
     }
 }

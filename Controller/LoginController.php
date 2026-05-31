@@ -3,6 +3,8 @@ require_once __DIR__ . '/../Model/Usuarios/Usuario.php';
 
 class LoginController
 {
+    private const COOKIE_LEMBRAR = 'aeed_login';
+
     private static function iniciarSessao()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -21,9 +23,79 @@ class LoginController
         }
     }
 
+    private static function salvarUsuarioNaSessao($usuario)
+    {
+        $_SESSION['usuario'] = [
+            'id' => $usuario['id'],
+            'nome' => $usuario['nome'],
+            'email' => $usuario['email']
+        ];
+    }
+
+    private static function opcoesCookie($expira)
+    {
+        return [
+            'expires' => $expira,
+            'path' => '/',
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ];
+    }
+
+    private static function criarCookieLogin($usuarioId)
+    {
+        $token = bin2hex(random_bytes(32));
+        $expira = time() + (60 * 60 * 24 * 7);
+        $expiraBanco = date('Y-m-d H:i:s', $expira);
+
+        $usuarioModel = new Usuario();
+        $usuarioModel->salvarTokenLogin($usuarioId, $token, $expiraBanco);
+
+        setcookie(
+            self::COOKIE_LEMBRAR,
+            $usuarioId . ':' . $token,
+            self::opcoesCookie($expira)
+        );
+    }
+
+    private static function limparCookieLogin()
+    {
+        setcookie(self::COOKIE_LEMBRAR, '', self::opcoesCookie(time() - 3600));
+    }
+
+    private static function recuperarLoginPorCookie()
+    {
+        if (isset($_SESSION['usuario']) || empty($_COOKIE[self::COOKIE_LEMBRAR])) {
+            return;
+        }
+
+        $partes = explode(':', $_COOKIE[self::COOKIE_LEMBRAR], 2);
+
+        if (count($partes) !== 2 || !ctype_digit($partes[0])) {
+            self::limparCookieLogin();
+            return;
+        }
+
+        try {
+            $usuarioModel = new Usuario();
+            $usuario = $usuarioModel->buscarPorTokenLogin((int) $partes[0], $partes[1]);
+
+            if ($usuario) {
+                self::salvarUsuarioNaSessao($usuario);
+                self::criarCookieLogin($usuario['id']);
+                return;
+            }
+        } catch (Exception $exception) {
+            return;
+        }
+
+        self::limparCookieLogin();
+    }
+
     public static function verificarLogin()
     {
         self::iniciarSessao();
+        self::recuperarLoginPorCookie();
 
         if (!isset($_SESSION['usuario'])) {
             header('Location: index.php?pagina=login');
@@ -55,11 +127,8 @@ class LoginController
                     $usuario = $usuarioModel->buscarPorEmail($email);
 
                     if ($usuario && password_verify($senha, $usuario['senha'])) {
-                        $_SESSION['usuario'] = [
-                            'id' => $usuario['id'],
-                            'nome' => $usuario['nome'],
-                            'email' => $usuario['email']
-                        ];
+                        self::salvarUsuarioNaSessao($usuario);
+                        self::criarCookieLogin($usuario['id']);
 
                         header('Location: index.php');
                         exit;
@@ -78,6 +147,16 @@ class LoginController
     public function logout()
     {
         self::iniciarSessao();
+
+        if (isset($_SESSION['usuario']['id'])) {
+            try {
+                $usuarioModel = new Usuario();
+                $usuarioModel->limparTokenLogin($_SESSION['usuario']['id']);
+            } catch (Exception $exception) {
+            }
+        }
+
+        self::limparCookieLogin();
 
         $_SESSION = [];
         session_destroy();

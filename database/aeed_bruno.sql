@@ -10,10 +10,16 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email VARCHAR(150) NOT NULL,
     senha VARCHAR(255) NOT NULL,
     ativo TINYINT(1) NOT NULL DEFAULT 1,
+    lembrar_token VARCHAR(64) NULL,
+    lembrar_expira DATETIME NULL,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uk_usuarios_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE usuarios
+    ADD COLUMN IF NOT EXISTS lembrar_token VARCHAR(64) NULL AFTER ativo,
+    ADD COLUMN IF NOT EXISTS lembrar_expira DATETIME NULL AFTER lembrar_token;
 
 INSERT INTO usuarios (nome, email, senha, ativo)
 VALUES (

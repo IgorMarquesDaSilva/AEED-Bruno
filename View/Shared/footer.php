@@ -1,7 +1,21 @@
     </main>
 
     <footer class="rodape">
-        <p>Projeto academico sobre estruturas de dados.</p>
+        <div class="rodape-conteudo">
+            <div class="rodape-marca">
+                <strong>ED em C#</strong>
+                <p>Ambiente de ensino para estudar Estruturas de Dados com exemplos em C#.</p>
+            </div>
+
+            <div class="rodape-links">
+                <a href="index.php">Início</a>
+                <a href="index.php?pagina=tad">TAD</a>
+                <a href="index.php?pagina=lisimples">Lista Simples</a>
+                <a href="index.php?pagina=lisdupla">Lista Dupla</a>
+            </div>
+
+            <p class="rodape-info">Projeto acadêmico de Análise e Desenvolvimento de Sistemas.</p>
+        </div>
     </footer>
 </body>
 </html>

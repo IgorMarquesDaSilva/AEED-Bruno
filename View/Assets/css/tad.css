@@ -1,129 +1,165 @@
-.pagina-tad {
+.pagina-tad,
+.pagina-lisimples,
+.pagina-lisdupla {
     color: #162432;
-    background-color: #f6f8fa;
+    background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.14), transparent 30%),
+        linear-gradient(180deg, #f4f7fb 0%, #eef4f7 100%);
     letter-spacing: 0;
     line-height: 1.6;
 }
 
-.pagina-tad h2 {
-    margin: 0 0 18px;
-    font-size: 26px;
-    color: #123554;
-}
-
-.pagina-tad h3 {
-    margin: 24px 0 10px;
-    font-size: 19px;
-    color: #123554;
-}
-
-.pagina-tad p {
-    margin: 0 0 16px;
-}
-
-.cabecalho-aula {
-    padding: 0;
-    border-bottom: 4px solid #0f766e;
-    background-color: #14334f;
-    color: #ffffff;
-}
-
-.cabecalho-conteudo {
-    width: min(1100px, calc(100% - 40px));
+.conteudo-aula {
+    width: min(1120px, calc(100% - 40px));
     margin: 0 auto;
-    padding: 26px 0 46px;
+    padding: 34px 0 60px;
 }
 
-.cabecalho-aula h1 {
-    max-width: 760px;
-    margin: 10px 0 14px;
-    font-size: 43px;
-    line-height: 1.15;
+.aula-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) 280px;
+    gap: 28px;
+    align-items: center;
+    margin-bottom: 28px;
+    padding: 42px;
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, rgba(20, 51, 79, 0.98), rgba(15, 118, 110, 0.88)),
+        radial-gradient(circle at top right, rgba(208, 139, 49, 0.34), transparent 38%);
     color: #ffffff;
-}
-
-.voltar {
-    display: inline-block;
-    padding: 7px 0;
-    color: #d2e6f3;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.voltar:hover {
-    color: #ffffff;
+    box-shadow: 0 20px 45px rgba(15, 35, 52, 0.2);
 }
 
 .rotulo {
-    margin-top: 28px;
-    margin-bottom: 0;
-    color: #5eead4;
-    font-size: 13px;
-    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background-color: rgba(94, 234, 212, 0.18);
+    color: #99f6e4;
+    font-size: 12px;
+    font-weight: 800;
     text-transform: uppercase;
 }
 
-.introducao {
-    max-width: 770px;
-    margin-bottom: 0;
-    color: #e2e8f0;
-    font-size: 18px;
+.aula-hero h1 {
+    max-width: 780px;
+    margin: 0 0 14px;
+    color: #ffffff;
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.08;
 }
 
-.conteudo-tad {
+.introducao {
+    max-width: 760px;
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+.aula-resumo {
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+}
+
+.aula-resumo strong,
+.aula-resumo span,
+.aula-resumo a {
+    display: block;
+}
+
+.aula-resumo strong {
+    margin-bottom: 6px;
+    font-size: 24px;
+}
+
+.aula-resumo span {
+    margin-bottom: 18px;
+    color: #dbeafe;
+}
+
+.aula-resumo a {
+    width: fit-content;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background-color: #5eead4;
+    color: #123554;
+    font-weight: 800;
+}
+
+.aula-layout {
     display: grid;
-    grid-template-columns: 218px minmax(0, 1fr);
+    grid-template-columns: 238px minmax(0, 1fr);
     align-items: start;
-    gap: 0 34px;
-    width: min(1100px, calc(100% - 40px));
-    max-width: none;
-    margin: 0 auto;
-    padding: 34px 0 54px;
+    gap: 32px;
 }
 
 .indice {
-    grid-row: 1 / span 20;
+    grid-row: 1 / span 40;
     position: sticky;
-    top: 22px;
-    padding: 17px;
+    top: 86px;
+    padding: 18px;
     border: 1px solid #d9e1e8;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 35, 52, 0.08);
 }
 
 .indice h2 {
     margin: 0 0 12px;
-    font-size: 17px;
+    color: #123554;
+    font-size: 18px;
 }
 
 .indice a {
     display: block;
-    padding: 8px 5px;
-    border-bottom: 1px solid #e9eef2;
+    padding: 9px 10px;
+    border-radius: 8px;
     color: #32485b;
     font-size: 14px;
-    font-weight: bold;
-}
-
-.indice a:last-child {
-    border-bottom: 0;
+    font-weight: 800;
+    transition: 0.2s;
 }
 
 .indice a:hover {
+    background-color: #e9f4f3;
     color: #0f766e;
-    text-decoration: none;
+}
+
+.aula-layout > .secao {
+    grid-column: 2;
 }
 
 .secao {
-    grid-column: 2;
-    padding: 0 0 34px;
-    margin: 0 0 32px;
+    padding: 0 0 36px;
+    margin: 0 0 36px;
     border-bottom: 1px solid #d9e1e8;
-    scroll-margin-top: 24px;
+    scroll-margin-top: 100px;
 }
 
 .secao:last-of-type {
     border-bottom: 0;
+}
+
+.secao h2 {
+    margin: 0 0 18px;
+    color: #123554;
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+.secao h3 {
+    margin: 24px 0 10px;
+    color: #123554;
+    font-size: 20px;
+}
+
+.secao p {
+    margin: 0 0 16px;
 }
 
 .lista-topicos,
@@ -133,18 +169,23 @@
 }
 
 .lista-topicos li,
-.lista-exercicios li {
+.lista-exercicios li,
+.lista-passos li {
     padding: 4px 0;
+}
+
+.representacao,
+.nota-codigo {
+    margin: 24px 0 28px;
+    padding: 18px 20px;
+    border-left: 4px solid #0f766e;
+    border-radius: 0 8px 8px 0;
+    background-color: #e9f4f3;
+    color: #123554;
 }
 
 .representacao {
     overflow-x: auto;
-    margin: 24px 0 28px;
-    padding: 19px 18px;
-    border-left: 4px solid #0f766e;
-    border-radius: 0 5px 5px 0;
-    background-color: #e9f4f3;
-    color: #123554;
     font-family: Consolas, "Courier New", monospace;
     font-size: 14px;
     font-weight: bold;
@@ -155,6 +196,7 @@
     margin: 22px 0 24px;
     padding: 18px 20px 8px;
     border-left: 4px solid #d08b31;
+    border-radius: 0 8px 8px 0;
     background-color: #fff8ee;
 }
 
@@ -162,50 +204,36 @@
     margin-top: 0;
 }
 
-.grade-anatomia {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 20px;
-}
-
-.anatomia {
-    padding: 15px 16px;
-    border: 1px solid #d9e1e8;
-    border-radius: 6px;
-    background-color: #ffffff;
-}
-
-.anatomia h3 {
-    margin: 0 0 7px;
-    font-size: 17px;
-}
-
-.anatomia p {
-    margin: 0;
-    font-size: 15px;
-}
-
+.grade-anatomia,
 .grade-operacoes {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    gap: 16px;
+    margin-top: 20px;
 }
 
-.operacao {
-    padding: 16px;
+.anatomia,
+.operacao,
+.etapa,
+.exemplo-codigo {
+    padding: 18px 20px;
     border: 1px solid #d9e1e8;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 35, 52, 0.06);
 }
 
-.operacao h3 {
-    margin: 0;
-    font-size: 17px;
+.anatomia h3,
+.operacao h3,
+.etapa h3,
+.exemplo-codigo h3,
+.video h3 {
+    margin-top: 0;
 }
 
+.anatomia p,
 .operacao p {
-    margin: 10px 0 0;
+    margin-bottom: 0;
     font-size: 15px;
 }
 
@@ -218,8 +246,8 @@
 
 .operacao-topo span {
     flex: none;
-    padding: 3px 9px;
-    border-radius: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
     background-color: #e0f2f1;
     color: #0f5e59;
     font-family: Consolas, "Courier New", monospace;
@@ -229,20 +257,8 @@
 
 .etapas {
     display: grid;
-    gap: 14px;
+    gap: 16px;
     margin-top: 22px;
-}
-
-.etapa {
-    padding: 18px 20px;
-    border: 1px solid #d9e1e8;
-    border-radius: 6px;
-    background-color: #ffffff;
-}
-
-.etapa h3 {
-    margin: 0 0 10px;
-    font-size: 18px;
 }
 
 .lista-passos {
@@ -250,12 +266,10 @@
     padding-left: 23px;
 }
 
-.lista-passos li {
-    padding: 3px 0;
-}
-
 .tabela-container {
     overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(15, 35, 52, 0.06);
 }
 
 .tabela-container table {
@@ -267,7 +281,7 @@
 
 .tabela-container th,
 .tabela-container td {
-    padding: 13px 12px;
+    padding: 14px 13px;
     border: 1px solid #d9e1e8;
     text-align: left;
     vertical-align: top;
@@ -283,19 +297,14 @@
     background-color: #f2f6f8;
 }
 
-.video h3,
-.exemplo-codigo h3,
-.video-gravado h3 {
-    margin-top: 0;
-}
-
 .video-container {
     overflow: hidden;
     width: 100%;
     aspect-ratio: 16 / 9;
     margin-top: 18px;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: #0b1825;
+    box-shadow: 0 12px 30px rgba(15, 35, 52, 0.1);
 }
 
 .video-container iframe {
@@ -316,36 +325,19 @@
 }
 
 .fonte-video a {
+    color: #0f766e;
     font-weight: bold;
 }
 
-.video-gravado {
-    margin-top: 30px;
-    padding: 18px 20px;
-    border-left: 4px solid #0f766e;
-    background-color: #e9f4f3;
-}
-
-.video-gravado p {
-    margin-bottom: 0;
-}
-
 .exemplo-codigo {
-    margin-bottom: 28px;
-}
-
-.nota-codigo {
-    margin-bottom: 26px;
-    padding: 16px 18px;
-    border-left: 4px solid #0f766e;
-    background-color: #e9f4f3;
+    margin-bottom: 24px;
 }
 
 .exemplo-codigo pre {
     overflow-x: auto;
     margin: 16px 0 0;
     padding: 18px;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: #102230;
     color: #edf4f7;
     font: 14px/1.55 Consolas, "Courier New", monospace;
@@ -355,45 +347,31 @@
     font: inherit;
 }
 
-.rodape-aula {
-    padding: 22px 20px;
-    border-top: 1px solid #d9e1e8;
-    background-color: #ffffff;
-    color: #526779;
-    text-align: center;
-}
-
-.rodape-aula p {
-    margin: 0;
-}
-
-@media (max-width: 780px) {
-    .cabecalho-conteudo,
-    .conteudo-tad {
-        width: min(100% - 32px, 680px);
+@media (max-width: 900px) {
+    .conteudo-aula {
+        width: min(100% - 32px, 720px);
+        padding-top: 24px;
     }
 
-    .conteudo-tad {
-        display: block;
-        padding-top: 22px;
+    .aula-hero,
+    .aula-layout {
+        grid-template-columns: 1fr;
     }
 
-    .cabecalho-aula h1 {
-        font-size: 32px;
+    .aula-hero {
+        padding: 32px 24px;
     }
 
     .indice {
         position: static;
-        margin-bottom: 30px;
+    }
+
+    .aula-layout > .secao {
+        grid-column: auto;
     }
 
     .grade-operacoes,
     .grade-anatomia {
         grid-template-columns: 1fr;
-    }
-
-    .secao {
-        padding-bottom: 28px;
-        margin-bottom: 28px;
     }
 }
