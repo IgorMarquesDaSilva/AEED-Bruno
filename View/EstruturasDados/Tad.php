@@ -183,9 +183,9 @@
                     <p><?php echo htmlspecialchars($video["descricao"]); ?></p>
 
                     <div class="video-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/zqIadL5EjuE?si=xwsV2xct-67RooWU"
-                         title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                          encrypted-media; gyroscope; picture-in-picture; web-share"
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/06PJrmeG784?si=4Tdqw1lQcXDcGqxU"
+                         title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+                          clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
 
