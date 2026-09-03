@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../Model/EstruturasDados/Tad.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Lisimples.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Lisdupla.php';
+require_once __DIR__ . '/../Model/EstruturasDados/Fila.php';
 require_once __DIR__ . '/LoginController.php';
 
 class EstruturaController{
@@ -42,6 +43,19 @@ class EstruturaController{
         $cssPagina = ['View/Assets/css/Lisdupla.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Lisdupla.php';
+    }
+
+    public function fila(){
+        LoginController::verificarLogin();
+
+        $fila = new Fila();
+        $conteudo = $fila->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-fila';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/Fila.css'];
+
+        require_once __DIR__ . '/../View/EstruturasDados/Fila.php';
     }
 }
 ?>

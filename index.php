@@ -24,6 +24,9 @@ if ($pagina == "login") {
 } elseif ($pagina == "lisdupla") {
     $controller = new EstruturaController();
     $controller->lisdupla();
+} elseif ($pagina == "fila") {
+    $controller = new EstruturaController();
+    $controller->fila();
 } else {
     $controller = new HomeController();
     $controller->index();

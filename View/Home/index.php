@@ -38,6 +38,10 @@
                 <span class="hero-card-item-dot"></span>
                 Listas duplamente encadeadas
             </div>
+            <div class="hero-card-item">
+                <span class="hero-card-item-dot"></span>
+                Fila encadeada FIFO
+            </div>
         </div>
 
     </div>
@@ -111,6 +115,27 @@
             <small>Navegação dupla</small>
             <h3>Lista Dupla</h3>
             <p>Cada nó mantém referência ao anterior e ao próximo elemento.</p>
+            <span class="card-link">
+                Acessar
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+
+        </a>
+
+        <a class="card-conteudo" href="index.php?pagina=fila">
+
+            <div class="card-icone">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="9" width="4" height="6"/>
+                    <rect x="10" y="9" width="4" height="6"/>
+                    <rect x="17" y="9" width="4" height="6"/>
+                    <path d="M5 9V6M12 9V6M19 9V6"/>
+                </svg>
+            </div>
+
+            <small>FIFO - First in First Out</small>
+            <h3>Fila Encadeada</h3>
+            <p>Insere sempre no fim e remove sempre no início, respeitando a ordem de chegada.</p>
             <span class="card-link">
                 Acessar
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

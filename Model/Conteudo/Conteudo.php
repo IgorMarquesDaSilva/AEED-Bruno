@@ -4,7 +4,8 @@ class Conteudo{
         return[
             "TAD – Tipo Abstrato de Dados",
             "Listas Simplesmente Encadeadas",
-            "Listas Duplamente Encadeadas"
+            "Listas Duplamente Encadeadas",
+            "Fila Encadeadas FIFO"
         ];
     }
 }
