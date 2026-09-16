@@ -25,7 +25,7 @@ class FilaPrioridade
                 "A diferença de uma fila de prioridades para uma fila comum está no momento da inserção: em vez de inserir sempre no fim, o novo elemento é posicionado no local correto, de acordo com sua prioridade."
             ],
 
-            "representacao" => "Cabeça -> [Valor 51, Prio 9] -> [Valor 12, Prio 9] -> [Valor 7, Prio 5] -> [Valor 10, Prio 2] -> NULL <- Cauda",
+           "representacao" => '<img src="/AEED-Bruno/View/img/flprioridade.png" alt="Representação de uma fila FIFO" class="imagem-representacao">',
 
             "anatomia" => [
                 [

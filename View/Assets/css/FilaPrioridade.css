@@ -341,6 +341,13 @@
     font: 14px/1.55 Consolas, "Courier New", monospace;
 }
 
+.imagem-representacao {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
 .pagina-filaprioridade .exemplo-codigo code {
     font: inherit;
 }

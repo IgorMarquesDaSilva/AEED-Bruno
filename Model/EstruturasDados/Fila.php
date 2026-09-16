@@ -25,7 +25,7 @@ class Fila
                 "A diferença de uma fila para uma lista genérica está nas regras de acesso: a fila só permite inserir elementos no final e remover elementos do início, garantindo a ordem de chegada."
             ],
 
-            "representacao" => "Cabeça -> [12 | Prox] -> [7 | Prox] -> [10 | Prox] -> [51 | Prox] -> NULL <- Cauda",
+            "representacao" => '<img src="/AEED-Bruno/View/img/filaencadeada.png" alt="Representação de uma fila FIFO" class="imagem-representacao">',
 
             "anatomia" => [
                 [

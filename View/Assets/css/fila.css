@@ -312,6 +312,13 @@
     border: 0;
 }
 
+.imagem-representacao {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
 .fonte-video {
     display: flex;
     flex-wrap: wrap;

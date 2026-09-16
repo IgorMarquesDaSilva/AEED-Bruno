@@ -57,7 +57,7 @@
             </div>
 
             <div class="representacao">
-                <?php echo htmlspecialchars($conteudo["representacao"]); ?>
+                <?php echo $conteudo["representacao"]; ?>
             </div>
 
             <h3>Como funciona</h3>
