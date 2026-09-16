@@ -13,6 +13,8 @@
                 <a href="index.php?pagina=tad">TAD</a>
                 <a href="index.php?pagina=lisimples">Lista Simples</a>
                 <a href="index.php?pagina=lisdupla">Lista Dupla</a>
+                <a href="index.php?pagina=fila">Fila Encadeadas</a>
+                <a href="index.php?pagina=filaprioridade">Fila de Prioridades Encadeadas</a>
             </nav>
 
             <p class="rodape-info">Projeto acadêmico &mdash; Análise e Desenvolvimento de Sistemas</p>
