@@ -42,6 +42,10 @@
                 <span class="hero-card-item-dot"></span>
                 Fila encadeada FIFO
             </div>
+            <div class="hero-card-item">
+                <span class="hero-card-item-dot"></span>
+                Fila de prioridades encadeada
+            </div>
         </div>
 
     </div>
@@ -136,6 +140,26 @@
             <small>FIFO - First in First Out</small>
             <h3>Fila Encadeada</h3>
             <p>Insere sempre no fim e remove sempre no início, respeitando a ordem de chegada.</p>
+            <span class="card-link">
+                Acessar
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+
+        </a>
+
+        <a class="card-conteudo" href="index.php?pagina=filaprioridade">
+
+            <div class="card-icone">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="7" width="4" height="10"/>
+                    <rect x="10" y="10" width="4" height="7"/>
+                    <rect x="17" y="4" width="4" height="13"/>
+                </svg>
+            </div>
+
+            <small>Maior prioridade primeiro</small>
+            <h3>Fila de Prioridades</h3>
+            <p>Insere de acordo com a prioridade e remove sempre o elemento mais importante, com FIFO no empate.</p>
             <span class="card-link">
                 Acessar
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

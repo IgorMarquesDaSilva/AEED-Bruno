@@ -3,6 +3,7 @@ require_once __DIR__ . '/../Model/EstruturasDados/Tad.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Lisimples.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Lisdupla.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Fila.php';
+require_once __DIR__ . '/../Model/EstruturasDados/FilaPrioridade.php';
 require_once __DIR__ . '/LoginController.php';
 
 class EstruturaController{
@@ -56,6 +57,19 @@ class EstruturaController{
         $cssPagina = ['View/Assets/css/Fila.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Fila.php';
+    }
+
+    public function filaprioridade(){
+        LoginController::verificarLogin();
+
+        $filaprioridade = new FilaPrioridade();
+        $conteudo = $filaprioridade->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-filaprioridade';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/FilaPrioridade.css'];
+
+        require_once __DIR__ . '/../View/EstruturasDados/FilaPrioridade.php';
     }
 }
 ?>

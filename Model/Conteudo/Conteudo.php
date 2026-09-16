@@ -5,7 +5,8 @@ class Conteudo{
             "TAD – Tipo Abstrato de Dados",
             "Listas Simplesmente Encadeadas",
             "Listas Duplamente Encadeadas",
-            "Fila Encadeadas FIFO"
+            "Fila Encadeadas FIFO",
+            "Fila de Prioridades Encadeadas FIFO"
         ];
     }
 }

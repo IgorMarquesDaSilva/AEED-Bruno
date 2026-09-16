@@ -27,6 +27,9 @@ if ($pagina == "login") {
 } elseif ($pagina == "fila") {
     $controller = new EstruturaController();
     $controller->fila();
+} elseif ($pagina == "filaprioridade") {
+    $controller = new EstruturaController();
+    $controller->filaprioridade();
 } else {
     $controller = new HomeController();
     $controller->index();
