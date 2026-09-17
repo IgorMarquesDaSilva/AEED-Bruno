@@ -42,6 +42,8 @@
                 >
 
                 <button type="submit">Entrar</button>
+
+                <a class="login-esqueci" href="index.php?pagina=esqueciSenha">Esqueci minha senha</a>
             </form>
 
             <p class="login-cadastro">

@@ -116,6 +116,45 @@
     color: #123554;
 }
 
+.login-esqueci {
+    display: block;
+    margin: 10px 0 0;
+    color: #0f766e;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: right;
+}
+
+.login-esqueci:hover {
+    color: #123554;
+}
+
+.login-dev-aviso {
+    margin: -6px 0 18px;
+    padding: 12px 14px;
+    border-left: 4px solid #b58a1c;
+    border-radius: 5px;
+    background-color: #fff8e6;
+    color: #6b4f0a;
+    font-size: 13px;
+    word-break: break-all;
+}
+
+.login-dev-aviso strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.login-dev-aviso p {
+    margin: 0 0 6px;
+    color: inherit;
+}
+
+.login-dev-aviso a {
+    color: #0f766e;
+    font-weight: 800;
+}
+
 @media (max-width: 520px) {
     .login-painel {
         padding: 26px 22px;

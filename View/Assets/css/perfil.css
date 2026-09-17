@@ -1,0 +1,133 @@
+.pagina-perfil {
+    background-color: #f4f7fb;
+}
+
+.conteudo-perfil {
+    display: grid;
+    place-items: start center;
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 34px 0 60px;
+}
+
+.perfil-painel {
+    width: min(100%, 560px);
+    padding: 34px;
+    border: 1px solid #d9e1e8;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 35, 52, 0.08);
+}
+
+.perfil-tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.perfil-painel h1 {
+    margin: 0 0 10px;
+    color: #123554;
+    font-size: 32px;
+    line-height: 1.15;
+}
+
+.perfil-painel > p {
+    margin: 0 0 26px;
+    color: #526779;
+    line-height: 1.5;
+}
+
+.perfil-erro {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-left: 4px solid #b42318;
+    border-radius: 5px;
+    background-color: #fff2f0;
+    color: #8a1f14;
+    font-weight: 700;
+}
+
+.perfil-sucesso {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-left: 4px solid #0f766e;
+    border-radius: 5px;
+    background-color: #e9f4f3;
+    color: #0a4f48;
+    font-weight: 700;
+}
+
+.perfil-formulario {
+    display: grid;
+    gap: 10px;
+}
+
+.perfil-formulario h2 {
+    margin: 20px 0 2px;
+    padding-top: 18px;
+    border-top: 1px solid #d9e1e8;
+    color: #123554;
+    font-size: 18px;
+}
+
+.perfil-formulario h2:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.perfil-nota {
+    margin: 0 0 6px;
+    color: #6b7d8c;
+    font-size: 13px;
+}
+
+.perfil-formulario label {
+    color: #123554;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.perfil-formulario input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cfd9e2;
+    border-radius: 6px;
+    color: #162432;
+    font: inherit;
+}
+
+.perfil-formulario input:focus {
+    border-color: #0f766e;
+    outline: 3px solid rgba(15, 118, 110, 0.16);
+}
+
+.perfil-formulario button {
+    margin-top: 16px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 6px;
+    background-color: #0f766e;
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+}
+
+.perfil-formulario button:hover {
+    background-color: #123554;
+}
+
+@media (max-width: 520px) {
+    .perfil-painel {
+        padding: 26px 22px;
+    }
+
+    .perfil-painel h1 {
+        font-size: 26px;
+    }
+}
