@@ -7,7 +7,7 @@ class Usuario
     {
         $conexao = Conexao::conectar();
 
-        $sql = 'SELECT id, nome, email, senha, ativo
+        $sql = 'SELECT id, nome, email, senha, ativo, sessao_versao
                 FROM usuarios
                 WHERE email = :email AND ativo = 1
                 LIMIT 1';
@@ -23,7 +23,7 @@ class Usuario
     {
         $conexao = Conexao::conectar();
 
-        $sql = 'SELECT id, nome, email, ativo
+        $sql = 'SELECT id, nome, email, ativo, sessao_versao
                 FROM usuarios
                 WHERE id = :id AND ativo = 1
                 LIMIT 1';
@@ -35,26 +35,28 @@ class Usuario
         return $stmt->fetch();
     }
 
-    public function salvarTokenLogin($id, $token, $expiraEm)
+    public function salvarTokenLogin($id, $token, $expiraEm, $sessaoVersao)
     {
         $conexao = Conexao::conectar();
 
         $sql = 'UPDATE usuarios
                 SET lembrar_token = :token, lembrar_expira = :expira
-                WHERE id = :id';
+                WHERE id = :id AND sessao_versao = :versao AND ativo = 1';
 
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':token', hash('sha256', $token));
         $stmt->bindValue(':expira', $expiraEm);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':versao', $sessaoVersao, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->rowCount() === 1;
     }
 
     public function buscarPorTokenLogin($id, $token)
     {
         $conexao = Conexao::conectar();
 
-        $sql = 'SELECT id, nome, email, lembrar_token
+        $sql = 'SELECT id, nome, email, lembrar_token, sessao_versao
                 FROM usuarios
                 WHERE id = :id
                   AND ativo = 1
@@ -140,7 +142,7 @@ class Usuario
         $conexao = Conexao::conectar();
 
         $sql = 'UPDATE usuarios
-                SET nome = :nome, email = :email
+                SET nome = :nome, email = :email, reset_token = NULL, reset_expira = NULL
                 WHERE id = :id';
 
         $stmt = $conexao->prepare($sql);
@@ -170,7 +172,8 @@ class Usuario
         $conexao = Conexao::conectar();
 
         $sql = 'UPDATE usuarios
-                SET senha = :senha, lembrar_token = NULL, lembrar_expira = NULL
+                SET senha = :senha, lembrar_token = NULL, lembrar_expira = NULL,
+                    reset_token = NULL, reset_expira = NULL, sessao_versao = sessao_versao + 1
                 WHERE id = :id';
 
         $stmt = $conexao->prepare($sql);
@@ -179,17 +182,16 @@ class Usuario
         $stmt->execute();
     }
 
-    public function salvarTokenReset($email, $token, $expiraEm)
+    public function salvarTokenReset($email, $token)
     {
         $conexao = Conexao::conectar();
 
         $sql = 'UPDATE usuarios
-                SET reset_token = :token, reset_expira = :expira
+                SET reset_token = :token, reset_expira = DATE_ADD(UTC_TIMESTAMP(), INTERVAL 30 MINUTE)
                 WHERE email = :email AND ativo = 1';
 
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':token', hash('sha256', $token));
-        $stmt->bindValue(':expira', $expiraEm);
         $stmt->bindValue(':email', $email);
         $stmt->execute();
 
@@ -200,25 +202,25 @@ class Usuario
     {
         $conexao = Conexao::conectar();
 
-        $sql = 'SELECT id, nome, email, reset_token
+        $sql = 'SELECT id, nome, email
                 FROM usuarios
                 WHERE ativo = 1
-                  AND reset_token IS NOT NULL
-                  AND reset_expira > NOW()';
+                  AND reset_token = :token
+                  AND reset_expira > UTC_TIMESTAMP()
+                LIMIT 1';
 
         $stmt = $conexao->prepare($sql);
-        $stmt->execute();
-
-        while ($usuario = $stmt->fetch()) {
-            if (hash_equals($usuario['reset_token'], hash('sha256', $token))) {
-                return $usuario;
-            }
-        }
-
-        return false;
+        $stmt->execute([':token' => hash('sha256', $token)]);
+        return $stmt->fetch();
     }
 
-    public function redefinirSenhaPorToken($id, $senha)
+    public function invalidarTokenReset($token)
+    {
+        $stmt = Conexao::conectar()->prepare('UPDATE usuarios SET reset_token = NULL, reset_expira = NULL WHERE reset_token = :token');
+        $stmt->execute([':token' => hash('sha256', $token)]);
+    }
+
+    public function redefinirSenhaPorToken($token, $senha)
     {
         $conexao = Conexao::conectar();
 
@@ -227,13 +229,15 @@ class Usuario
                     reset_token = NULL,
                     reset_expira = NULL,
                     lembrar_token = NULL,
-                    lembrar_expira = NULL
-                WHERE id = :id';
+                    lembrar_expira = NULL,
+                    sessao_versao = sessao_versao + 1
+                WHERE reset_token = :token AND reset_expira > UTC_TIMESTAMP() AND ativo = 1';
 
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':senha', password_hash($senha, PASSWORD_DEFAULT));
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':token', hash('sha256', $token));
         $stmt->execute();
+        return $stmt->rowCount() === 1;
     }
 }
 

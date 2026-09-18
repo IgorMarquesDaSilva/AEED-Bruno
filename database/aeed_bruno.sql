@@ -37,7 +37,17 @@ CREATE TABLE `usuarios` (
   `lembrar_expira` datetime DEFAULT NULL,
   `reset_token` varchar(64) DEFAULT NULL,
   `reset_expira` datetime DEFAULT NULL,
+  `sessao_versao` int unsigned NOT NULL DEFAULT 0,
   `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX idx_usuarios_reset_token ON usuarios (reset_token);
+
+CREATE TABLE IF NOT EXISTS recuperacao_limites (
+  chave char(64) NOT NULL PRIMARY KEY,
+  inicio datetime NOT NULL,
+  tentativas int unsigned NOT NULL DEFAULT 0,
+  INDEX idx_recuperacao_inicio (inicio)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --

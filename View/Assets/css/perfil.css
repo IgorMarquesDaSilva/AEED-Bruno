@@ -4,6 +4,8 @@
 
 .conteudo-perfil {
     display: grid;
+    grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
+    gap: 40px;
     place-items: start center;
     width: min(1120px, calc(100% - 40px));
     margin: 0 auto;
@@ -120,6 +122,101 @@
 
 .perfil-formulario button:hover {
     background-color: #123554;
+}
+
+.perfil-moedas {
+    width: 100%;
+    min-width: 0;
+    padding-top: 12px;
+    scroll-margin-top: 110px;
+}
+
+.perfil-moedas h2 {
+    margin: 0 0 24px;
+    color: #123554;
+    font-size: 26px;
+}
+
+.perfil-moedas h3 {
+    margin: 28px 0 8px;
+    color: #123554;
+    font-size: 18px;
+}
+
+.perfil-saldo {
+    margin: 0;
+    padding: 20px 0;
+    border-block: 1px solid #cfd9e2;
+}
+
+.perfil-saldo dt {
+    color: #526779;
+    font-size: 14px;
+}
+
+.perfil-saldo dd {
+    margin: 4px 0 0;
+    color: #0f766e;
+    font-size: 32px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.perfil-saldo dd span {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.perfil-historico {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+}
+
+.perfil-historico li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #d9e1e8;
+    font-size: 14px;
+}
+
+.perfil-historico li > div {
+    min-width: 0;
+}
+
+.perfil-historico div span {
+    display: block;
+    margin-top: 4px;
+    color: #526779;
+    font-size: 12px;
+}
+
+.perfil-ganho {
+    flex-shrink: 0;
+    color: #0f766e;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.perfil-link-quiz {
+    color: #0f766e;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+    .conteudo-perfil {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .perfil-moedas {
+        max-width: 560px;
+    }
 }
 
 @media (max-width: 520px) {

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../Model/Usuarios/Usuario.php';
+require_once __DIR__ . '/../Model/Moedas/Carteira.php';
 
 class LoginController
 {
@@ -25,10 +26,14 @@ class LoginController
 
     private static function salvarUsuarioNaSessao($usuario)
     {
+        $saldo = (new Carteira())->saldo($usuario['id']);
+        session_regenerate_id(true);
         $_SESSION['usuario'] = [
             'id' => $usuario['id'],
             'nome' => $usuario['nome'],
-            'email' => $usuario['email']
+            'email' => $usuario['email'],
+            'sessao_versao' => (int) $usuario['sessao_versao'],
+            'moedas' => $saldo
         ];
     }
 
@@ -49,7 +54,12 @@ class LoginController
         $expiraBanco = date('Y-m-d H:i:s', $expira);
 
         $usuarioModel = new Usuario();
-        $usuarioModel->salvarTokenLogin($usuarioId, $token, $expiraBanco);
+        $salvou = $usuarioModel->salvarTokenLogin($usuarioId, $token, $expiraBanco, $_SESSION['usuario']['sessao_versao']);
+        if (!$salvou) {
+            $_SESSION = [];
+            self::limparCookieLogin();
+            return;
+        }
 
         setcookie(
             self::COOKIE_LEMBRAR,
@@ -95,6 +105,7 @@ class LoginController
     public static function verificarLogin()
     {
         self::iniciarSessao();
+        self::validarSessaoAtual();
         self::recuperarLoginPorCookie();
 
         if (!isset($_SESSION['usuario'])) {
@@ -106,6 +117,7 @@ class LoginController
     public function login()
     {
         self::iniciarSessao();
+        self::validarSessaoAtual();
 
         if (isset($_SESSION['usuario'])) {
             header('Location: index.php');
@@ -142,6 +154,30 @@ class LoginController
         }
 
         require __DIR__ . '/../View/Login/index.php';
+    }
+
+    private static function validarSessaoAtual()
+    {
+        if (!isset($_SESSION['usuario'])) return;
+        try {
+            $usuario = (new Usuario())->buscarPorId($_SESSION['usuario']['id']);
+            $saldo = $usuario ? (new Carteira())->saldo($usuario['id']) : 0;
+        } catch (Exception $exception) {
+            // Uma indisponibilidade do banco nao deve apagar a sessao do usuario.
+            http_response_code(503);
+            $erro = 'Não foi possível validar seu acesso agora. Tente novamente em instantes.';
+            $email = '';
+            require __DIR__ . '/../View/Login/index.php';
+            exit;
+        }
+        if (!$usuario || (int) ($_SESSION['usuario']['sessao_versao'] ?? 0) !== (int) $usuario['sessao_versao']) {
+            $_SESSION = [];
+            self::limparCookieLogin();
+            unset($_COOKIE[self::COOKIE_LEMBRAR]);
+            session_regenerate_id(true);
+        } else {
+            $_SESSION['usuario']['moedas'] = $saldo;
+        }
     }
 
     public function logout()

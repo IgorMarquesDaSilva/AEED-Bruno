@@ -16,33 +16,27 @@
             <p>Informe o e-mail cadastrado para receber as instruções de redefinição de senha.</p>
 
             <?php if (!empty($erro)) { ?>
-                <div class="login-erro">
+                <div class="login-erro" role="alert">
                     <?php echo htmlspecialchars($erro); ?>
                 </div>
             <?php } ?>
 
             <?php if (!empty($sucesso)) { ?>
-                <div class="cadastro-sucesso">
+                <div class="login-sucesso" role="status">
                     <?php echo htmlspecialchars($sucesso); ?>
                 </div>
 
-                <?php if (!empty($linkTeste)) { ?>
-                    <div class="login-dev-aviso">
-                        <strong>Modo de teste (sem servidor de e-mail configurado):</strong>
-                        <p>Em produção este link seria enviado por e-mail. Para testar agora, acesse:</p>
-                        <a href="<?php echo htmlspecialchars($linkTeste); ?>">
-                            <?php echo htmlspecialchars($linkTeste); ?>
-                        </a>
-                    </div>
-                <?php } ?>
             <?php } ?>
 
             <form class="login-formulario" method="POST" action="index.php?pagina=esqueciSenha">
+                <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
                 <label for="email">E-mail</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
+                    autocomplete="email"
+                    maxlength="150"
                     value="<?php echo htmlspecialchars(isset($email) ? $email : ''); ?>"
                     placeholder="seuemail@exemplo.com"
                     required

@@ -15,13 +15,13 @@
             <h1>Redefinir senha</h1>
 
             <?php if (!empty($erro)) { ?>
-                <div class="login-erro">
+                <div class="login-erro" role="alert">
                     <?php echo htmlspecialchars($erro); ?>
                 </div>
             <?php } ?>
 
             <?php if (!empty($sucesso)) { ?>
-                <div class="cadastro-sucesso">
+                <div class="login-sucesso" role="status">
                     <?php echo htmlspecialchars($sucesso); ?>
                 </div>
             <?php } ?>
@@ -30,13 +30,16 @@
                 <p>Escolha uma nova senha para acessar sua conta.</p>
 
                 <form class="login-formulario" method="POST" action="index.php?pagina=redefinirSenha">
-                    <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                    <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
 
                     <label for="nova_senha">Nova senha</label>
                     <input
                         type="password"
                         id="nova_senha"
                         name="nova_senha"
+                        autocomplete="new-password"
+                        minlength="6"
+                        maxlength="72"
                         placeholder="Minimo de 6 caracteres"
                         required
                     >
@@ -46,6 +49,9 @@
                         type="password"
                         id="confirmar_senha"
                         name="confirmar_senha"
+                        autocomplete="new-password"
+                        minlength="6"
+                        maxlength="72"
                         placeholder="Repita a nova senha"
                         required
                     >

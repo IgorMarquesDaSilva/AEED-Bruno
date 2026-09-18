@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../Model/Usuarios/Usuario.php';
 require_once __DIR__ . '/LoginController.php';
+require_once __DIR__ . '/../Model/Moedas/Carteira.php';
+require_once __DIR__ . '/../Model/Quiz/Quiz.php';
 
 class PerfilController
 {
@@ -65,6 +67,7 @@ class PerfilController
 
                         if ($querTrocarSenha) {
                             $usuarioModel->atualizarSenha($usuarioSessao['id'], $novaSenha);
+                            $_SESSION['usuario']['sessao_versao'] = (int) ($usuarioSessao['sessao_versao'] ?? 0) + 1;
                         }
 
                         $_SESSION['usuario']['nome'] = $nome;
@@ -78,6 +81,21 @@ class PerfilController
                     $erro = 'Nao foi possivel conectar ao banco. Importe o arquivo database/aeed_bruno.sql no MySQL.';
                 }
             }
+        }
+
+        $saldoMoedas = $_SESSION['usuario']['moedas'];
+        $historicoMoedas = [];
+        $erroMoedas = '';
+        $temasQuiz = (new Quiz())->listarTemas();
+        try {
+            $historicoMoedas = (new Carteira())->historico($usuarioSessao['id']);
+            foreach ($historicoMoedas as &$registro) {
+                $data = new DateTimeImmutable($registro['concluido_em'], new DateTimeZone('UTC'));
+                $registro['data_local'] = $data->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i');
+            }
+            unset($registro);
+        } catch (Throwable $exception) {
+            $erroMoedas = 'Não foi possível carregar o histórico de moedas agora.';
         }
 
         $titulo = 'Meu Perfil';

@@ -364,6 +364,32 @@
     margin-top: 48px;
 }
 
+.quiz-recompensa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 22px 0;
+    border-block: 1px solid #c0ddd9;
+}
+
+.quiz-recompensa span {
+    display: block;
+    color: #526779;
+    font-size: 14px;
+}
+
+.quiz-recompensa strong {
+    color: #0f766e;
+    font-size: 32px;
+    font-variant-numeric: tabular-nums;
+}
+
+.quiz-premio-questao {
+    color: #0f766e;
+}
+
 .quiz-revisao-item {
     padding: 18px 0;
     border-bottom: 1px solid #d4dce5;

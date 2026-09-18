@@ -74,4 +74,32 @@
 
 </section>
 
+<section id="moedas" class="perfil-moedas" aria-labelledby="moedas-titulo">
+    <span class="perfil-tag">Minhas recompensas</span>
+    <h2 id="moedas-titulo">Moedas</h2>
+    <dl class="perfil-saldo">
+        <dt>Saldo disponível</dt>
+        <dd><?php echo number_format($saldoMoedas, 0, ',', '.'); ?> <span>moedas</span></dd>
+    </dl>
+    <h3>Últimas rodadas</h3>
+    <?php if ($erroMoedas !== '') { ?>
+        <p class="perfil-erro" role="alert"><?php echo htmlspecialchars($erroMoedas); ?></p>
+    <?php } elseif (!$historicoMoedas) { ?>
+        <p class="perfil-nota">Nenhuma rodada concluída.</p>
+    <?php } else { ?>
+        <ul class="perfil-historico">
+            <?php foreach ($historicoMoedas as $registro) { ?>
+                <li>
+                    <div>
+                        <strong><?php echo htmlspecialchars($temasQuiz[$registro['tema']] ?? 'Quiz'); ?></strong>
+                        <span><?php echo htmlspecialchars($registro['data_local']); ?></span>
+                    </div>
+                    <span class="perfil-ganho">+<?php echo (int) $registro['moedas_ganhas']; ?> moedas</span>
+                </li>
+            <?php } ?>
+        </ul>
+    <?php } ?>
+    <a class="perfil-link-quiz" href="index.php?pagina=quiz">Ir para o quiz</a>
+</section>
+
 <?php require_once "View/Shared/footer.php"; ?>

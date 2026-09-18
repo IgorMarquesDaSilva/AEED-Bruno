@@ -1,120 +1,128 @@
 <?php
-require_once __DIR__ . '/../Model/Usuarios/Usuario.php';
+require_once __DIR__ . '/../Model/Usuarios/RecuperacaoSenha.php';
 
 class RecuperarSenhaController
 {
     private static function iniciarSessao()
     {
         if (session_status() === PHP_SESSION_NONE) {
-            $caminhoSessao = __DIR__ . '/../storage/sessions';
-
-            if (!is_dir($caminhoSessao)) {
-                mkdir($caminhoSessao, 0777, true);
-            }
-
-            if (is_dir($caminhoSessao) && is_writable($caminhoSessao)) {
-                session_save_path($caminhoSessao);
-            }
-
+            $caminho = __DIR__ . '/../storage/sessions';
+            if (!is_dir($caminho)) mkdir($caminho, 0777, true);
+            session_save_path($caminho);
             ini_set('session.cookie_httponly', '1');
+            ini_set('session.cookie_samesite', 'Lax');
             session_start();
         }
+        header('Cache-Control: no-store');
+        header('Referrer-Policy: no-referrer');
+        if (empty($_SESSION['recuperacao_csrf'])) {
+            $_SESSION['recuperacao_csrf'] = bin2hex(random_bytes(32));
+        }
+    }
+
+    private static function csrfValido()
+    {
+        $token = $_POST['csrf'] ?? '';
+        return is_string($token) && hash_equals($_SESSION['recuperacao_csrf'], $token);
+    }
+
+    private static function redirecionar($pagina)
+    {
+        header('Location: index.php?pagina=' . $pagina, true, 303);
+        exit;
     }
 
     public function esqueciSenha()
     {
         self::iniciarSessao();
-
-        if (isset($_SESSION['usuario'])) {
-            header('Location: index.php');
-            exit;
-        }
-
-        $erro = '';
-        $sucesso = '';
-        $linkTeste = '';
-        $email = '';
+        $servico = new RecuperacaoSenha();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim(isset($_POST['email']) ? $_POST['email'] : '');
-
-            if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $erro = 'Informe um e-mail valido.';
+            $email = is_string($_POST['email'] ?? null) ? trim($_POST['email']) : '';
+            $erro = '';
+            $sucesso = '';
+            if (!self::csrfValido()) {
+                $erro = 'O formulário expirou. Tente novamente.';
+            } elseif (strlen($email) > 150 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $erro = 'Informe um e-mail válido.';
             } else {
                 try {
-                    $usuarioModel = new Usuario();
-
-                    $token = bin2hex(random_bytes(32));
-                    $expira = date('Y-m-d H:i:s', time() + (60 * 60));
-
-                    $salvou = $usuarioModel->salvarTokenReset($email, $token, $expira);
-
-                    // NAO revelamos se o e-mail existe ou nao, por seguranca.
-                    $sucesso = 'Se o e-mail informado estiver cadastrado, voce recebera as instrucoes de redefinicao de senha em instantes.';
-
-                    if ($salvou) {
-                        // Este projeto academico nao possui servidor de e-mail configurado.
-                        // Em producao, o link abaixo seria enviado por e-mail (ex.: via PHPMailer/SMTP)
-                        // em vez de ser exibido na propria tela.
-                        $linkTeste = 'index.php?pagina=redefinirSenha&token=' . $token;
-                    }
-                } catch (Exception $exception) {
-                    $erro = 'Nao foi possivel conectar ao banco. Importe o arquivo database/aeed_bruno.sql no MySQL.';
+                    $servico->solicitar($email, $_SERVER['REMOTE_ADDR'] ?? 'desconhecido');
+                    $sucesso = 'Se o e-mail estiver cadastrado e o limite de solicitações não tiver sido atingido, você receberá um link de recuperação. Confira também a pasta de spam.';
+                } catch (Throwable $exception) {
+                    error_log('AEED: recuperacao indisponivel; confira SMTP, dependencias e migracao do banco.');
+                    $erro = 'A recuperação por e-mail está temporariamente indisponível. Tente novamente mais tarde ou avise o responsável pelo site.';
                 }
             }
+            $_SESSION['recuperacao_aviso'] = compact('erro', 'sucesso', 'email');
+            self::redirecionar('esqueciSenha');
         }
-
+        $aviso = $_SESSION['recuperacao_aviso'] ?? [];
+        unset($_SESSION['recuperacao_aviso']);
+        $erro = $aviso['erro'] ?? '';
+        $sucesso = $aviso['sucesso'] ?? '';
+        $email = $aviso['email'] ?? '';
+        $csrf = $_SESSION['recuperacao_csrf'];
         require __DIR__ . '/../View/RecuperarSenha/esqueci.php';
     }
 
     public function redefinirSenha()
     {
         self::iniciarSessao();
+        $servico = new RecuperacaoSenha();
+        $invalido = 'Este link é inválido, já foi utilizado ou expirou. Solicite um novo.';
 
-        if (isset($_SESSION['usuario'])) {
-            header('Location: index.php');
-            exit;
-        }
-
-        $erro = '';
-        $sucesso = '';
-        $tokenValido = false;
-        $token = isset($_GET['token']) ? $_GET['token'] : (isset($_POST['token']) ? $_POST['token'] : '');
-
-        if ($token === '') {
-            $erro = 'Link de redefinicao invalido.';
-        } else {
+        // Retira a credencial da URL antes de carregar a tela e seus recursos externos.
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && array_key_exists('token', $_GET)) {
+            unset($_SESSION['recuperacao_token'], $_SESSION['redefinicao_aviso']);
             try {
-                $usuarioModel = new Usuario();
-                $usuario = $usuarioModel->buscarPorTokenReset($token);
-
-                if (!$usuario) {
-                    $erro = 'Este link de redefinicao e invalido ou ja expirou. Solicite um novo.';
+                if ($servico->tokenValido($_GET['token'])) {
+                    $_SESSION['recuperacao_token'] = $_GET['token'];
+                    $_SESSION['recuperacao_csrf'] = bin2hex(random_bytes(32));
                 } else {
-                    $tokenValido = true;
-
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        $novaSenha = isset($_POST['nova_senha']) ? $_POST['nova_senha'] : '';
-                        $confirmarSenha = isset($_POST['confirmar_senha']) ? $_POST['confirmar_senha'] : '';
-
-                        if (strlen($novaSenha) < 6) {
-                            $erro = 'A nova senha deve ter no minimo 6 caracteres.';
-                        } elseif ($novaSenha !== $confirmarSenha) {
-                            $erro = 'As senhas nao coincidem.';
-                        } else {
-                            $usuarioModel->redefinirSenhaPorToken($usuario['id'], $novaSenha);
-                            $sucesso = 'Senha redefinida com sucesso! Faca login com sua nova senha.';
-                            $tokenValido = false;
-                        }
-                    }
+                    $_SESSION['redefinicao_aviso'] = ['erro' => $invalido];
                 }
-            } catch (Exception $exception) {
-                $erro = 'Nao foi possivel conectar ao banco. Importe o arquivo database/aeed_bruno.sql no MySQL.';
+            } catch (Throwable $exception) {
+                $_SESSION['redefinicao_aviso'] = ['erro' => 'Não foi possível verificar o link agora. Tente abrir o e-mail novamente mais tarde.'];
             }
+            self::redirecionar('redefinirSenha');
         }
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $erro = '';
+            $sucesso = '';
+            try {
+                if (!self::csrfValido()) {
+                    $erro = 'O formulário expirou. Tente novamente.';
+                } elseif ($servico->redefinir($_SESSION['recuperacao_token'] ?? '', $_POST['nova_senha'] ?? '', $_POST['confirmar_senha'] ?? '')) {
+                    $sucesso = 'Senha redefinida com sucesso! Faça login com sua nova senha.';
+                    unset($_SESSION['recuperacao_token']);
+                    $_SESSION['recuperacao_csrf'] = bin2hex(random_bytes(32));
+                } else {
+                    $erro = $invalido;
+                    unset($_SESSION['recuperacao_token']);
+                }
+            } catch (DomainException $exception) {
+                $erro = $exception->getMessage();
+            } catch (Throwable $exception) {
+                $erro = 'Não foi possível redefinir sua senha agora. Tente novamente mais tarde.';
+            }
+            $_SESSION['redefinicao_aviso'] = compact('erro', 'sucesso');
+            self::redirecionar('redefinirSenha');
+        }
+
+        $aviso = $_SESSION['redefinicao_aviso'] ?? [];
+        unset($_SESSION['redefinicao_aviso']);
+        $erro = $aviso['erro'] ?? '';
+        $sucesso = $aviso['sucesso'] ?? '';
+        $tokenValido = false;
+        try {
+            $tokenValido = (bool) $servico->tokenValido($_SESSION['recuperacao_token'] ?? '');
+            if (!$tokenValido && $erro === '' && $sucesso === '') $erro = $invalido;
+        } catch (Throwable $exception) {
+            $erro = 'Não foi possível verificar o link agora. Tente novamente mais tarde.';
+        }
+        $csrf = $_SESSION['recuperacao_csrf'];
         require __DIR__ . '/../View/RecuperarSenha/redefinir.php';
     }
 }
-
-?>

@@ -109,7 +109,7 @@ class Quiz
             $resposta = $tentativa['respostas'][$id];
             $acertou = $resposta === $pergunta['correta'];
             if ($acertou) $acertos++;
-            $revisao[] = ['pergunta' => $pergunta, 'resposta' => $resposta, 'acertou' => $acertou];
+            $revisao[] = ['id' => $id, 'pergunta' => $pergunta, 'resposta' => $resposta, 'acertou' => $acertou];
         }
         $total = count($tentativa['perguntas']);
         return [

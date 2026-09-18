@@ -10,7 +10,9 @@
     <div class="quiz-aviso quiz-aviso-erro" role="alert"><?php echo htmlspecialchars($erro); ?></div>
 <?php } ?>
 
-<?php if (!$tentativa) { ?>
+<?php if ($indisponivel) { ?>
+    <a class="quiz-link" href="index.php?pagina=quiz">Tentar novamente</a>
+<?php } elseif (!$tentativa) { ?>
     <section class="quiz-inicio" aria-labelledby="quiz-nova-rodada">
         <div>
             <h2 id="quiz-nova-rodada">Nova rodada</h2>
@@ -101,7 +103,7 @@
     </section>
     <details class="quiz-encerrar">
         <summary>Encerrar rodada</summary>
-        <p>O progresso desta rodada será descartado.</p>
+        <p>Esta rodada será encerrada sem moedas. Os erros já registrados continuam valendo para hoje.</p>
         <form method="post" action="index.php?pagina=quiz">
             <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
             <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
@@ -119,6 +121,10 @@
             <div><dt>Erros</dt><dd><?php echo $resultado['total'] - $resultado['acertos']; ?></dd></div>
             <div><dt>Aproveitamento</dt><dd><?php echo $resultado['percentual']; ?>%</dd></div>
         </dl>
+        <div class="quiz-recompensa" role="status">
+            <div><span>Moedas nesta rodada</span><strong>+<?php echo $recompensas['ganhas']; ?></strong></div>
+            <a class="quiz-link" href="index.php?pagina=perfil#moedas">Saldo atual: <?php echo number_format($saldoMoedas, 0, ',', '.'); ?> moedas</a>
+        </div>
         <form class="quiz-acoes" method="post" action="index.php?pagina=quiz">
             <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
             <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
@@ -139,6 +145,22 @@
                 </summary>
                 <div class="quiz-revisao-conteudo">
                     <span class="quiz-rotulo"><?php echo htmlspecialchars($temas[$questao['tema']] . ' · ' . $questao['tipo']); ?></span>
+                    <?php $premio = $recompensas['por_questao'][$item['id']]; ?>
+                    <p class="quiz-premio-questao"><strong>+<?php echo $premio['moedas']; ?> moedas</strong>
+                        <?php if ($premio['dia'] === null) { ?>
+                            · Resposta anterior ao sistema de moedas
+                        <?php } elseif (!$item['acertou']) { ?>
+                            · Resposta incorreta
+                        <?php } elseif ($premio['moedas'] === 0) { ?>
+                            · Questão já recompensada no dia da resposta
+                        <?php } elseif ($premio['moedas'] === 5) { ?>
+                            · Acerto após 1 erro no dia
+                        <?php } elseif ($premio['moedas'] === 2) { ?>
+                            · Acerto após 2 ou mais erros no dia
+                        <?php } else { ?>
+                            · Acerto sem erros anteriores no dia
+                        <?php } ?>
+                    </p>
                     <?php if (isset($questao['codigo'])) { ?>
                         <pre class="quiz-codigo" tabindex="0" aria-label="Código C# da questão"><code><?php echo htmlspecialchars($questao['codigo']); ?></code></pre>
                     <?php } ?>
