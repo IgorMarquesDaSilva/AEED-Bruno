@@ -56,6 +56,7 @@
     <a href="#conteudos">Conteúdos</a>
     <a href="#resumo">Mapa</a>
     <a href="index.php?pagina=tad">TAD</a>
+    <a href="index.php?pagina=quiz">Quiz</a>
 </nav>
 
 <section id="conteudos">

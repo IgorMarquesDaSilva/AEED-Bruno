@@ -15,6 +15,7 @@
                 <a href="index.php?pagina=lisdupla">Lista Dupla</a>
                 <a href="index.php?pagina=fila">Fila Encadeadas</a>
                 <a href="index.php?pagina=filaprioridade">Fila de Prioridades Encadeadas</a>
+                <a href="index.php?pagina=quiz">Quiz</a>
             </nav>
 
             <p class="rodape-info">Projeto acadêmico &mdash; Análise e Desenvolvimento de Sistemas</p>
