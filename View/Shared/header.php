@@ -39,6 +39,7 @@
             <a href="index.php?pagina=lisdupla">Lista Dupla</a>
             <a href="index.php?pagina=fila">Fila FIFO</a>
             <a href="index.php?pagina=filaprioridade">Fila de Prioridades</a>
+            <a href="index.php?pagina=pilha">Pilha LIFO</a>
             <a href="index.php?pagina=quiz"<?php if (($bodyClass ?? '') === 'pagina-quiz') { echo ' class="ativo" aria-current="page"'; } ?>>Quiz</a>
             <a href="index.php?pagina=loja"<?php if (($bodyClass ?? '') === 'pagina-loja') { echo ' class="ativo" aria-current="page"'; } ?>>Loja</a>
             <a class="menu-perfil" href="index.php?pagina=perfil">

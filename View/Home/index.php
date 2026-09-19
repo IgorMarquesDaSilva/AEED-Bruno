@@ -168,6 +168,26 @@
 
         </a>
 
+        <a class="card-conteudo" href="index.php?pagina=pilha">
+
+            <div class="card-icone">
+                <svg viewBox="0 0 24 24">
+                    <rect x="7" y="4" width="10" height="4"/>
+                    <rect x="7" y="10" width="10" height="4"/>
+                    <rect x="7" y="16" width="10" height="4"/>
+                </svg>
+            </div>
+
+            <small>LIFO - Last in First Out</small>
+            <h3>Pilha Encadeada</h3>
+            <p>Insere e remove sempre pelo Topo, respeitando a ordem inversa de chegada.</p>
+            <span class="card-link">
+                Acessar
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+
+        </a>
+
     </div>
 
 </section>
