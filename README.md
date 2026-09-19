@@ -29,6 +29,16 @@ diario. Pode ser repetido sem apagar usuarios, saldos ou historico. Como
 alternativa, importe `database/moedas.sql` no banco `aeed_bruno` pelo phpMyAdmin.
 No Windows, se PHP nao estiver no PATH, use `C:\xampp\php\php.exe` no lugar de `php`.
 
+Depois, habilite o avatar e a loja:
+
+```sh
+php database/migrar_avatar_loja.php
+```
+
+A migracao cria as tabelas de inventario e equipamento sem alterar usuarios,
+moedas ou rodadas existentes. Pode ser repetida. Tambem e possivel importar
+`database/avatar_loja.sql` pelo phpMyAdmin no banco `aeed_bruno`.
+
 Usuario inicial para teste:
 
 - E-mail: `admin@aeed.com`
@@ -141,8 +151,8 @@ de a questao aparecer no quiz geral ou no quiz de uma materia:
 - Rodadas que ja estavam na sessao antes desta atualizacao sao preservadas,
   mas respostas anteriores nao geram moedas nem penalidades retroativas.
 
-Esta etapa inclui ganhar, guardar e consultar moedas. Loja, compras, avatar e
-habilidades dos itens ainda nao fazem parte dela.
+As moedas tambem podem ser usadas na loja do avatar. As habilidades dos itens
+no quiz ainda nao fazem parte desta etapa.
 
 Para executar os testes na pasta do projeto, com o MySQL e as migracoes prontos:
 
@@ -155,3 +165,24 @@ O teste de moedas usa contas temporarias e remove seus registros ao terminar.
 Verifica as recompensas, abandono, mudanca do dia, migracao de rodadas antigas,
 isolamento de contas, falha com rollback e conclusoes simultaneas. Nao altera
 contas existentes.
+
+## Avatar e loja
+
+Depois de entrar, acesse **Loja** no menu ou `index.php?pagina=loja`.
+O perfil mostra o avatar e o link para **Meu armario**. O avatar inicial possui
+cabelo curto, sorriso e camiseta verde. O catalogo inclui cabelo ou chapeu,
+rosto, roupas e acessorios. O catalogo e seus precos ficam em
+`Model/Avatar/CatalogoAvatar.php`.
+
+Uma compra desconta as moedas e adiciona o item ao armario na mesma transacao.
+O item comprado e equipado imediatamente. No armario, e possivel equipar
+novamente qualquer item comprado ou inicial e retirar o acessorio. Pecas,
+compras e equipamento continuam na conta apos F5, logout ou troca de navegador.
+O servidor confere propriedade e saldo; uma compra duplicada nao debita de novo.
+
+```sh
+php tests/AvatarLojaTest.php
+```
+
+O teste usa contas temporarias, verifica compras, saldo, equipamento, isolamento
+entre contas e duas compras simultaneas. Remove os registros criados ao terminar.

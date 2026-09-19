@@ -3,6 +3,8 @@ require_once __DIR__ . '/../Model/Usuarios/Usuario.php';
 require_once __DIR__ . '/LoginController.php';
 require_once __DIR__ . '/../Model/Moedas/Carteira.php';
 require_once __DIR__ . '/../Model/Quiz/Quiz.php';
+require_once __DIR__ . '/../Model/Avatar/AvatarLoja.php';
+require_once __DIR__ . '/../View/Avatar/desenho.php';
 
 class PerfilController
 {
@@ -84,6 +86,13 @@ class PerfilController
         }
 
         $saldoMoedas = $_SESSION['usuario']['moedas'];
+        $avatarEquipado = CatalogoAvatar::iniciais();
+        $erroAvatar = '';
+        try {
+            $avatarEquipado = (new AvatarLoja())->equipado($usuarioSessao['id']);
+        } catch (Throwable $exception) {
+            $erroAvatar = 'Não foi possível carregar o avatar agora.';
+        }
         $historicoMoedas = [];
         $erroMoedas = '';
         $temasQuiz = (new Quiz())->listarTemas();

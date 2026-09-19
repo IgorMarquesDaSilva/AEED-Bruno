@@ -6,6 +6,7 @@ require_once __DIR__ . '/Controller/Cadastrocontroller.php';
 require_once __DIR__ . '/Controller/PerfilController.php';
 require_once __DIR__ . '/Controller/RecuperarSenhaController.php';
 require_once __DIR__ . '/Controller/QuizController.php';
+require_once __DIR__ . '/Controller/LojaController.php';
  
 $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : "home";
 
@@ -23,6 +24,9 @@ if ($pagina == "login") {
     $controller->perfil();
 } elseif ($pagina == "quiz") {
     $controller = new QuizController();
+    $controller->index();
+} elseif ($pagina == "loja") {
+    $controller = new LojaController();
     $controller->index();
 } elseif ($pagina == "esqueciSenha") {
     $controller = new RecuperarSenhaController();

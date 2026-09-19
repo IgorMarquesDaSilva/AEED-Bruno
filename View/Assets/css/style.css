@@ -36,6 +36,22 @@ img {
     max-width: 100%;
 }
 
+.avatar-desenho {
+    display: block;
+    width: min(100%, 235px);
+    height: auto;
+}
+
+.perfil-avatar-palco,
+.loja-avatar-palco {
+    display: grid;
+    place-items: center;
+    min-height: 270px;
+    border: 1px solid #d9e1e8;
+    border-radius: 8px;
+    background-color: #eaf4f3;
+}
+
 /* ─── Container ─────────────────────────────────────────── */
 
 .container {

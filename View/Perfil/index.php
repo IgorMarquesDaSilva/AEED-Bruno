@@ -74,6 +74,18 @@
 
 </section>
 
+<div class="perfil-lateral">
+<section class="perfil-avatar" aria-labelledby="avatar-titulo">
+    <span class="perfil-tag">Meu personagem</span>
+    <h2 id="avatar-titulo">Avatar</h2>
+    <div class="perfil-avatar-palco"><?php echo desenharAvatar($avatarEquipado); ?></div>
+    <?php if ($erroAvatar !== '') { ?>
+        <p class="perfil-erro" role="alert"><?php echo htmlspecialchars($erroAvatar); ?></p>
+    <?php } else { ?>
+        <a class="perfil-link-quiz" href="index.php?pagina=loja&vista=armario">Personalizar avatar</a>
+    <?php } ?>
+</section>
+
 <section id="moedas" class="perfil-moedas" aria-labelledby="moedas-titulo">
     <span class="perfil-tag">Minhas recompensas</span>
     <h2 id="moedas-titulo">Moedas</h2>
@@ -101,5 +113,6 @@
     <?php } ?>
     <a class="perfil-link-quiz" href="index.php?pagina=quiz">Ir para o quiz</a>
 </section>
+</div>
 
 <?php require_once "View/Shared/footer.php"; ?>

@@ -131,6 +131,30 @@
     scroll-margin-top: 110px;
 }
 
+.perfil-lateral {
+    width: 100%;
+    min-width: 0;
+}
+
+.perfil-avatar {
+    margin-bottom: 42px;
+}
+
+.perfil-avatar h2 {
+    margin: 0 0 16px;
+    color: #123554;
+    font-size: 26px;
+}
+
+.perfil-avatar-palco {
+    min-height: 260px;
+    margin-bottom: 14px;
+}
+
+.perfil-avatar-palco .avatar-desenho {
+    width: 210px;
+}
+
 .perfil-moedas h2 {
     margin: 0 0 24px;
     color: #123554;
@@ -214,7 +238,7 @@
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .perfil-moedas {
+    .perfil-lateral {
         max-width: 560px;
     }
 }
