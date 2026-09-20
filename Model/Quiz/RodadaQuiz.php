@@ -1,9 +1,13 @@
 <?php
 require_once __DIR__ . '/Quiz.php';
 require_once __DIR__ . '/../Moedas/Carteira.php';
+require_once __DIR__ . '/../Avatar/AvatarLoja.php';
+require_once __DIR__ . '/DicasQuiz.php';
 
 class RodadaQuiz
 {
+    public const PRECO_RENOVACAO = 5;
+    public const PRECO_DICA = 3;
     private $pdo;
     private $quiz;
     private $carteira;
@@ -56,7 +60,72 @@ class RodadaQuiz
             if ($this->buscarAtual($usuarioId)) {
                 throw new DomainException('Já existe uma rodada em andamento. Continue ou encerre essa rodada.');
             }
-            $tentativa = $this->quiz->criarTentativa($tema, $usuarioId);
+            $lote = $this->buscarLote($usuarioId, $tema);
+            if ($lote === null) {
+                $anterior = $this->pdo->prepare('SELECT perguntas FROM quiz_lotes_dia WHERE usuario_id = ? AND tema = ? AND dia < ? ORDER BY dia DESC LIMIT 1');
+                $anterior->execute([$usuarioId, $tema, $this->agora->format('Y-m-d')]);
+                $idsAnteriores = $anterior->fetchColumn();
+                $excluidas = $idsAnteriores === false ? [] : json_decode($idsAnteriores, true, 512, JSON_THROW_ON_ERROR);
+                if (!$this->quiz->podeSortearPerguntas($tema, $excluidas)) $excluidas = [];
+                $perguntas = $this->quiz->sortearPerguntas($tema, $excluidas);
+                $stmt = $this->pdo->prepare('INSERT INTO quiz_lotes_dia (usuario_id, tema, dia, perguntas, usadas) VALUES (?, ?, ?, ?, ?)');
+                $json = json_encode($perguntas, JSON_THROW_ON_ERROR);
+                $stmt->execute([$usuarioId, $tema, $this->agora->format('Y-m-d'), $json, $json]);
+            } else {
+                $perguntas = $lote['perguntas'];
+            }
+            $habilidades = (new AvatarLoja($this->pdo))->habilidadesEquipadas($usuarioId);
+            $tentativa = $this->quiz->criarTentativa($tema, $usuarioId, $perguntas, $habilidades);
+            $this->inserir($tentativa);
+            return $tentativa;
+        });
+    }
+
+    private function buscarLote($usuarioId, $tema)
+    {
+        if (!is_string($tema) || !isset($this->quiz->listarTemas()[$tema])) {
+            throw new DomainException('Selecione uma matéria válida.');
+        }
+        $stmt = $this->pdo->prepare('SELECT perguntas, usadas FROM quiz_lotes_dia WHERE usuario_id = ? AND tema = ? AND dia = ?');
+        $stmt->execute([$usuarioId, $tema, $this->agora->format('Y-m-d')]);
+        $registro = $stmt->fetch();
+        if (!$registro) return null;
+        return [
+            'perguntas' => json_decode($registro['perguntas'], true, 512, JSON_THROW_ON_ERROR),
+            'usadas' => json_decode($registro['usadas'], true, 512, JSON_THROW_ON_ERROR)
+        ];
+    }
+
+    public function podeRenovar($usuarioId, $tema)
+    {
+        $lote = $this->buscarLote($usuarioId, $tema);
+        return $lote !== null && $this->quiz->podeSortearPerguntas($tema, $lote['usadas']);
+    }
+
+    public function renovarEIniciar($usuarioId, $tema)
+    {
+        return $this->transacao($usuarioId, function () use ($usuarioId, $tema) {
+            if ($this->buscarAtual($usuarioId)) {
+                throw new DomainException('Finalize ou encerre a rodada atual antes de trocar as perguntas.');
+            }
+            $lote = $this->buscarLote($usuarioId, $tema);
+            if ($lote === null) throw new DomainException('Comece pelo lote gratuito de hoje.');
+            $perguntas = $this->quiz->sortearPerguntas($tema, $lote['usadas']);
+            if ($this->carteira->saldo($usuarioId) < self::PRECO_RENOVACAO) {
+                throw new DomainException('Moedas insuficientes para trocar as perguntas.');
+            }
+            $stmt = $this->pdo->prepare('UPDATE moedas_carteiras SET saldo = saldo - ? WHERE usuario_id = ? AND saldo >= ?');
+            $stmt->execute([self::PRECO_RENOVACAO, $usuarioId, self::PRECO_RENOVACAO]);
+            if ($stmt->rowCount() !== 1) throw new RuntimeException('Não foi possível atualizar o saldo.');
+            $stmt = $this->pdo->prepare('UPDATE quiz_lotes_dia SET perguntas = ?, usadas = ?, renovacoes = renovacoes + 1, moedas_gastas = moedas_gastas + ?
+                WHERE usuario_id = ? AND tema = ? AND dia = ?');
+            $stmt->execute([
+                json_encode($perguntas, JSON_THROW_ON_ERROR),
+                json_encode(array_merge($lote['usadas'], $perguntas), JSON_THROW_ON_ERROR),
+                self::PRECO_RENOVACAO, $usuarioId, $tema, $this->agora->format('Y-m-d')
+            ]);
+            $habilidades = (new AvatarLoja($this->pdo))->habilidadesEquipadas($usuarioId);
+            $tentativa = $this->quiz->criarTentativa($tema, $usuarioId, $perguntas, $habilidades);
             $this->inserir($tentativa);
             return $tentativa;
         });
@@ -109,11 +178,51 @@ class RodadaQuiz
         $stmt->execute([json_encode($tentativa, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE), $tentativa['id'], $tentativa['usuario_id']]);
     }
 
+    public function usarHabilidade($usuarioId, $rodadaId, $perguntaId, $itemId)
+    {
+        return $this->transacao($usuarioId, function () use ($usuarioId, $rodadaId, $perguntaId, $itemId) {
+            $tentativa = $this->carregar($usuarioId, $rodadaId);
+            $this->quiz->usarHabilidade($tentativa, $rodadaId, $perguntaId, $itemId);
+            $this->salvar($tentativa);
+            return $tentativa;
+        });
+    }
+
+    public function dicaComprada($usuarioId, $perguntaId)
+    {
+        $stmt = $this->pdo->prepare('SELECT 1 FROM quiz_dicas WHERE usuario_id = ? AND pergunta_id = ?');
+        $stmt->execute([$usuarioId, $perguntaId]);
+        return $stmt->fetchColumn() !== false;
+    }
+
+    public function comprarDica($usuarioId, $rodadaId, $perguntaId)
+    {
+        return $this->transacao($usuarioId, function () use ($usuarioId, $rodadaId, $perguntaId) {
+            $tentativa = $this->carregar($usuarioId, $rodadaId);
+            $this->quiz->validarQuestaoPendente($tentativa, $rodadaId, $perguntaId);
+            DicasQuiz::obter($perguntaId);
+            if ($this->dicaComprada($usuarioId, $perguntaId)) return $this->carteira->saldo($usuarioId);
+            if ($this->carteira->saldo($usuarioId) < self::PRECO_DICA) {
+                throw new DomainException('Moedas insuficientes para comprar a dica.');
+            }
+            $stmt = $this->pdo->prepare('UPDATE moedas_carteiras SET saldo = saldo - ? WHERE usuario_id = ? AND saldo >= ?');
+            $stmt->execute([self::PRECO_DICA, $usuarioId, self::PRECO_DICA]);
+            if ($stmt->rowCount() !== 1) throw new RuntimeException('Não foi possível atualizar o saldo.');
+            $stmt = $this->pdo->prepare('INSERT INTO quiz_dicas (usuario_id, pergunta_id, custo_moedas, comprado_em) VALUES (?, ?, ?, ?)');
+            $stmt->execute([$usuarioId, $perguntaId, self::PRECO_DICA, $this->instanteUtc()]);
+            return $this->carteira->saldo($usuarioId);
+        });
+    }
+
     public function responder($usuarioId, $rodadaId, $perguntaId, $alternativa)
     {
         return $this->transacao($usuarioId, function () use ($usuarioId, $rodadaId, $perguntaId, $alternativa) {
             $tentativa = $this->carregar($usuarioId, $rodadaId);
             $this->quiz->responder($tentativa, $rodadaId, $perguntaId, $alternativa);
+            if (!array_key_exists($perguntaId, $tentativa['respostas'])) {
+                $this->salvar($tentativa);
+                return $tentativa;
+            }
             $correta = $this->quiz->obterPergunta($perguntaId)['correta'] === (int) $alternativa;
             $dia = $this->agora->format('Y-m-d');
             $stmt = $this->pdo->prepare('INSERT INTO moedas_questoes_dia (usuario_id, pergunta_id, dia) VALUES (?, ?, ?)

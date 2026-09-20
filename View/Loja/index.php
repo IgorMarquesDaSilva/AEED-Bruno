@@ -54,6 +54,9 @@
                                 <span class="loja-item-categoria"><?php echo htmlspecialchars($categorias[$item['categoria']]); ?></span>
                                 <h3><?php echo htmlspecialchars($item['nome']); ?></h3>
                                 <p><?php echo htmlspecialchars($item['descricao']); ?></p>
+                                <?php if (isset($habilidades[$id])) { ?>
+                                    <p class="loja-item-habilidade"><strong>Quiz:</strong> <?php echo htmlspecialchars($habilidades[$id]['descricao']); ?>. Uma vez por rodada.</p>
+                                <?php } ?>
                                 <div class="loja-item-rodape">
                                     <strong><?php echo $item['preco'] === 0 ? 'Inicial' : number_format($item['preco'], 0, ',', '.') . ' moedas'; ?></strong>
                                     <?php if ($emUso) { ?>

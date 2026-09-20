@@ -35,6 +35,16 @@ class AvatarLoja
         return $equipado;
     }
 
+    public function habilidadesEquipadas($usuarioId)
+    {
+        $equipado = $this->equipado($usuarioId);
+        $inventario = $this->inventario($usuarioId);
+        $habilidades = CatalogoAvatar::habilidades();
+        return array_values(array_filter($equipado, function ($itemId) use ($inventario, $habilidades) {
+            return isset($inventario[$itemId], $habilidades[$itemId]);
+        }));
+    }
+
     public function comprar($usuarioId, $itemId)
     {
         $itens = CatalogoAvatar::itens();

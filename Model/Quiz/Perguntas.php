@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/PerguntasAdicionais.php';
 
 class Perguntas
 {
@@ -168,6 +169,6 @@ class Perguntas
                 'alternativas' => ['30(5) → 40(3) → 10(2)', '10(2) → 30(5) → 40(3)', '20(5) → 30(5) → 40(3)', '40(3) → 30(5) → 10(2)'], 'correta' => 0,
                 'explicacao' => 'A fila inicialmente fica 20(5), 30(5), 10(2). A remoção retira 20; o valor 40 com prioridade 3 entra entre 30 e 10.'
             ]
-        ];
+        ] + PerguntasAdicionais::listar();
     }
 }

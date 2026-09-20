@@ -39,6 +39,24 @@ A migracao cria as tabelas de inventario e equipamento sem alterar usuarios,
 moedas ou rodadas existentes. Pode ser repetida. Tambem e possivel importar
 `database/avatar_loja.sql` pelo phpMyAdmin no banco `aeed_bruno`.
 
+Para os lotes diarios de perguntas, execute tambem:
+
+```sh
+php database/migrar_lotes_quiz.php
+```
+
+Essa migracao e repetivel e preserva rodadas, moedas e compras anteriores.
+
+Para liberar a compra de dicas do quiz, execute:
+
+```sh
+php database/migrar_dicas_quiz.php
+```
+
+A migracao das dicas pode ser repetida e nao apaga saldo nem rodadas. Todos
+esses arquivos de migracao estao no repositorio para uso pelos demais membros
+da equipe.
+
 Usuario inicial para teste:
 
 - E-mail: `admin@aeed.com`
@@ -114,9 +132,21 @@ seguranca seguem a [referencia OWASP sobre recuperacao de senha](https://cheatsh
 ## Quiz
 
 Depois de entrar na conta, acesse **Quiz** no menu ou
-`index.php?pagina=quiz`. O banco de 25 perguntas fica em
-`Model/Quiz/Perguntas.php`, com teoria e exemplos em C# das cinco materias.
-A rodada geral sorteia 10 perguntas; por materia, sao 5.
+`index.php?pagina=quiz`. O banco de 72 perguntas fica em
+`Model/Quiz/Perguntas.php` e `Model/Quiz/PerguntasAdicionais.php`, com teoria
+e exemplos em C# das seis materias, incluindo Pilha Encadeada. A rodada
+geral tem 12 perguntas (uma teorica e uma de codigo por materia); por
+materia, sao 6 (tres teoricas e tres de codigo).
+
+O primeiro lote de cada materia ou do quiz geral e gratuito em cada dia, no
+horario de Brasilia. Repetir o quiz no mesmo dia usa as mesmas perguntas sem
+custo. A primeira rodada do dia evita o ultimo lote do dia anterior quando ha
+perguntas suficientes. Depois de concluir uma rodada, e possivel gastar
+**5 moedas** para iniciar outra com perguntas ainda nao usadas naquele modo
+naquele dia. Quando nao restam perguntas suficientes para um lote completo,
+a troca deixa de aparecer ate o dia seguinte. O quiz geral e cada materia
+possuem lotes proprios; a recompensa por acerto continua limitada a uma vez
+por questao e por dia, mesmo se a questao aparecer em modos diferentes.
 
 O progresso, as respostas e o resultado ficam no MySQL, vinculados a conta.
 Uma rodada em andamento pode ser retomada depois de F5, logout ou acesso em
@@ -151,14 +181,31 @@ de a questao aparecer no quiz geral ou no quiz de uma materia:
 - Rodadas que ja estavam na sessao antes desta atualizacao sao preservadas,
   mas respostas anteriores nao geram moedas nem penalidades retroativas.
 
-As moedas tambem podem ser usadas na loja do avatar. As habilidades dos itens
-no quiz ainda nao fazem parte desta etapa.
+As moedas tambem podem ser usadas na loja do avatar. Todos os itens pagos tem
+uma habilidade descrita na propria loja: eliminar uma ou duas alternativas
+erradas ou ganhar uma segunda tentativa depois de um erro. Somente itens
+comprados e equipados entram na rodada; os itens iniciais sao esteticos.
+Cada item pode ser ativado uma vez por rodada, em apenas uma questao. A
+segunda chance elimina a primeira resposta errada sem registrar erro nem
+reduzir a recompensa; uma nova resposta errada segue as regras normais.
+Trocar o equipamento durante uma rodada nao altera as habilidades dela;
+a proxima rodada usa o equipamento atualizado. O uso fica salvo com a rodada
+no MySQL, inclusive ao atualizar a pagina ou trocar de dispositivo.
+
+Cada uma das 72 questoes tambem possui uma dica conceitual. Ela custa
+**3 moedas** e pode ser comprada antes de responder. O desbloqueio e permanente
+para aquela conta e questao: se a pergunta reaparecer em outra rodada ou
+materia, a dica ja estara disponivel sem nova cobranca. Compras duplicadas,
+inclusive de abas diferentes, sao cobradas uma unica vez.
 
 Para executar os testes na pasta do projeto, com o MySQL e as migracoes prontos:
 
 ```sh
 php tests/QuizTest.php
 php tests/MoedasTest.php
+php tests/LotesQuizTest.php
+php tests/HabilidadesQuizTest.php
+php tests/DicasQuizTest.php
 ```
 
 O teste de moedas usa contas temporarias e remove seus registros ao terminar.

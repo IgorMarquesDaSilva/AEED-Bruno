@@ -17,10 +17,11 @@
         <div>
             <h2 id="quiz-nova-rodada">Nova rodada</h2>
             <dl class="quiz-dados">
-                <div><dt>Rodada geral</dt><dd>10 questões</dd></div>
-                <div><dt>Por matéria</dt><dd>5 questões</dd></div>
+                <div><dt>Rodada geral</dt><dd>12 questões</dd></div>
+                <div><dt>Por matéria</dt><dd>6 questões</dd></div>
                 <div><dt>Tempo</dt><dd>Sem limite</dd></div>
             </dl>
+            <p class="quiz-nota">Perguntas novas a cada dia. Repetir gratuitamente no mesmo dia mantém o lote atual.</p>
             <form class="quiz-configuracao" method="post" action="index.php?pagina=quiz">
                 <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
                 <input type="hidden" name="acao" value="iniciar">
@@ -59,6 +60,52 @@
             <pre class="quiz-codigo" tabindex="0" aria-label="Código C# da questão"><code><?php echo htmlspecialchars($pergunta['codigo']); ?></code></pre>
         <?php } ?>
 
+        <?php if ($dicaComprada || !$respondida) { ?>
+        <div class="quiz-dica" aria-label="Dica da questão">
+            <?php if ($dicaComprada) { ?>
+                <strong>Dica desbloqueada</strong>
+                <p><?php echo htmlspecialchars($dicaTexto); ?></p>
+            <?php } elseif (!$respondida) { ?>
+                <strong>Dica da questão</strong>
+                <form method="post" action="index.php?pagina=quiz">
+                    <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
+                    <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
+                    <input type="hidden" name="pergunta" value="<?php echo htmlspecialchars($perguntaId); ?>">
+                    <input type="hidden" name="acao" value="comprar_dica">
+                    <button class="quiz-botao quiz-botao-secundario" type="submit"<?php if ($saldoMoedas < RodadaQuiz::PRECO_DICA) echo ' disabled'; ?>>Comprar dica · <?php echo RodadaQuiz::PRECO_DICA; ?> moedas</button>
+                </form>
+            <?php } ?>
+        </div>
+        <?php } ?>
+
+        <?php if (!empty($tentativa['habilidades'])) { ?>
+            <div class="quiz-habilidades" aria-label="Habilidades dos itens equipados">
+                <strong>Habilidades</strong>
+                <div class="quiz-habilidades-lista">
+                    <?php foreach ($tentativa['habilidades'] as $itemId => $usada) { ?>
+                        <?php if ($usada || $respondida || $ajudaAtual) { ?>
+                            <span class="quiz-habilidade-inativa"><?php echo htmlspecialchars($itensCatalogo[$itemId]['nome']); ?>: <?php echo $usada ? 'usada' : 'disponível na próxima questão'; ?></span>
+                        <?php } else { ?>
+                            <form method="post" action="index.php?pagina=quiz">
+                                <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
+                                <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
+                                <input type="hidden" name="pergunta" value="<?php echo htmlspecialchars($perguntaId); ?>">
+                                <input type="hidden" name="acao" value="habilidade">
+                                <input type="hidden" name="item" value="<?php echo htmlspecialchars($itemId); ?>">
+                                <button class="quiz-botao quiz-botao-secundario" type="submit"><?php echo htmlspecialchars($itensCatalogo[$itemId]['nome'] . ': ' . $habilidadesCatalogo[$itemId]['descricao']); ?></button>
+                            </form>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+                <?php if ($ajudaAtual && !$respondida) { ?>
+                    <p class="quiz-habilidade-ativa"><?php echo !empty($ajudaAtual['escudo']) ? 'Segunda chance ativa nesta questão.' : 'Alternativas erradas removidas nesta questão.'; ?></p>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php if (isset($ajudaAtual['erro']) && !$respondida) { ?>
+            <div class="quiz-aviso quiz-aviso-sucesso" role="status"><strong>Segunda chance!</strong><p>A alternativa anterior foi eliminada. Escolha outra resposta.</p></div>
+        <?php } ?>
+
         <form method="post" action="index.php?pagina=quiz">
             <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
             <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
@@ -67,6 +114,9 @@
             <fieldset class="quiz-alternativas"<?php if ($respondida) echo ' disabled'; ?>>
                 <legend>Alternativas</legend>
                 <?php foreach ($pergunta['alternativas'] as $indice => $alternativa) {
+                    $ocultas = $ajudaAtual['ocultas'] ?? [];
+                    if (isset($ajudaAtual['erro'])) $ocultas[] = $ajudaAtual['erro'];
+                    if (in_array($indice, $ocultas, true)) continue;
                     $selecionada = $respondida && $tentativa['respostas'][$perguntaId] === $indice;
                     $classe = '';
                     if ($respondida && $indice === $pergunta['correta']) $classe = ' quiz-alternativa-correta';
@@ -125,13 +175,23 @@
             <div><span>Moedas nesta rodada</span><strong>+<?php echo $recompensas['ganhas']; ?></strong></div>
             <a class="quiz-link" href="index.php?pagina=perfil#moedas">Saldo atual: <?php echo number_format($saldoMoedas, 0, ',', '.'); ?> moedas</a>
         </div>
-        <form class="quiz-acoes" method="post" action="index.php?pagina=quiz">
-            <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
-            <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
-            <input type="hidden" name="acao" value="novo">
-            <button class="quiz-botao" type="submit">Novo quiz</button>
+        <div class="quiz-acoes">
+            <form method="post" action="index.php?pagina=quiz">
+                <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
+                <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
+                <input type="hidden" name="acao" value="novo">
+                <button class="quiz-botao" type="submit">Novo quiz</button>
+            </form>
+            <?php if ($podeRenovar) { ?>
+                <form method="post" action="index.php?pagina=quiz">
+                    <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
+                    <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
+                    <input type="hidden" name="acao" value="renovar">
+                    <button class="quiz-botao quiz-botao-secundario" type="submit"<?php if ($saldoMoedas < RodadaQuiz::PRECO_RENOVACAO) echo ' disabled'; ?>>Trocar perguntas · <?php echo RodadaQuiz::PRECO_RENOVACAO; ?> moedas</button>
+                </form>
+            <?php } ?>
             <a class="quiz-link" href="index.php#conteudos">Voltar às matérias</a>
-        </form>
+        </div>
     </section>
     <section class="quiz-revisao" aria-labelledby="quiz-revisao-titulo">
         <h2 id="quiz-revisao-titulo">Revisão das respostas</h2>

@@ -27,7 +27,7 @@ function rejeitar($operacao, $mensagem)
 
 $quiz = new Quiz();
 $banco = Perguntas::listar();
-verificar(count($banco) === 25, 'O banco deve conter 25 perguntas.');
+verificar(count($banco) === 72, 'O banco deve conter 72 perguntas.');
 foreach ($banco as $id => $pergunta) {
     verificar(isset($quiz->listarTemas()[$pergunta['tema']]), "Tema valido: $id");
     verificar(count($pergunta['alternativas']) === 4, "Quatro alternativas: $id");
@@ -39,7 +39,7 @@ foreach ($banco as $id => $pergunta) {
 
 foreach (array_keys($quiz->listarTemas()) as $tema) {
     $tentativa = $quiz->criarTentativa($tema, 42);
-    $total = $tema === 'todos' ? 10 : 5;
+    $total = $tema === 'todos' ? Quiz::QUESTOES_GERAL : Quiz::QUESTOES_POR_MATERIA;
     verificar(count($tentativa['perguntas']) === $total, "Total por tema: $tema");
     verificar(count(array_unique($tentativa['perguntas'])) === $total, 'Sem repeticao de perguntas.');
     $tipos = [];
@@ -87,7 +87,7 @@ while (!$tentativa['concluida']) {
     $quiz->avancar($tentativa, $tentativa['id'], $id);
 }
 $resultado = $quiz->obterResultado($tentativa);
-verificar($resultado['acertos'] === 1 && $resultado['percentual'] === 10, 'Contagem mista de acertos e erros.');
+verificar($resultado['acertos'] === 1 && $resultado['percentual'] === (int) round(100 / Quiz::QUESTOES_GERAL), 'Contagem mista de acertos e erros.');
 rejeitar(function () use ($quiz) { $quiz->criarTentativa('inexistente', 42); }, 'Tema inexistente.');
 rejeitar(function () use ($quiz) { $quiz->criarTentativa([], 42); }, 'Tema malformado.');
 echo "$verificacoes verificacoes passaram.\n";

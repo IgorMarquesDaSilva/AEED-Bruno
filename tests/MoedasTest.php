@@ -50,7 +50,8 @@ function jogarMoedas($modelo, $usuarioId, $tema, $erradas = [], $segurarFinal = 
     while (!$tentativa['concluida']) {
         $id = $tentativa['perguntas'][$tentativa['indice']];
         $certa = $quiz->obterPergunta($id)['correta'];
-        $alternativa = in_array($id, $erradas, true) ? ($certa + 1) % 4 : $certa;
+        $errar = is_int($erradas) ? $tentativa['indice'] < $erradas : in_array($id, $erradas, true);
+        $alternativa = $errar ? ($certa + 1) % 4 : $certa;
         $tentativa = $modelo->responder($usuarioId, $tentativa['id'], $id, (string) $alternativa);
         verificarMoedas($carteira->saldo($usuarioId) === $saldoAntes, 'Nenhum credito antes da conclusao.');
         if ($segurarFinal && $tentativa['indice'] === count($tentativa['perguntas']) - 1) return $tentativa;
@@ -65,24 +66,25 @@ try {
     verificarMoedas(Carteira::recompensaPorErros(2) === 2 && Carteira::recompensaPorErros(8) === 2, 'Piso de 2 moedas.');
     $id = criarContaMoedas();
     verificarMoedas($carteira->saldo($id) === 0, 'Saldo inicial zero.');
-    $r1 = jogarMoedas($rodadas, $id, 'tad', ['tad-1', 'tad-2', 'tad-3']);
-    verificarMoedas($carteira->saldo($id) === 20, 'Dois acertos iniciais rendem 20.');
-    $r2 = jogarMoedas($rodadas, $id, 'tad', ['tad-1', 'tad-2']);
-    verificarMoedas($carteira->saldo($id) === 25, 'Um novo acerto apos um erro rende 5.');
+    $r1 = jogarMoedas($rodadas, $id, 'tad', 3);
+    verificarMoedas($carteira->saldo($id) === 30, 'Tres acertos iniciais rendem 30.');
+    $r2 = jogarMoedas($rodadas, $id, 'tad', 2);
+    verificarMoedas($r1['perguntas'] === $r2['perguntas'], 'Lote gratuito permanece igual no dia.');
+    verificarMoedas($carteira->saldo($id) === 35, 'Um novo acerto apos um erro rende 5.');
     $r3 = jogarMoedas($rodadas, $id, 'tad');
-    verificarMoedas($carteira->saldo($id) === 29, 'Dois novos acertos apos dois erros rendem 4.');
+    verificarMoedas($carteira->saldo($id) === 39, 'Dois novos acertos apos dois erros rendem 4.');
     $premios = $rodadas->recompensas($id, $r3['id']);
-    verificarMoedas($premios['ganhas'] === 4 && $premios['por_questao']['tad-1']['moedas'] === 2, 'Detalhamento da recompensa.');
+    verificarMoedas($premios['ganhas'] === 4 && $premios['por_questao'][$r1['perguntas'][0]]['moedas'] === 2, 'Detalhamento da recompensa.');
     $r4 = jogarMoedas($rodadas, $id, 'tad');
-    verificarMoedas($carteira->saldo($id) === 29 && $rodadas->recompensas($id, $r4['id'])['ganhas'] === 0, 'Repetir nao rende moedas adicionais.');
+    verificarMoedas($carteira->saldo($id) === 39 && $rodadas->recompensas($id, $r4['id'])['ganhas'] === 0, 'Repetir nao rende moedas adicionais.');
     rejeitarMoedas(function () use ($rodadas, $id, $r4) { $rodadas->avancar($id, $r4['id'], end($r4['perguntas'])); });
-    verificarMoedas($carteira->saldo($id) === 29, 'Conclusao duplicada nao duplica saldo.');
+    verificarMoedas($carteira->saldo($id) === 39, 'Conclusao duplicada nao duplica saldo.');
     $antesMeiaNoite = new RodadaQuiz($pdo, new DateTimeImmutable('2026-10-02T02:59:59Z'));
     jogarMoedas($antesMeiaNoite, $id, 'tad');
-    verificarMoedas($carteira->saldo($id) === 29, 'Antes de 03:00 UTC ainda e o dia anterior em Brasilia.');
+    verificarMoedas($carteira->saldo($id) === 39, 'Antes de 03:00 UTC ainda e o dia anterior em Brasilia.');
     $diaSeguinte = new RodadaQuiz($pdo, new DateTimeImmutable('2026-10-02T03:00:00Z'));
     jogarMoedas($diaSeguinte, $id, 'tad');
-    verificarMoedas($carteira->saldo($id) === 79, 'Virada do dia restaura 10 por questao sem zerar saldo.');
+    verificarMoedas($carteira->saldo($id) === 99, 'Virada do dia restaura 10 por questao sem zerar saldo.');
 
     $abandono = criarContaMoedas();
     $t = $rodadas->iniciar($abandono, 'fila');
@@ -97,13 +99,17 @@ try {
     $rodadas->abandonar($abandono, $t['id']);
     verificarMoedas($carteira->saldo($abandono) === 0, 'Abandonar nao concede moedas.');
     jogarMoedas(new RodadaQuiz($pdo, $dia), $abandono, 'fila');
-    verificarMoedas($carteira->saldo($abandono) === 45, 'Erro preservado no abandono; duplicata nao contou como segundo erro.');
+    verificarMoedas($carteira->saldo($abandono) === 55, 'Erro preservado no abandono; duplicata nao contou como segundo erro.');
 
     $geral = criarContaMoedas();
     $rGeral = jogarMoedas($rodadas, $geral, 'todos');
-    verificarMoedas($carteira->saldo($geral) === 100, 'Rodada geral perfeita rende 100.');
-    foreach (['tad', 'lisimples', 'lisdupla', 'fila', 'filaprioridade'] as $tema) jogarMoedas($rodadas, $geral, $tema);
-    verificarMoedas($carteira->saldo($geral) === 250, 'Trocar modalidades nao duplica premios; 25 questoes rendem no maximo 250 no dia.');
+    verificarMoedas($carteira->saldo($geral) === 120, 'Rodada geral perfeita rende 120.');
+    $distintas = array_fill_keys($rGeral['perguntas'], true);
+    foreach (['tad', 'lisimples', 'lisdupla', 'fila', 'filaprioridade', 'pilha'] as $tema) {
+        $feita = jogarMoedas($rodadas, $geral, $tema);
+        foreach ($feita['perguntas'] as $pergunta) $distintas[$pergunta] = true;
+    }
+    verificarMoedas($carteira->saldo($geral) === 10 * count($distintas), 'Trocar modalidades nao duplica premios por questao.');
 
     $noturno = criarContaMoedas();
     $t = $antesMeiaNoite->iniciar($noturno, 'fila');
@@ -115,9 +121,9 @@ try {
         $t = $diaSeguinte->responder($noturno, $t['id'], $q, (string) $quiz->obterPergunta($q)['correta']);
         $t = $diaSeguinte->avancar($noturno, $t['id'], $q);
     }
-    verificarMoedas($carteira->saldo($noturno) === 50, 'Rodada atravessando meia-noite conserva recompensas.');
+    verificarMoedas($carteira->saldo($noturno) === 60, 'Rodada atravessando meia-noite conserva recompensas.');
     jogarMoedas($diaSeguinte, $noturno, 'fila');
-    verificarMoedas($carteira->saldo($noturno) === 60, 'Premio diario segue a data de cada resposta, nao a data da conclusao.');
+    verificarMoedas($carteira->saldo($noturno) === 120, 'Novo lote do dia seguinte preserva moedas e evita repeticao do dia anterior.');
 
     $legado = criarContaMoedas();
     $antiga = $quiz->criarTentativa('tad', $legado);
@@ -152,7 +158,7 @@ try {
     verificarMoedas($carteira->saldo($falhaId) === 0, 'Falha nao altera saldo.');
     verificarMoedas(!$rodadas->buscarAtual($falhaId)['concluida'], 'Falha preserva rodada para nova tentativa.');
     $rodadas->avancar($falhaId, $pendente['id'], end($pendente['perguntas']));
-    verificarMoedas($carteira->saldo($falhaId) === 50, 'Rollback tambem preservou as recompensas diarias.');
+    verificarMoedas($carteira->saldo($falhaId) === 60, 'Rollback tambem preservou as recompensas diarias.');
 
     $concorrente = criarContaMoedas();
     $t = jogarMoedas($rodadas, $concorrente, 'tad', [], true);
@@ -184,7 +190,7 @@ try {
     }
     sort($saidas);
     verificarMoedas($saidas === ['creditado', 'duplicado'], 'Somente uma conclusao concorrente aceita.');
-    verificarMoedas($carteira->saldo($concorrente) === 50, 'Concorrencia nao duplica saldo.');
+    verificarMoedas($carteira->saldo($concorrente) === 60, 'Concorrencia nao duplica saldo.');
     verificarMoedas(count($carteira->historico($concorrente)) === 1, 'Um unico registro no historico.');
     verificarMoedas($rodadas->recompensas($id, $t['id'])['por_questao'] === [], 'Historico de outra conta nao e exposto.');
     echo "$verificacoes verificacoes de moedas passaram.\n";

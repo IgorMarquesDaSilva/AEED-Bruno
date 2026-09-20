@@ -34,4 +34,20 @@ class CatalogoAvatar
     {
         return ['cabelo' => 'cabelo_curto', 'rosto' => 'rosto_sorriso', 'roupa' => 'roupa_basica'];
     }
+
+    public static function habilidades()
+    {
+        return [
+            'cabelo_cacheado' => ['tipo' => 'eliminar', 'quantidade' => 1, 'descricao' => 'Elimina 1 alternativa errada'],
+            'cabelo_longo' => ['tipo' => 'eliminar', 'quantidade' => 1, 'descricao' => 'Elimina 1 alternativa errada'],
+            'bone' => ['tipo' => 'eliminar', 'quantidade' => 1, 'descricao' => 'Elimina 1 alternativa errada'],
+            'chapeu' => ['tipo' => 'eliminar', 'quantidade' => 2, 'descricao' => 'Elimina 2 alternativas erradas'],
+            'rosto_serio' => ['tipo' => 'eliminar', 'quantidade' => 1, 'descricao' => 'Elimina 1 alternativa errada'],
+            'rosto_piscada' => ['tipo' => 'segunda_chance', 'descricao' => 'Dá uma segunda chance após um erro'],
+            'roupa_azul' => ['tipo' => 'segunda_chance', 'descricao' => 'Dá uma segunda chance após um erro'],
+            'roupa_vermelha' => ['tipo' => 'segunda_chance', 'descricao' => 'Dá uma segunda chance após um erro'],
+            'oculos' => ['tipo' => 'eliminar', 'quantidade' => 2, 'descricao' => 'Elimina 2 alternativas erradas'],
+            'fone' => ['tipo' => 'segunda_chance', 'descricao' => 'Dá uma segunda chance após um erro']
+        ];
+    }
 }

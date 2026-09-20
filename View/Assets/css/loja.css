@@ -149,6 +149,13 @@
     font-size: 13px;
 }
 
+.loja-item .loja-item-habilidade {
+    margin-top: -6px;
+    padding-top: 10px;
+    border-top: 1px solid #d9e1e8;
+    color: #0a5d56;
+}
+
 .loja-item-rodape {
     display: flex;
     flex-wrap: wrap;

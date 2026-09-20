@@ -12,6 +12,7 @@ class LojaController
         $usuarioId = (int) $_SESSION['usuario']['id'];
         $categorias = CatalogoAvatar::categorias();
         $catalogo = CatalogoAvatar::itens();
+        $habilidades = CatalogoAvatar::habilidades();
         $vista = ($_GET['vista'] ?? '') === 'armario' ? 'armario' : 'loja';
         $categoria = $_GET['categoria'] ?? 'todos';
         if (!is_string($categoria) || ($categoria !== 'todos' && !isset($categorias[$categoria]))) $categoria = 'todos';

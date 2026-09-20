@@ -50,19 +50,19 @@ try {
         $tentativa = $rodadas->responder($id, $tentativa['id'], $pergunta, (string) $quiz->obterPergunta($pergunta)['correta']);
         $tentativa = $rodadas->avancar($id, $tentativa['id'], $pergunta);
     }
-    conferirAvatar($carteira->saldo($id) === 50, 'Quiz credita 50 moedas.');
-    conferirAvatar($modelo->comprar($id, 'bone') === 25, 'Compra debita o preço exato.');
+    conferirAvatar($carteira->saldo($id) === 60, 'Quiz credita 60 moedas.');
+    conferirAvatar($modelo->comprar($id, 'bone') === 35, 'Compra debita o preço exato.');
     conferirAvatar(isset($modelo->inventario($id)['bone']), 'Item comprado consta no armário.');
     conferirAvatar($modelo->equipado($id)['cabelo'] === 'bone', 'Compra equipa a peça.');
     rejeitarAvatar(fn() => $modelo->comprar($id, 'bone'));
-    conferirAvatar($carteira->saldo($id) === 25, 'Compra repetida não desconta de novo.');
+    conferirAvatar($carteira->saldo($id) === 35, 'Compra repetida não desconta de novo.');
     $modelo->equipar($id, 'cabelo_curto');
     conferirAvatar($modelo->equipado($id)['cabelo'] === 'cabelo_curto', 'Peça inicial pode ser reequipada.');
     $modelo->equipar($id, 'bone');
     conferirAvatar((new AvatarLoja($pdo))->equipado($id)['cabelo'] === 'bone', 'Equipamento persiste no banco.');
-    conferirAvatar($modelo->comprar($id, 'rosto_serio') === 5, 'Outra categoria pode ser comprada.');
+    conferirAvatar($modelo->comprar($id, 'rosto_serio') === 15, 'Outra categoria pode ser comprada.');
     rejeitarAvatar(fn() => $modelo->comprar($id, 'oculos'));
-    conferirAvatar($carteira->saldo($id) === 5, 'Saldo insuficiente não desconta.');
+    conferirAvatar($carteira->saldo($id) === 15, 'Saldo insuficiente não desconta.');
     rejeitarAvatar(fn() => $modelo->equipar($outro, 'bone'));
     conferirAvatar($modelo->inventario($outro) === [], 'Inventário não vaza entre contas.');
     $modelo->removerAcessorio($id);
