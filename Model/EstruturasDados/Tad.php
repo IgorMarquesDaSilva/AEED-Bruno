@@ -7,6 +7,13 @@ class Tad
         return [
             "titulo" => "TAD - Tipo Abstrato de Dados",
 
+            "animacao" => [
+                "gif" => "View/img/tad-contrato.gif",
+                "poster" => "View/img/tad-contrato.png",
+                "alt" => "O mesmo contrato de operações de uma fila implementado primeiro com vetor e depois com nós encadeados.",
+                "legenda" => "Um TAD define as operações e o comportamento; a estrutura interna pode mudar."
+            ],
+
             "introducao" => "Um Tipo Abstrato de Dados organiza uma ideia em duas partes principais: os dados que serão armazenados e as operações que podem ser realizadas sobre esses dados.",
 
             "objetivos" => [
@@ -165,8 +172,8 @@ class Tad
                     "titulo" => "Videoaula sobre TAD",
                     "descricao" => "Vídeo complementar para reforçar o conceito de Tipo Abstrato de Dados e sua relação com dados e operações.",
                     "fonte" => "YouTube - vídeo complementar",
-                    "url" => "https://www.youtube.com/embed/LU9mHjzxR2M",
-                    "link" => "https://www.youtube.com/results?search_query=tipo+abstrato+de+dados+tad"
+                    "url" => "https://www.youtube.com/embed/06PJrmeG784",
+                    "link" => "https://www.youtube.com/watch?v=06PJrmeG784"
                 ]
             ],
 

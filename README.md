@@ -1,69 +1,42 @@
 # AEED-Bruno
 
-Sistema web em PHP para ensino de Estruturas de Dados.
+Sistema web em PHP para ensino de Estruturas de Dados. Inclui aulas de TAD,
+listas simplesmente e duplamente encadeadas, filas, fila de prioridades e
+pilha; cadastro/login, perfil, quiz, moedas, avatar e loja.
+
+## Instalacao local
+
+1. Coloque o projeto em `C:\xampp\htdocs\AEED-Bruno` e inicie Apache e MySQL no XAMPP.
+2. Use PHP 8.2+ com PDO MySQL e OpenSSL. Na pasta do projeto, execute `composer install`.
+3. Crie um banco vazio chamado `aeed_bruno` com collation `utf8mb4_unicode_ci` no phpMyAdmin e importe **uma vez** `database/aeed_bruno.sql` nesse banco.
+4. Abra `http://localhost/AEED-Bruno/index.php?pagina=cadastro` e crie sua conta. O projeto nao distribui conta ou senha padrao.
+5. Entre em `http://localhost/AEED-Bruno/`. Se seu MySQL nao usa `root` sem senha, ajuste `Model/Database/Conexao.php` apenas na sua maquina e nao publique credenciais.
+
+No Windows, se `php` nao estiver no PATH, use `C:\xampp\php\php.exe` nos
+comandos abaixo. Cada integrante precisa executar `composer install`, pois
+`vendor/` nao e versionado.
 
 ## Banco de dados
 
-1. Inicie Apache e MySQL no XAMPP e abra o phpMyAdmin.
-2. Em uma instalacao nova, crie o banco `aeed_bruno` com collation `utf8mb4_unicode_ci`.
-3. Selecione esse banco e importe `database/aeed_bruno.sql`.
-
-Se o banco ja existe, **nao reimporte o dump** para atualizar a recuperacao de
-senha. Execute na pasta do projeto (o comando pode ser repetido):
+`database/aeed_bruno.sql` e um esquema completo para instalacoes novas. Nao
+contem usuarios, senhas, tokens, saldos ou rodadas. Os arquivos SQL menores
+e as migracoes continuam disponiveis para bancos **ja existentes**. Antes de
+atualizar um banco com dados, faca um backup local e execute, nessa ordem:
 
 ```sh
 php database/migrar_recuperacao.php
-```
-
-A migracao acrescenta os campos e a tabela de limites sem apagar usuarios.
-
-Para habilitar o quiz com moedas, tanto em uma instalacao nova quanto em um
-banco existente, execute depois da importacao/migracao acima:
-
-```sh
 php database/migrar_moedas.php
-```
-
-Esse comando cria as quatro tabelas de carteira, rodadas, respostas e controle
-diario. Pode ser repetido sem apagar usuarios, saldos ou historico. Como
-alternativa, importe `database/moedas.sql` no banco `aeed_bruno` pelo phpMyAdmin.
-No Windows, se PHP nao estiver no PATH, use `C:\xampp\php\php.exe` no lugar de `php`.
-
-Depois, habilite o avatar e a loja:
-
-```sh
 php database/migrar_avatar_loja.php
-```
-
-A migracao cria as tabelas de inventario e equipamento sem alterar usuarios,
-moedas ou rodadas existentes. Pode ser repetida. Tambem e possivel importar
-`database/avatar_loja.sql` pelo phpMyAdmin no banco `aeed_bruno`.
-
-Para os lotes diarios de perguntas, execute tambem:
-
-```sh
 php database/migrar_lotes_quiz.php
-```
-
-Essa migracao e repetivel e preserva rodadas, moedas e compras anteriores.
-
-Para liberar a compra de dicas do quiz, execute:
-
-```sh
 php database/migrar_dicas_quiz.php
 ```
 
-A migracao das dicas pode ser repetida e nao apaga saldo nem rodadas. Todos
-esses arquivos de migracao estao no repositorio para uso pelos demais membros
-da equipe.
-
-Usuario inicial para teste:
-
-- E-mail: `admin@aeed.com`
-- Senha: `123456`
-
-Se o MySQL local usar outro usuario ou senha, altere os dados em
-`Model/Database/Conexao.php`.
+As migracoes podem ser repetidas sem apagar usuarios, moedas ou historico. **Nao
+reimporte nem restaure um dump antigo sobre um banco em uso**; isso pode
+sobrescrever dados. Dumps de bancos pessoais, mesmo com hashes de senha, nao
+devem ser enviados ao GitHub. Uma versao antiga deste repositorio continha
+contas de teste; quem reutilizou aquelas senhas deve troca-las. A remocao do
+arquivo atual nao apaga o historico anterior do Git.
 
 ## Recuperacao de senha
 
@@ -233,3 +206,28 @@ php tests/AvatarLojaTest.php
 
 O teste usa contas temporarias, verifica compras, saldo, equipamento, isolamento
 entre contas e duas compras simultaneas. Remove os registros criados ao terminar.
+
+## Conteudo e verificacao
+
+As seis aulas usam os mesmos componentes de navegacao e diagramas animados em
+`View/img/`. Para quem prefere movimento reduzido, cada GIF possui um poster
+PNG. Os arquivos ja estao no repositorio; para regenerar os diagramas, use
+Python 3 com Pillow e execute `python scripts/gerar_diagramas.py` na raiz do
+projeto. Os videos de TAD e Lista Simples usam o mesmo endereco no player e no
+link externo. A reproducao depende da disponibilidade do YouTube.
+
+Com MySQL iniciado e o banco instalado, execute os testes de regressao:
+
+```sh
+php tests/RecuperacaoSenhaTest.php
+php tests/QuizTest.php
+php tests/MoedasTest.php
+php tests/LotesQuizTest.php
+php tests/AvatarLojaTest.php
+php tests/HabilidadesQuizTest.php
+php tests/DicasQuizTest.php
+```
+
+Os testes criam contas temporarias e nao exigem SMTP real. Para validar o
+fluxo no navegador, cadastre uma conta, atualize nome/email no perfil, faca
+uma rodada do quiz, confira as moedas e compre/equipe um item na loja.

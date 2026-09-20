@@ -10,7 +10,7 @@ class HomeController
 
         $conteudo = new Conteudo();
         $titulo = 'Estruturas de Dados em C#';
-        $descricao = 'Projeto inicial para apresentar conceitos basicos de estruturas de dados usando o padrao MVC.';
+        $descricao = 'Entenda como organizar informações para buscar, inserir e remover dados com eficiência, usando TADs, listas, filas e pilhas em C#.';
         $estruturas = $conteudo->listarEstruturas();
         $bodyClass = 'pagina-home';
         $mainClass = 'container';

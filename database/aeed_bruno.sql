@@ -1,85 +1,104 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Tempo de geração: 17-Set-2026 às 19:19
--- Versão do servidor: 10.4.27-MariaDB
--- versão do PHP: 8.2.0
+-- Esquema para instalacao nova. Crie e selecione o banco aeed_bruno antes de importar.
+-- Sem contas, senhas, tokens ou dados de uso: cadastre o primeiro usuario pelo site.
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Banco de dados: `aeed_bruno`
---
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `senha` varchar(255) NOT NULL,
-  `ativo` tinyint(1) NOT NULL DEFAULT 1,
-  `lembrar_token` varchar(64) DEFAULT NULL,
-  `lembrar_expira` datetime DEFAULT NULL,
-  `reset_token` varchar(64) DEFAULT NULL,
-  `reset_expira` datetime DEFAULT NULL,
-  `sessao_versao` int unsigned NOT NULL DEFAULT 0,
-  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    ativo TINYINT(1) NOT NULL DEFAULT 1,
+    lembrar_token VARCHAR(64) DEFAULT NULL,
+    lembrar_expira DATETIME DEFAULT NULL,
+    reset_token VARCHAR(64) DEFAULT NULL,
+    reset_expira DATETIME DEFAULT NULL,
+    sessao_versao INT UNSIGNED NOT NULL DEFAULT 0,
+    criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_usuarios_email (email),
+    INDEX idx_usuarios_reset_token (reset_token)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE INDEX idx_usuarios_reset_token ON usuarios (reset_token);
 
 CREATE TABLE IF NOT EXISTS recuperacao_limites (
-  chave char(64) NOT NULL PRIMARY KEY,
-  inicio datetime NOT NULL,
-  tentativas int unsigned NOT NULL DEFAULT 0,
-  INDEX idx_recuperacao_inicio (inicio)
+    chave CHAR(64) NOT NULL PRIMARY KEY,
+    inicio DATETIME NOT NULL,
+    tentativas INT UNSIGNED NOT NULL DEFAULT 0,
+    INDEX idx_recuperacao_inicio (inicio)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Extraindo dados da tabela `usuarios`
---
+CREATE TABLE IF NOT EXISTS moedas_carteiras (
+    usuario_id INT NOT NULL PRIMARY KEY,
+    saldo INT UNSIGNED NOT NULL DEFAULT 0,
+    CONSTRAINT fk_carteira_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `ativo`, `lembrar_token`, `lembrar_expira`, `reset_token`, `reset_expira`, `criado_em`) VALUES
-(1, 'Administrador', 'admin@aeed.com', '$2y$10$/FEUjeQRj4U6hu5u7NSEEOLYMMqzhHCJt6FgDapef9hgm0IYWTKSS', 1, NULL, NULL, NULL, NULL, '2026-09-17 16:46:47'),
-(3, 'Feliphe', 'fefe@gmail.com', '$2y$10$bnxNPz3JDRAPY2RbehZDSe9A9ms/2I4Dr/w/rA/ZTgz1aJNOsDv46', 1, '5faf4578c919f195b94aba2fa40b67e5ae9b8e2138be655456f9022019accd37', '2026-09-24 19:18:43', NULL, NULL, '2026-09-17 17:03:23');
+CREATE TABLE IF NOT EXISTS quiz_rodadas (
+    id CHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    tema VARCHAR(32) NOT NULL,
+    estado VARCHAR(12) NOT NULL DEFAULT 'andamento',
+    dados JSON NOT NULL,
+    criado_em DATETIME NOT NULL,
+    concluido_em DATETIME DEFAULT NULL,
+    moedas_ganhas INT UNSIGNED NOT NULL DEFAULT 0,
+    saldo_apos INT UNSIGNED DEFAULT NULL,
+    INDEX idx_rodadas_usuario (usuario_id, estado, concluido_em),
+    CONSTRAINT fk_rodada_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Índices para tabelas despejadas
---
+CREATE TABLE IF NOT EXISTS quiz_respostas (
+    rodada_id CHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    pergunta_id VARCHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    dia DATE DEFAULT NULL,
+    alternativa TINYINT UNSIGNED NOT NULL,
+    correta TINYINT UNSIGNED NOT NULL,
+    moedas_previstas TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    moedas_recebidas TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY (rodada_id, pergunta_id),
+    CONSTRAINT fk_resposta_rodada FOREIGN KEY (rodada_id) REFERENCES quiz_rodadas (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Índices para tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uk_usuarios_email` (`email`);
+CREATE TABLE IF NOT EXISTS moedas_questoes_dia (
+    usuario_id INT NOT NULL,
+    pergunta_id VARCHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    dia DATE NOT NULL,
+    erros INT UNSIGNED NOT NULL DEFAULT 0,
+    moedas_creditadas TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY (usuario_id, pergunta_id, dia),
+    CONSTRAINT fk_questao_dia_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- AUTO_INCREMENT de tabelas despejadas
---
+CREATE TABLE IF NOT EXISTS avatar_inventario (
+    usuario_id INT NOT NULL,
+    item_id VARCHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    comprado_em DATETIME NOT NULL,
+    PRIMARY KEY (usuario_id, item_id),
+    CONSTRAINT fk_avatar_inventario_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- AUTO_INCREMENT de tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-COMMIT;
+CREATE TABLE IF NOT EXISTS avatar_equipamentos (
+    usuario_id INT NOT NULL,
+    categoria VARCHAR(16) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    item_id VARCHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    PRIMARY KEY (usuario_id, categoria),
+    CONSTRAINT fk_avatar_equipamento_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE TABLE IF NOT EXISTS quiz_lotes_dia (
+    usuario_id INT NOT NULL,
+    tema VARCHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    dia DATE NOT NULL,
+    perguntas JSON NOT NULL,
+    usadas JSON NOT NULL,
+    renovacoes INT UNSIGNED NOT NULL DEFAULT 0,
+    moedas_gastas INT UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY (usuario_id, tema, dia),
+    CONSTRAINT fk_lote_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_dicas (
+    usuario_id INT NOT NULL,
+    pergunta_id VARCHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    custo_moedas TINYINT UNSIGNED NOT NULL,
+    comprado_em DATETIME NOT NULL,
+    PRIMARY KEY (usuario_id, pergunta_id),
+    CONSTRAINT fk_quiz_dica_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

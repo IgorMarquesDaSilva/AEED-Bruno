@@ -7,6 +7,13 @@ class Pilha
         return [
             "titulo" => "Pilha Encadeada - LIFO",
 
+            "animacao" => [
+                "gif" => "View/img/pilha-lifo.gif",
+                "poster" => "View/img/pilha-lifo.png",
+                "alt" => "Pilha com C no topo recebe D por PUSH e depois remove D por POP, voltando a ter C no topo.",
+                "legenda" => "PUSH e POP agem no topo: o último elemento empilhado é o primeiro a sair."
+            ],
+
             "introducao" => "Uma pilha encadeada organiza elementos em nós conectados, seguindo a regra LIFO (Last in First out): o último elemento que entra na pilha é o primeiro que sai.",
 
             "objetivos" => [

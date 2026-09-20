@@ -16,7 +16,7 @@ class EstruturaController{
         $titulo = $conteudo["titulo"];
         $bodyClass = 'pagina-tad';
         $mainClass = 'conteudo-aula';
-        $cssPagina = ['View/Assets/css/tad.css'];
+        $cssPagina = ['View/Assets/css/tad.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Tad.php';
     }
@@ -29,7 +29,7 @@ class EstruturaController{
         $titulo = $conteudo["titulo"];
         $bodyClass = 'pagina-lisimples';
         $mainClass = 'conteudo-aula';
-        $cssPagina = ['View/Assets/css/lisimples.css'];
+        $cssPagina = ['View/Assets/css/lisimples.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Lisimples.php';
     }
@@ -42,7 +42,7 @@ class EstruturaController{
         $titulo = $conteudo["titulo"];
         $bodyClass = 'pagina-lisdupla';
         $mainClass = 'conteudo-aula';
-        $cssPagina = ['View/Assets/css/Lisdupla.css'];
+        $cssPagina = ['View/Assets/css/Lisdupla.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Lisdupla.php';
     }
@@ -55,7 +55,7 @@ class EstruturaController{
         $titulo = $conteudo["titulo"];
         $bodyClass = 'pagina-fila';
         $mainClass = 'conteudo-aula';
-        $cssPagina = ['View/Assets/css/Fila.css'];
+        $cssPagina = ['View/Assets/css/Fila.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Fila.php';
     }
@@ -68,7 +68,7 @@ class EstruturaController{
         $titulo = $conteudo["titulo"];
         $bodyClass = 'pagina-filaprioridade';
         $mainClass = 'conteudo-aula';
-        $cssPagina = ['View/Assets/css/FilaPrioridade.css'];
+        $cssPagina = ['View/Assets/css/FilaPrioridade.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/FilaPrioridade.php';
     }
@@ -81,7 +81,7 @@ class EstruturaController{
         $titulo = $conteudo["titulo"];
         $bodyClass = 'pagina-pilha';
         $mainClass = 'conteudo-aula';
-        $cssPagina = ['View/Assets/css/pilha.css'];
+        $cssPagina = ['View/Assets/css/pilha.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Pilha.php';
     }

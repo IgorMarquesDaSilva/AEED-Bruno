@@ -19,6 +19,7 @@
     <?php } ?>
 
     <form class="perfil-formulario" method="POST" action="index.php?pagina=perfil">
+        <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8'); ?>">
 
         <h2>Dados pessoais</h2>
 

@@ -5,6 +5,12 @@ class Lisimples
     public function obterConteudo()
     {
         return [
+            "animacao" => [
+                "gif" => "View/img/lista-simples-insercao.gif",
+                "poster" => "View/img/lista-simples-insercao.png",
+                "alt" => "Inserção de X no início da lista simples A, B, C: X aponta para A e depois Início passa a apontar para X.",
+                "legenda" => "Na inserção pelo início, ligue o novo nó ao início antigo antes de atualizar a referência Início."
+            ],
             "titulo" => "Lista Simplesmente Encadeada",
 
             "introducao" => "Uma lista simplesmente encadeada organiza elementos em nós conectados por uma única direção. Cada nó armazena um valor e uma referência para o próximo nó. Diferente de um array, os elementos não ocupam posições contíguas na memória — eles crescem e encolhem dinamicamente conforme a necessidade.",
@@ -229,8 +235,8 @@ class Lisimples
                     "titulo" => "Videoaula sobre Lista Simplesmente Encadeada",
                     "descricao" => "Vídeo complementar sobre lista simplesmente encadeada para apoiar o estudo das operações.",
                     "fonte" => "YouTube - vídeo complementar",
-                    "url" => "https://www.youtube.com/watch?v=Uk8v7gB2rHk",
-                    "link" => "https://youtu.be/Uk8v7gB2rHk?si=ZAxxiHEFQIZB05bw"
+                    "url" => "https://www.youtube.com/embed/EM8tJnKo71s",
+                    "link" => "https://www.youtube.com/watch?v=EM8tJnKo71s"
                 ]
             ],
 

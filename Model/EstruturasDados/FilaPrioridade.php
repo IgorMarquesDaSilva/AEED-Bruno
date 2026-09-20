@@ -7,6 +7,13 @@ class FilaPrioridade
         return [
             "titulo" => "Fila de Prioridades Encadeada - FIFO",
 
+            "animacao" => [
+                "gif" => "View/img/fila-prioridade.gif",
+                "poster" => "View/img/fila-prioridade.png",
+                "alt" => "Uma fila ordenada B prioridade 5, C prioridade 3, A prioridade 2 recebe D prioridade 6, que ocupa o início.",
+                "legenda" => "A inserção posiciona cada nó pela prioridade; elementos empatados mantêm a ordem de chegada."
+            ],
+
             "introducao" => "Uma fila de prioridades encadeada organiza elementos em nós conectados, mas a ordem de saída não depende apenas da chegada: quem tem maior prioridade sai primeiro. Quando dois elementos possuem a mesma prioridade, o critério de desempate é o FIFO (First in First out).",
 
             "objetivos" => [

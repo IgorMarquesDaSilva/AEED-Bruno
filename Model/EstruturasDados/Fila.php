@@ -7,6 +7,13 @@ class Fila
         return [
             "titulo" => "Fila Encadeada - FIFO",
 
+            "animacao" => [
+                "gif" => "View/img/fila-fifo.gif",
+                "poster" => "View/img/fila-fifo.png",
+                "alt" => "Fila A, B, C recebe D no fim e remove A do início, restando B, C, D.",
+                "legenda" => "Na fila FIFO, novos nós entram no fim e o nó mais antigo sai pelo início."
+            ],
+
             "introducao" => "Uma fila encadeada organiza elementos em nós conectados, seguindo a regra FIFO (First in First out): o primeiro elemento que entra na fila é o primeiro que sai.",
 
             "objetivos" => [

@@ -11,6 +11,12 @@ class PerfilController
     public function perfil()
     {
         LoginController::verificarLogin();
+        header('Cache-Control: no-store');
+
+        if (empty($_SESSION['perfil_csrf'])) {
+            $_SESSION['perfil_csrf'] = bin2hex(random_bytes(32));
+        }
+        $csrf = $_SESSION['perfil_csrf'];
 
         $usuarioModel = new Usuario();
         $usuarioSessao = $_SESSION['usuario'];
@@ -21,7 +27,10 @@ class PerfilController
         $nome = $usuarioSessao['nome'];
         $email = $usuarioSessao['email'];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
+            (!is_string($_POST['csrf'] ?? null) || !hash_equals($csrf, $_POST['csrf']))) {
+            $erro = 'O formulario expirou. Atualize a pagina e tente novamente.';
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nome = trim(isset($_POST['nome']) ? $_POST['nome'] : '');
             $email = trim(isset($_POST['email']) ? $_POST['email'] : '');
             $senhaAtual = isset($_POST['senha_atual']) ? $_POST['senha_atual'] : '';

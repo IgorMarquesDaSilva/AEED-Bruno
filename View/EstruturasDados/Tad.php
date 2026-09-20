@@ -60,6 +60,8 @@
                 <?php echo htmlspecialchars($conteudo["representacao"]); ?>
             </div>
 
+            <?php require __DIR__ . '/../Shared/diagrama_animado.php'; ?>
+
             <h3>Por que ele é importante?</h3>
             <p><?php echo htmlspecialchars($conteudo["importancia"]); ?></p>
 
@@ -183,10 +185,11 @@
                     <p><?php echo htmlspecialchars($video["descricao"]); ?></p>
 
                     <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/06PJrmeG784?si=4Tdqw1lQcXDcGqxU"
-                         title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
-                          clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe src="<?php echo htmlspecialchars($video["url"]); ?>"
+                                title="<?php echo htmlspecialchars($video["titulo"]); ?>"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
 
                     <p class="fonte-video">

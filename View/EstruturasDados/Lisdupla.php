@@ -60,6 +60,8 @@
                 <?php echo htmlspecialchars($conteudo["representacao"]); ?>
             </div>
 
+            <?php require __DIR__ . '/../Shared/diagrama_animado.php'; ?>
+
             <h3>Como funciona</h3>
 
             <ul class="lista-topicos">

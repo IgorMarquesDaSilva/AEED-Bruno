@@ -1,0 +1,47 @@
+.aula-layout > .secao,
+.aula-layout > .indice {
+    min-width: 0;
+}
+
+.aula-diagrama {
+    max-width: 760px;
+    margin: 24px 0 30px;
+}
+
+.aula-diagrama picture,
+.aula-diagrama img {
+    display: block;
+    width: 100%;
+}
+
+.aula-diagrama img {
+    height: auto;
+    border: 1px solid #d4dce5;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.aula-diagrama figcaption {
+    margin-top: 8px;
+    color: #526779;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+    .aula-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .operacao-topo {
+        flex-wrap: wrap;
+    }
+
+    .operacao-topo span {
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}

@@ -46,6 +46,10 @@
                 <span class="hero-card-item-dot"></span>
                 Fila de prioridades encadeada
             </div>
+            <div class="hero-card-item">
+                <span class="hero-card-item-dot"></span>
+                Pilha encadeada LIFO
+            </div>
         </div>
 
     </div>
@@ -58,6 +62,17 @@
     <a href="index.php?pagina=tad">TAD</a>
     <a href="index.php?pagina=quiz">Quiz</a>
 </nav>
+
+<section id="fundamentos" class="home-fundamentos" aria-labelledby="fundamentos-titulo">
+    <div>
+        <p class="secao-titulo">Fundamentos</p>
+        <h2 id="fundamentos-titulo">O que são estruturas de dados?</h2>
+    </div>
+    <div class="home-fundamentos-texto">
+        <p>São formas de organizar e relacionar dados na memória para que operações como inserir, buscar e remover tenham um comportamento definido.</p>
+        <p>Escolher a estrutura adequada torna o programa mais claro e pode reduzir o trabalho necessário em cada operação. Listas permitem conexões flexíveis entre elementos; filas atendem por ordem de chegada ou prioridade; pilhas tratam primeiro o elemento mais recente.</p>
+    </div>
+</section>
 
 <section id="conteudos">
 

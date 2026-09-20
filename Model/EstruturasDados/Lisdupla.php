@@ -5,6 +5,12 @@ class Lisdupla
     public function obterConteudo()
     {
         return [
+            "animacao" => [
+                "gif" => "View/img/lista-dupla-remocao.gif",
+                "poster" => "View/img/lista-dupla-remocao.png",
+                "alt" => "Remoção do nó B da lista dupla A, B, C, religando A e C nos dois sentidos.",
+                "legenda" => "Ao remover um nó do meio, os vizinhos precisam ser religados nos dois sentidos."
+            ],
             "titulo" => "Lista Duplamente Encadeada",
 
             "introducao" => "Uma lista duplamente encadeada organiza elementos em nós conectados. Diferente da lista simplesmente encadeada, cada nó conhece o elemento anterior e o próximo elemento.",

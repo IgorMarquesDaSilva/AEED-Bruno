@@ -6,7 +6,8 @@ class Conteudo{
             "Listas Simplesmente Encadeadas",
             "Listas Duplamente Encadeadas",
             "Fila Encadeadas FIFO",
-            "Fila de Prioridades Encadeadas FIFO"
+            "Fila de Prioridades Encadeadas FIFO",
+            "Pilha Encadeada LIFO"
         ];
     }
 }

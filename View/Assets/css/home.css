@@ -190,6 +190,39 @@
 
 /* ─── Cards de conteúdo ──────────────────────────────────── */
 
+.home-fundamentos {
+    display: grid;
+    grid-template-columns: minmax(200px, 0.8fr) minmax(0, 1.2fr);
+    gap: 32px;
+    margin-bottom: 34px;
+    padding: 28px 0;
+    border-top: 1px solid #d4dce5;
+    border-bottom: 1px solid #d4dce5;
+}
+
+.home-fundamentos .secao-titulo {
+    margin-bottom: 8px;
+    color: #0f766e;
+}
+
+.home-fundamentos h2 {
+    margin: 0;
+    color: #0f2233;
+    font-size: 23px;
+    line-height: 1.3;
+}
+
+.home-fundamentos-texto p {
+    margin: 0 0 12px;
+    color: #526779;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.home-fundamentos-texto p:last-child {
+    margin-bottom: 0;
+}
+
 .secao-titulo {
     margin: 0 0 20px;
     color: #1a2e3d;
@@ -369,6 +402,11 @@
 /* ─── Responsivo ─────────────────────────────────────────── */
 
 @media (max-width: 900px) {
+    .home-fundamentos {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
     .home-hero {
         grid-template-columns: 1fr;
         padding: 36px 28px;
