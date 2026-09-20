@@ -152,8 +152,8 @@ class Fila
                     "titulo" => "Videoaula sobre Fila Encadeada - FIFO",
                     "descricao" => "Vídeo complementar sobre fila encadeada FIFO para apoiar o estudo das operações de enfileirar e desenfileirar.",
                     "fonte" => "YouTube - vídeo complementar",
-                    "url" => "https://www.youtube.com/embed/mCathNfPHqM",
-                    "link" => "https://www.youtube.com/watch?v=mCathNfPHqM"
+                    "url" => "https://www.youtube.com/embed/EtHZa8XJyYI",
+                    "link" => "https://www.youtube.com/watch?v=EtHZa8XJyYI"
                 ]
             ],
 

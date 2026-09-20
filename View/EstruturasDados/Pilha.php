@@ -28,6 +28,7 @@
             <a href="#remocoes">Remoção (POP)</a>
             <a href="#percurso">Busca e percurso</a>
             <a href="#comparacao">Comparação</a>
+            <a href="#videoaula">Videoaula</a>
             <a href="#codigo">Exemplos em C#</a>
             <a href="#exercicios">Exercícios</a>
         </nav>
@@ -201,6 +202,33 @@
                     </tbody>
                 </table>
             </div>
+        </section>
+
+        <section id="videoaula" class="secao">
+            <h2>Videoaula complementar</h2>
+
+            <?php foreach ($conteudo["videos"] as $video) { ?>
+                <article class="video">
+                    <h3><?php echo htmlspecialchars($video["titulo"]); ?></h3>
+                    <p><?php echo htmlspecialchars($video["descricao"]); ?></p>
+
+                    <div class="video-container">
+                        <iframe
+                            src="<?php echo htmlspecialchars($video["url"]); ?>"
+                            title="<?php echo htmlspecialchars($video["titulo"]); ?>"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <p class="fonte-video">
+                        <?php echo htmlspecialchars($video["fonte"]); ?>
+                        <a href="<?php echo htmlspecialchars($video["link"]); ?>" target="_blank" rel="noopener noreferrer">
+                            Abrir no YouTube
+                        </a>
+                    </p>
+                </article>
+            <?php } ?>
         </section>
 
         <section id="codigo" class="secao">

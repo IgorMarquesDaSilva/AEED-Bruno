@@ -184,6 +184,16 @@ class Pilha
                 ]
             ],
 
+            "videos" => [
+                [
+                    "titulo" => "Videoaula sobre Pilha - operações PUSH e POP",
+                    "descricao" => "Vídeo complementar sobre a estrutura de dados Pilha (LIFO) para apoiar o estudo das operações de empilhar e desempilhar.",
+                    "fonte" => "YouTube - vídeo complementar",
+                    "url" => "https://www.youtube.com/embed/vQg_-RqTW8Y",
+                    "link" => "https://www.youtube.com/watch?v=vQg_-RqTW8Y"
+                ]
+            ],
+
             "orientacaoCodigo" => "Os exemplos seguem o mesmo raciocínio das operações: primeiro definimos o nó e a pilha, depois inserimos (push), removemos (pop), buscamos e percorremos. Os métodos ficam dentro das classes No e Pilha.",
 
             "exemplos" => [
