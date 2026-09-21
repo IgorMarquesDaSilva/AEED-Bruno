@@ -22,6 +22,19 @@ class Conexao
 
         return self::$conexao;
     }
+
+    public static function tabelaAusente($exception)
+    {
+        return $exception instanceof PDOException && $exception->getCode() === '42S02';
+    }
+
+    // Cria apenas as tabelas que faltam; o esquema usa CREATE TABLE IF NOT EXISTS.
+    public static function garantirEsquema()
+    {
+        $pdo = self::conectar();
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        $pdo->exec(file_get_contents(__DIR__ . '/../../database/aeed_bruno.sql'));
+    }
 }
 
 ?>

@@ -24,7 +24,7 @@ class QuizController
         $dicaComprada = false;
         $podeRenovar = false;
         $indisponivel = false;
-        try {
+        $carregar = function () use (&$tentativa, &$recompensas, &$podeRenovar, &$dicaComprada, $rodadas, $usuarioId) {
             if (isset($_SESSION['quiz'])) {
                 $rodadas->importarLegada($usuarioId, $_SESSION['quiz']);
                 $_SESSION['quiz_id'] = $_SESSION['quiz']['id'];
@@ -41,15 +41,24 @@ class QuizController
                     $dicaComprada = $rodadas->dicaComprada($usuarioId, $perguntaAtualId);
                 }
             }
+        };
+        try {
+            try {
+                $carregar();
+            } catch (PDOException $exception) {
+                if (!Conexao::tabelaAusente($exception)) throw $exception;
+                Conexao::garantirEsquema();
+                $carregar();
+            }
         } catch (Throwable $exception) {
             http_response_code(503);
             $indisponivel = true;
             $erro = 'O quiz está temporariamente indisponível. Tente novamente em instantes.';
-            error_log('AEED: falha ao consultar as rodadas; confira as migracoes de moedas, lotes e dicas.');
+            error_log('AEED: falha ao consultar as rodadas: ' . get_class($exception) . ' - ' . $exception->getMessage());
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$indisponivel) {
-            try {
+            $executar = function () use (&$tentativa, $rodadas, $usuarioId) {
                 $csrf = $_POST['csrf'] ?? '';
                 if (!is_string($csrf) || !hash_equals($_SESSION['quiz_csrf'], $csrf)) {
                     throw new DomainException('O formulário expirou. Tente novamente nesta página.');
@@ -86,11 +95,21 @@ class QuizController
                 } else {
                     throw new DomainException('Ação inválida. Utilize as opções do quiz.');
                 }
+            };
+            try {
+                try {
+                    $executar();
+                } catch (PDOException $exception) {
+                    // Bancos criados antes das ultimas migracoes nao possuem todas as tabelas do quiz.
+                    if (!Conexao::tabelaAusente($exception)) throw $exception;
+                    Conexao::garantirEsquema();
+                    $executar();
+                }
             } catch (DomainException $exception) {
                 $_SESSION['quiz_erro'] = $exception->getMessage();
             } catch (Throwable $exception) {
                 $_SESSION['quiz_erro'] = 'Não foi possível confirmar a operação. Atualize a página antes de tentar novamente.';
-                error_log('AEED: falha ao salvar a rodada ou sua recompensa.');
+                error_log('AEED: falha ao salvar a rodada ou sua recompensa: ' . get_class($exception) . ' - ' . $exception->getMessage());
             }
             // POST/Redirect/GET evita reenviar uma resposta ao atualizar a página.
             header('Location: index.php?pagina=quiz', true, 303);
