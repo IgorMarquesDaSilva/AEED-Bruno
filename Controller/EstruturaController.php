@@ -5,6 +5,8 @@ require_once __DIR__ . '/../Model/EstruturasDados/Lisdupla.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Fila.php';
 require_once __DIR__ . '/../Model/EstruturasDados/FilaPrioridade.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Pilha.php';
+require_once __DIR__ . '/../Model/EstruturasDados/Trie.php';
+require_once __DIR__ . '/../Model/EstruturasDados/ArvoreBinaria.php';
 require_once __DIR__ . '/LoginController.php';
 
 class EstruturaController{
@@ -84,6 +86,32 @@ class EstruturaController{
         $cssPagina = ['View/Assets/css/pilha.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/Pilha.php';
+    }
+
+    public function trie(){
+        LoginController::verificarLogin();
+
+        $trie = new Trie();
+        $conteudo = $trie->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-trie';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/Trie.css', 'View/Assets/css/diagramas.css'];
+
+        require_once __DIR__ . '/../View/EstruturasDados/Trie.php';
+    }
+
+    public function arvorebinaria(){
+        LoginController::verificarLogin();
+
+        $arvorebinaria = new ArvoreBinaria();
+        $conteudo = $arvorebinaria->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-arvorebinaria';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/ArvoreBinaria.css', 'View/Assets/css/diagramas.css'];
+
+        require_once __DIR__ . '/../View/EstruturasDados/ArvoreBinaria.php';
     }
 }
 ?>

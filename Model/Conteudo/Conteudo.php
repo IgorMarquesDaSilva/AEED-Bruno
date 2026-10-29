@@ -7,7 +7,9 @@ class Conteudo{
             "Listas Duplamente Encadeadas",
             "Fila Encadeadas FIFO",
             "Fila de Prioridades Encadeadas FIFO",
-            "Pilha Encadeada LIFO"
+            "Pilha Encadeada LIFO",
+            "Árvore Binária",
+            "Árvore Trie (Árvore de Prefixos)"
         ];
     }
 }

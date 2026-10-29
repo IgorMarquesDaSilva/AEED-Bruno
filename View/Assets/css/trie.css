@@ -1,0 +1,410 @@
+.pagina-trie {
+    color: #162432;
+    background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.14), transparent 30%),
+        linear-gradient(180deg, #f4f7fb 0%, #eef4f7 100%);
+    letter-spacing: 0;
+    line-height: 1.6;
+}
+
+.pagina-trie .conteudo-aula {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 34px 0 60px;
+}
+
+.pagina-trie .aula-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) 280px;
+    gap: 28px;
+    align-items: center;
+    margin-bottom: 28px;
+    padding: 42px;
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, rgba(20, 51, 79, 0.98), rgba(15, 118, 110, 0.88)),
+        radial-gradient(circle at top right, rgba(208, 139, 49, 0.3), transparent 38%);
+    color: #ffffff;
+    box-shadow: 0 20px 45px rgba(15, 35, 52, 0.2);
+}
+
+.pagina-trie .rotulo {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background-color: rgba(94, 234, 212, 0.18);
+    color: #99f6e4;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.pagina-trie .aula-hero h1 {
+    max-width: 780px;
+    margin: 0 0 14px;
+    color: #ffffff;
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.08;
+}
+
+.pagina-trie .introducao {
+    max-width: 760px;
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+.pagina-trie .aula-resumo {
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+}
+
+.pagina-trie .aula-resumo strong,
+.pagina-trie .aula-resumo span,
+.pagina-trie .aula-resumo a {
+    display: block;
+}
+
+.pagina-trie .aula-resumo strong {
+    margin-bottom: 6px;
+    font-size: 24px;
+}
+
+.pagina-trie .aula-resumo span {
+    margin-bottom: 18px;
+    color: #e2e8f0;
+}
+
+.pagina-trie .aula-resumo a {
+    width: fit-content;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background-color: #5eead4;
+    color: #123554;
+    font-weight: 800;
+}
+
+.pagina-trie .aula-layout {
+    display: grid;
+    grid-template-columns: 238px minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+}
+
+.pagina-trie .indice {
+    grid-row: 1 / span 40;
+    position: sticky;
+    top: 86px;
+    padding: 18px;
+    border: 1px solid #d9e1e8;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 35, 52, 0.08);
+}
+
+.pagina-trie .indice h2 {
+    margin: 0 0 12px;
+    color: #123554;
+    font-size: 18px;
+}
+
+.pagina-trie .indice a {
+    display: block;
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: #32485b;
+    font-size: 14px;
+    font-weight: 800;
+    transition: 0.2s;
+}
+
+.pagina-trie .indice a:hover {
+    background-color: #e9f4f3;
+    color: #0f766e;
+}
+
+.pagina-trie .aula-layout > .secao {
+    grid-column: 2;
+}
+
+.pagina-trie .secao {
+    padding: 0 0 36px;
+    margin: 0 0 36px;
+    border-bottom: 1px solid #d9e1e8;
+    scroll-margin-top: 100px;
+}
+
+.pagina-trie .secao:last-of-type {
+    border-bottom: 0;
+}
+
+.pagina-trie .secao h2 {
+    margin: 0 0 18px;
+    color: #123554;
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+.pagina-trie .secao h3 {
+    margin: 24px 0 10px;
+    color: #123554;
+    font-size: 20px;
+}
+
+.pagina-trie .secao p {
+    margin: 0 0 16px;
+}
+
+.pagina-trie .lista-topicos,
+.pagina-trie .lista-exercicios {
+    margin: 0;
+    padding-left: 23px;
+}
+
+.pagina-trie .lista-topicos li,
+.pagina-trie .lista-exercicios li,
+.pagina-trie .lista-passos li {
+    padding: 4px 0;
+}
+
+.pagina-trie .representacao,
+.pagina-trie .nota-codigo {
+    margin: 24px 0 28px;
+    padding: 18px 20px;
+    border-left: 4px solid #0f766e;
+    border-radius: 0 8px 8px 0;
+    background-color: #e9f4f3;
+    color: #123554;
+}
+
+.pagina-trie .representacao {
+    overflow-x: auto;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.pagina-trie .bloco-contexto {
+    margin: 22px 0 24px;
+    padding: 18px 20px 8px;
+    border-left: 4px solid #d08b31;
+    border-radius: 0 8px 8px 0;
+    background-color: #fff8ee;
+}
+
+.pagina-trie .bloco-contexto h3 {
+    margin-top: 0;
+}
+
+.pagina-trie .grade-anatomia,
+.pagina-trie .grade-operacoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.pagina-trie .anatomia,
+.pagina-trie .operacao,
+.pagina-trie .etapa,
+.pagina-trie .exemplo-codigo {
+    padding: 18px 20px;
+    border: 1px solid #d9e1e8;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 35, 52, 0.06);
+}
+
+.pagina-trie .anatomia h3,
+.pagina-trie .operacao h3,
+.pagina-trie .etapa h3,
+.pagina-trie .exemplo-codigo h3,
+.pagina-trie .video h3 {
+    margin-top: 0;
+}
+
+.pagina-trie .anatomia p,
+.pagina-trie .operacao p {
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+.pagina-trie .operacao-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pagina-trie .operacao-topo span {
+    flex: none;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: #e9f4f3;
+    color: #0f5e59;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pagina-trie .etapas {
+    display: grid;
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.pagina-trie .lista-passos {
+    margin: 4px 0 0;
+    padding-left: 23px;
+}
+
+.pagina-trie .tabela-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(15, 35, 52, 0.06);
+}
+
+.pagina-trie .tabela-container table {
+    width: 100%;
+    min-width: 590px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.pagina-trie .tabela-container th,
+.pagina-trie .tabela-container td {
+    padding: 14px 13px;
+    border: 1px solid #d9e1e8;
+    text-align: left;
+    vertical-align: top;
+}
+
+.pagina-trie .tabela-container th {
+    background-color: #123554;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.pagina-trie .tabela-container tbody tr:nth-child(even) {
+    background-color: #f2f6f8;
+}
+
+.pagina-trie .video-container {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 18px;
+    border-radius: 8px;
+    background-color: #0b1825;
+    box-shadow: 0 12px 30px rgba(15, 35, 52, 0.1);
+}
+
+.pagina-trie .video-container iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.pagina-trie .fonte-video {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 10px;
+    color: #586b7b;
+    font-size: 14px;
+}
+
+.pagina-trie .fonte-video a {
+    color: #0f766e;
+    font-weight: bold;
+}
+
+.pagina-trie .exemplo-codigo {
+    margin-bottom: 24px;
+}
+
+.pagina-trie .exemplo-codigo pre {
+    overflow-x: auto;
+    margin: 16px 0 0;
+    padding: 18px;
+    border-radius: 8px;
+    background-color: #102230;
+    color: #edf4f7;
+    font: 14px/1.55 Consolas, "Courier New", monospace;
+}
+
+.imagem-representacao {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.pagina-trie .exemplo-codigo code {
+    font: inherit;
+}
+
+@media (max-width: 900px) {
+    .pagina-trie .conteudo-aula {
+        width: min(100% - 32px, 720px);
+        padding-top: 24px;
+    }
+
+    .pagina-trie .aula-hero,
+    .pagina-trie .aula-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pagina-trie .aula-hero {
+        padding: 32px 24px;
+    }
+
+    .pagina-trie .indice {
+        position: static;
+    }
+
+    .pagina-trie .aula-layout > .secao {
+        grid-column: auto;
+    }
+
+    .pagina-trie .grade-operacoes,
+    .pagina-trie .grade-anatomia {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pagina-trie .trie-diagrama {
+    max-width: 760px;
+    margin: 24px 0 30px;
+}
+
+.pagina-trie .trie-diagrama svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 8px;
+    border: 1px solid #d4dce5;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.pagina-trie .trie-diagrama figcaption {
+    margin-top: 8px;
+    color: #526779;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.pagina-trie .secao .nota-complexidade {
+    margin: 16px 0 0;
+    color: #526779;
+    font-size: 14px;
+}

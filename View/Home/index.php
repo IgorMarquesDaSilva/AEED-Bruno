@@ -50,6 +50,14 @@
                 <span class="hero-card-item-dot"></span>
                 Pilha encadeada LIFO
             </div>
+            <div class="hero-card-item">
+                <span class="hero-card-item-dot"></span>
+                Árvore binária
+            </div>
+            <div class="hero-card-item">
+                <span class="hero-card-item-dot"></span>
+                Árvore Trie
+            </div>
         </div>
 
     </div>
@@ -196,6 +204,49 @@
             <small>LIFO - Last in First Out</small>
             <h3>Pilha Encadeada</h3>
             <p>Insere e remove sempre pelo Topo, respeitando a ordem inversa de chegada.</p>
+            <span class="card-link">
+                Acessar
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+
+        </a>
+
+        <a class="card-conteudo" href="index.php?pagina=arvorebinaria">
+
+            <div class="card-icone">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="5" r="2"/>
+                    <circle cx="6" cy="13" r="2"/>
+                    <circle cx="18" cy="13" r="2"/>
+                    <path d="M11 6.7L7 11.3M13 6.7l4 4.6"/>
+                </svg>
+            </div>
+
+            <small>Esquerda menor, direita maior</small>
+            <h3>Árvore Binária</h3>
+            <p>Cada nó tem no máximo dois filhos, organizados em sub-árvores esquerda e direita.</p>
+            <span class="card-link">
+                Acessar
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+
+        </a>
+
+        <a class="card-conteudo" href="index.php?pagina=trie">
+
+            <div class="card-icone">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="5" r="2"/>
+                    <circle cx="6" cy="13" r="2"/>
+                    <circle cx="18" cy="13" r="2"/>
+                    <circle cx="6" cy="20" r="1.5"/>
+                    <path d="M11 6.7L7 11.3M13 6.7l4 4.6M6 15v3.5"/>
+                </svg>
+            </div>
+
+            <small>Árvore de prefixos</small>
+            <h3>Árvore Trie</h3>
+            <p>Cada nó guarda uma letra e o caminho da raiz forma o prefixo das palavras armazenadas.</p>
             <span class="card-link">
                 Acessar
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

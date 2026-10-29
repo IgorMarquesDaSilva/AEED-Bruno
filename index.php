@@ -52,6 +52,12 @@ if ($pagina == "login") {
 } elseif ($pagina == "pilha") {
     $controller = new EstruturaController();
     $controller->pilha();
+} elseif ($pagina == "trie") {
+    $controller = new EstruturaController();
+    $controller->trie();
+} elseif ($pagina == "arvorebinaria") {
+    $controller = new EstruturaController();
+    $controller->arvorebinaria();
 } else {
     $controller = new HomeController();
     $controller->index();
