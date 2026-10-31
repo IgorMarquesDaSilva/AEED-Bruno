@@ -9,7 +9,8 @@ class Conteudo{
             "Fila de Prioridades Encadeadas FIFO",
             "Pilha Encadeada LIFO",
             "Árvore Binária",
-            "Árvore Trie (Árvore de Prefixos)"
+            "Árvore Trie (Árvore de Prefixos)",
+            "Árvore Patricia (Trie Compacta)"
         ];
     }
 }

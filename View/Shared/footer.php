@@ -17,6 +17,7 @@
                 <a href="index.php?pagina=filaprioridade">Fila de Prioridades Encadeadas</a>
                 <a href="index.php?pagina=arvorebinaria">Árvore Binária</a>
                 <a href="index.php?pagina=trie">Árvore Trie</a>
+                <a href="index.php?pagina=patricia">Árvore Patricia</a>
                 <a href="index.php?pagina=quiz">Quiz</a>
                 <a href="index.php?pagina=loja">Loja</a>
             </nav>

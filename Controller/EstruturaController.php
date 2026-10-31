@@ -7,6 +7,7 @@ require_once __DIR__ . '/../Model/EstruturasDados/FilaPrioridade.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Pilha.php';
 require_once __DIR__ . '/../Model/EstruturasDados/Trie.php';
 require_once __DIR__ . '/../Model/EstruturasDados/ArvoreBinaria.php';
+require_once __DIR__ . '/../Model/EstruturasDados/Patricia.php';
 require_once __DIR__ . '/LoginController.php';
 
 class EstruturaController{
@@ -112,6 +113,19 @@ class EstruturaController{
         $cssPagina = ['View/Assets/css/ArvoreBinaria.css', 'View/Assets/css/diagramas.css'];
 
         require_once __DIR__ . '/../View/EstruturasDados/ArvoreBinaria.php';
+    }
+
+    public function patricia(){
+        LoginController::verificarLogin();
+
+        $patricia = new Patricia();
+        $conteudo = $patricia->obterConteudo();
+        $titulo = $conteudo["titulo"];
+        $bodyClass = 'pagina-patricia';
+        $mainClass = 'conteudo-aula';
+        $cssPagina = ['View/Assets/css/Patricia.css', 'View/Assets/css/diagramas.css'];
+
+        require_once __DIR__ . '/../View/EstruturasDados/Patricia.php';
     }
 }
 ?>

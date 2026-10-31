@@ -58,6 +58,10 @@
                 <span class="hero-card-item-dot"></span>
                 Árvore Trie
             </div>
+            <div class="hero-card-item">
+                <span class="hero-card-item-dot"></span>
+                Árvore Patricia
+            </div>
         </div>
 
     </div>
@@ -247,6 +251,28 @@
             <small>Árvore de prefixos</small>
             <h3>Árvore Trie</h3>
             <p>Cada nó guarda uma letra e o caminho da raiz forma o prefixo das palavras armazenadas.</p>
+            <span class="card-link">
+                Acessar
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+
+        </a>
+
+        <a class="card-conteudo" href="index.php?pagina=patricia">
+
+            <div class="card-icone">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="8" height="4" rx="1"/>
+                    <rect x="13" y="3" width="8" height="4" rx="1"/>
+                    <rect x="3" y="14" width="8" height="4" rx="1"/>
+                    <rect x="13" y="14" width="8" height="4" rx="1"/>
+                    <path d="M11 5h2M7 7v7M17 7v7M11 16h2"/>
+                </svg>
+            </div>
+
+            <small>Trie compacta</small>
+            <h3>Árvore Patricia</h3>
+            <p>Guarda fragmentos de palavras em vez de letras, reduzindo a quantidade de nós da Trie.</p>
             <span class="card-link">
                 Acessar
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
