@@ -80,7 +80,46 @@ class DicasQuiz
             'pilha-9' => 'Topo.Proximo é o nó que passa a ocupar o topo após a remoção.',
             'pilha-10' => 'Antes de acessar Topo.Valor, verifique se Topo aponta para algum nó.',
             'pilha-11' => 'Retire os dois elementos mais recentes e veja quem permanece.',
-            'pilha-12' => 'O laço segue Proximo até null e soma o Valor de cada nó.'
+            'pilha-12' => 'O laço segue Proximo até null e soma o Valor de cada nó.',
+
+            'arvorebinaria-1' => 'Compare o novo valor com o da raiz: menores seguem por um lado, maiores pelo outro.',
+            'arvorebinaria-2' => 'Conte os níveis a partir da raiz até o nó mais profundo.',
+            'arvorebinaria-3' => 'Pense no que acontece com o formato da árvore quando a ordem dos valores muda.',
+            'arvorebinaria-4' => 'Em uma árvore binária de busca, os menores valores estão na sub-árvore esquerda.',
+            'arvorebinaria-5' => 'Procure um valor que possa ocupar o lugar do nó sem quebrar a ordenação.',
+            'arvorebinaria-6' => 'Imagine inserir 1, 2, 3, 4 e 5 em sequência e desenhe a árvore.',
+            'arvorebinaria-7' => 'O percurso em-ordem visita esquerda, nó e direita.',
+            'arvorebinaria-8' => 'A pré-ordem imprime o nó antes de visitar as sub-árvores.',
+            'arvorebinaria-9' => 'Siga o caminho a partir da raiz, contando cada nó visitado, inclusive o encontrado.',
+            'arvorebinaria-10' => 'Desenhe a árvore: cada valor é maior que todos os anteriores.',
+            'arvorebinaria-11' => 'Veja o que acontece quando o valor é igual ao do nó, nem menor nem maior.',
+            'arvorebinaria-12' => 'Nó com dois filhos recebe o menor valor da sub-árvore direita.',
+
+            'trie-1' => 'Pense no que muda de nó em nó ao descer pelo caminho de uma palavra.',
+            'trie-2' => 'Compare o caminho que existe com as palavras que de fato foram inseridas.',
+            'trie-3' => 'Conte quantos nós a busca visita para cada letra da palavra.',
+            'trie-4' => 'Depois do prefixo, tudo o que está abaixo do nó começa com ele.',
+            'trie-5' => 'Lembre que cada nó guarda um vetor com uma posição para cada letra.',
+            'trie-6' => 'Verifique se algum nó do caminho de amor ainda é usado por outra palavra.',
+            'trie-7' => 'Subtrair caracteres dá a distância entre eles no alfabeto.',
+            'trie-8' => 'Conte apenas os nós novos criados em cada inserção.',
+            'trie-9' => 'Diferencie a existência do caminho da marcação de fim de palavra.',
+            'trie-10' => 'Os filhos de cada nó são visitados da letra a até a z.',
+            'trie-11' => 'Veja se o nó r precisa continuar existindo depois da remoção.',
+            'trie-12' => 'Observe qual condição o método buscar exige além de o caminho existir.',
+
+            'patricia-1' => 'Lembre o que cada nó guarda em uma Trie e o que muda na versão compacta.',
+            'patricia-2' => 'Pense nos nós que só têm um filho em uma Trie.',
+            'patricia-3' => 'Veja qual trecho dados e dente têm em comum.',
+            'patricia-4' => 'Uma seta desce um nível e a outra anda pelo mesmo nível.',
+            'patricia-5' => 'Pense em um nó sem marcação de fim que sobra com um único filho.',
+            'patricia-6' => 'Verifique se dent foi inserida como palavra ou é só um trecho do caminho.',
+            'patricia-7' => 'Compare as duas palavras letra a letra, até a primeira diferença.',
+            'patricia-8' => 'Calcule o prefixo comum e veja se o nó precisa ser dividido.',
+            'patricia-9' => 'Cada busca precisa terminar em um nó marcado como fim de palavra.',
+            'patricia-10' => 'Quando k é igual ao tamanho da palavra, ela termina no nó atual.',
+            'patricia-11' => 'Aplique a condição: nó sem marcação de fim e com um único filho é fundido.',
+            'patricia-12' => 'Concatene os fragmentos do caminho e imprima apenas nos fins de palavra.'
         ];
     }
 

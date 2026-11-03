@@ -17,8 +17,8 @@
         <div>
             <h2 id="quiz-nova-rodada">Nova rodada</h2>
             <dl class="quiz-dados">
-                <div><dt>Rodada geral</dt><dd>12 questões</dd></div>
-                <div><dt>Por matéria</dt><dd>6 questões</dd></div>
+                <div><dt>Rodada geral</dt><dd><?php echo (int) Quiz::QUESTOES_GERAL; ?> questões</dd></div>
+                <div><dt>Por matéria</dt><dd><?php echo (int) Quiz::QUESTOES_POR_MATERIA; ?> questões</dd></div>
                 <div><dt>Tempo</dt><dd>Sem limite</dd></div>
             </dl>
             <p class="quiz-nota">Perguntas novas a cada dia. Repetir gratuitamente no mesmo dia mantém o lote atual.</p>

@@ -5,7 +5,8 @@ require_once __DIR__ . '/../Avatar/CatalogoAvatar.php';
 class Quiz
 {
     public const QUESTOES_POR_MATERIA = 6;
-    public const QUESTOES_GERAL = 12;
+    // Uma questão de Teoria e uma de Código para cada uma das 9 matérias.
+    public const QUESTOES_GERAL = 18;
     private $perguntas;
 
     public function __construct()
@@ -22,7 +23,10 @@ class Quiz
             'lisdupla' => 'Lista Dupla',
             'fila' => 'Fila Encadeada FIFO',
             'filaprioridade' => 'Fila de Prioridades',
-            'pilha' => 'Pilha Encadeada LIFO'
+            'pilha' => 'Pilha Encadeada LIFO',
+            'arvorebinaria' => 'Árvore Binária',
+            'trie' => 'Árvore Trie',
+            'patricia' => 'Árvore Patricia'
         ];
     }
 
@@ -105,6 +109,17 @@ class Quiz
             'indice' => 0,
             'concluida' => false
         ];
+    }
+
+    // Indica se um lote salvo ainda respeita as regras atuais da matéria (quantidade e tipos).
+    public function loteCompativel($tema, $ids)
+    {
+        try {
+            $this->criarTentativa($tema, 0, $ids);
+            return true;
+        } catch (DomainException $exception) {
+            return false;
+        }
     }
 
     public function obterPergunta($id)

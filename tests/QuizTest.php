@@ -27,7 +27,7 @@ function rejeitar($operacao, $mensagem)
 
 $quiz = new Quiz();
 $banco = Perguntas::listar();
-verificar(count($banco) === 72, 'O banco deve conter 72 perguntas.');
+verificar(count($banco) === 108, 'O banco deve conter 108 perguntas.');
 foreach ($banco as $id => $pergunta) {
     verificar(isset($quiz->listarTemas()[$pergunta['tema']]), "Tema valido: $id");
     verificar(count($pergunta['alternativas']) === 4, "Quatro alternativas: $id");

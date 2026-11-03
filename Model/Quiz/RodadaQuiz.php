@@ -73,6 +73,19 @@ class RodadaQuiz
                 $stmt->execute([$usuarioId, $tema, $this->agora->format('Y-m-d'), $json, $json]);
             } else {
                 $perguntas = $lote['perguntas'];
+                if (!$this->quiz->loteCompativel($tema, $perguntas)) {
+                    // Lote salvo antes de o banco de perguntas ou a rodada geral mudarem: sorteia outro para o mesmo dia.
+                    $excluidas = $lote['usadas'];
+                    if (!$this->quiz->podeSortearPerguntas($tema, $excluidas)) $excluidas = [];
+                    $perguntas = $this->quiz->sortearPerguntas($tema, $excluidas);
+                    $usadas = array_values(array_unique(array_merge($lote['usadas'], $perguntas)));
+                    $stmt = $this->pdo->prepare('UPDATE quiz_lotes_dia SET perguntas = ?, usadas = ? WHERE usuario_id = ? AND tema = ? AND dia = ?');
+                    $stmt->execute([
+                        json_encode($perguntas, JSON_THROW_ON_ERROR),
+                        json_encode($usadas, JSON_THROW_ON_ERROR),
+                        $usuarioId, $tema, $this->agora->format('Y-m-d')
+                    ]);
+                }
             }
             $habilidades = (new AvatarLoja($this->pdo))->habilidadesEquipadas($usuarioId);
             $tentativa = $this->quiz->criarTentativa($tema, $usuarioId, $perguntas, $habilidades);

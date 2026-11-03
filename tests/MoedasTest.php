@@ -103,9 +103,9 @@ try {
 
     $geral = criarContaMoedas();
     $rGeral = jogarMoedas($rodadas, $geral, 'todos');
-    verificarMoedas($carteira->saldo($geral) === 120, 'Rodada geral perfeita rende 120.');
+    verificarMoedas($carteira->saldo($geral) === 180, 'Rodada geral perfeita rende 180.');
     $distintas = array_fill_keys($rGeral['perguntas'], true);
-    foreach (['tad', 'lisimples', 'lisdupla', 'fila', 'filaprioridade', 'pilha'] as $tema) {
+    foreach (['tad', 'lisimples', 'lisdupla', 'fila', 'filaprioridade', 'pilha', 'arvorebinaria', 'trie', 'patricia'] as $tema) {
         $feita = jogarMoedas($rodadas, $geral, $tema);
         foreach ($feita['perguntas'] as $pergunta) $distintas[$pergunta] = true;
     }

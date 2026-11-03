@@ -109,11 +109,43 @@ try {
 
     $geral = criarContaLote();
     $rGeral = concluirLote($modelo, $geral, $modelo->iniciar($geral, 'todos'));
-    conferirLote(count($rGeral['perguntas']) === 12, 'Rodada geral inclui 12 perguntas.');
+    conferirLote(count($rGeral['perguntas']) === 18, 'Rodada geral inclui 18 perguntas.');
     $trocaGeral = $modelo->renovarEIniciar($geral, 'todos');
     conferirLote(count(array_intersect($rGeral['perguntas'], $trocaGeral['perguntas'])) === 0, 'Troca geral não repete perguntas.');
-    conferirLote($carteira->saldo($geral) === 115, 'Troca geral desconta cinco moedas.');
+    conferirLote($carteira->saldo($geral) === 175, 'Troca geral desconta cinco moedas.');
     $modelo->abandonar($geral, $trocaGeral['id']);
+
+    // Lote geral salvo com 12 perguntas (antes das matérias de árvores) é refeito com 18, sem quebrar a rodada.
+    $antigo = criarContaLote();
+    $bancoLote = Perguntas::listar();
+    $idsAntigos = [];
+    foreach (['tad', 'lisimples', 'lisdupla', 'fila', 'filaprioridade', 'pilha'] as $materia) {
+        foreach (['Teoria', 'Código'] as $tipo) {
+            foreach ($bancoLote as $perguntaId => $questao) {
+                if ($questao['tema'] === $materia && $questao['tipo'] === $tipo) { $idsAntigos[] = $perguntaId; break; }
+            }
+        }
+    }
+    conferirLote(count($idsAntigos) === 12, 'Lote antigo montado com 12 perguntas.');
+    $json = json_encode($idsAntigos);
+    $stmt = $pdo->prepare('INSERT INTO quiz_lotes_dia (usuario_id, tema, dia, perguntas, usadas) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$antigo, 'todos', $dia->format('Y-m-d'), $json, $json]);
+    $refeita = $modelo->iniciar($antigo, 'todos');
+    conferirLote(count($refeita['perguntas']) === Quiz::QUESTOES_GERAL, 'Lote antigo é refeito com a rodada geral atual.');
+    $stmt = $pdo->prepare('SELECT perguntas, usadas FROM quiz_lotes_dia WHERE usuario_id = ? AND tema = ? AND dia = ?');
+    $stmt->execute([$antigo, 'todos', $dia->format('Y-m-d')]);
+    $salvo = $stmt->fetch();
+    conferirLote(json_decode($salvo['perguntas'], true) === $refeita['perguntas'], 'Novo lote geral gravado para o dia.');
+    conferirLote(!array_diff($idsAntigos, json_decode($salvo['usadas'], true)), 'Perguntas do lote antigo continuam registradas como usadas.');
+    $modelo->abandonar($antigo, $refeita['id']);
+
+    // As três matérias de árvores funcionam como qualquer outra.
+    foreach (['arvorebinaria', 'trie', 'patricia'] as $materia) {
+        $conta = criarContaLote();
+        $rodada = concluirLote($modelo, $conta, $modelo->iniciar($conta, $materia));
+        conferirLote(count($rodada['perguntas']) === Quiz::QUESTOES_POR_MATERIA, "Rodada de $materia com 6 perguntas.");
+        conferirLote($carteira->saldo($conta) === 60, "Rodada perfeita de $materia rende 60 moedas.");
+    }
 
     $concorrente = criarContaLote();
     concluirLote($modelo, $concorrente, $modelo->iniciar($concorrente, 'fila'));
