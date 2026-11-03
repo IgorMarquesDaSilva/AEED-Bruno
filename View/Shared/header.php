@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/icone_moeda.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -47,7 +48,7 @@
             <a href="index.php?pagina=loja"<?php if (($bodyClass ?? '') === 'pagina-loja') { echo ' class="ativo" aria-current="page"'; } ?>>Loja</a>
             <a class="menu-perfil" href="index.php?pagina=perfil">
                 Perfil
-                <span class="menu-saldo"><?php echo number_format((int) ($_SESSION['usuario']['moedas'] ?? 0), 0, ',', '.'); ?> moedas</span>
+                <span class="menu-saldo"><?php echo iconeMoeda(); ?><?php echo number_format((int) ($_SESSION['usuario']['moedas'] ?? 0), 0, ',', '.'); ?> moedas</span>
             </a>
             <a class="menu-sair" href="index.php?pagina=logout">Sair</a>
         </nav>

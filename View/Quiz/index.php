@@ -72,7 +72,7 @@
                     <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
                     <input type="hidden" name="pergunta" value="<?php echo htmlspecialchars($perguntaId); ?>">
                     <input type="hidden" name="acao" value="comprar_dica">
-                    <button class="quiz-botao quiz-botao-secundario" type="submit"<?php if ($saldoMoedas < RodadaQuiz::PRECO_DICA) echo ' disabled'; ?>>Comprar dica · <?php echo RodadaQuiz::PRECO_DICA; ?> moedas</button>
+                    <button class="quiz-botao quiz-botao-secundario" type="submit"<?php if ($saldoMoedas < RodadaQuiz::PRECO_DICA) echo ' disabled'; ?>>Comprar dica · <?php echo iconeMoeda(); ?><?php echo RodadaQuiz::PRECO_DICA; ?> moedas</button>
                 </form>
             <?php } ?>
         </div>
@@ -172,8 +172,8 @@
             <div><dt>Aproveitamento</dt><dd><?php echo $resultado['percentual']; ?>%</dd></div>
         </dl>
         <div class="quiz-recompensa" role="status">
-            <div><span>Moedas nesta rodada</span><strong>+<?php echo $recompensas['ganhas']; ?></strong></div>
-            <a class="quiz-link" href="index.php?pagina=perfil#moedas">Saldo atual: <?php echo number_format($saldoMoedas, 0, ',', '.'); ?> moedas</a>
+            <div><span>Moedas nesta rodada</span><strong><?php echo iconeMoeda(); ?>+<?php echo $recompensas['ganhas']; ?></strong></div>
+            <a class="quiz-link" href="index.php?pagina=perfil#moedas">Saldo atual: <?php echo iconeMoeda(); ?><?php echo number_format($saldoMoedas, 0, ',', '.'); ?> moedas</a>
         </div>
         <div class="quiz-acoes">
             <form method="post" action="index.php?pagina=quiz">
@@ -187,7 +187,7 @@
                     <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($csrf); ?>">
                     <input type="hidden" name="tentativa" value="<?php echo htmlspecialchars($tentativa['id']); ?>">
                     <input type="hidden" name="acao" value="renovar">
-                    <button class="quiz-botao quiz-botao-secundario" type="submit"<?php if ($saldoMoedas < RodadaQuiz::PRECO_RENOVACAO) echo ' disabled'; ?>>Trocar perguntas · <?php echo RodadaQuiz::PRECO_RENOVACAO; ?> moedas</button>
+                    <button class="quiz-botao quiz-botao-secundario" type="submit"<?php if ($saldoMoedas < RodadaQuiz::PRECO_RENOVACAO) echo ' disabled'; ?>>Trocar perguntas · <?php echo iconeMoeda(); ?><?php echo RodadaQuiz::PRECO_RENOVACAO; ?> moedas</button>
                 </form>
             <?php } ?>
             <a class="quiz-link" href="index.php#conteudos">Voltar às matérias</a>
@@ -206,7 +206,7 @@
                 <div class="quiz-revisao-conteudo">
                     <span class="quiz-rotulo"><?php echo htmlspecialchars($temas[$questao['tema']] . ' · ' . $questao['tipo']); ?></span>
                     <?php $premio = $recompensas['por_questao'][$item['id']]; ?>
-                    <p class="quiz-premio-questao"><strong>+<?php echo $premio['moedas']; ?> moedas</strong>
+                    <p class="quiz-premio-questao"><strong><?php echo iconeMoeda(); ?>+<?php echo $premio['moedas']; ?> moedas</strong>
                         <?php if ($premio['dia'] === null) { ?>
                             · Resposta anterior ao sistema de moedas
                         <?php } elseif (!$item['acertou']) { ?>

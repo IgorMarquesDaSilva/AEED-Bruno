@@ -5,7 +5,7 @@
         <span class="loja-rotulo">Personalização</span>
         <h1><?php echo htmlspecialchars($titulo); ?></h1>
     </div>
-    <a class="loja-saldo" href="index.php?pagina=perfil#moedas"><span>Seu saldo</span><strong><?php echo number_format($saldo, 0, ',', '.'); ?> moedas</strong></a>
+    <a class="loja-saldo" href="index.php?pagina=perfil#moedas"><span>Seu saldo</span><strong><?php echo iconeMoeda(); ?><?php echo number_format($saldo, 0, ',', '.'); ?> moedas</strong></a>
 </header>
 
 <?php if ($aviso) { ?>
@@ -58,7 +58,7 @@
                                     <p class="loja-item-habilidade"><strong>Quiz:</strong> <?php echo htmlspecialchars($habilidades[$id]['descricao']); ?>. Uma vez por rodada.</p>
                                 <?php } ?>
                                 <div class="loja-item-rodape">
-                                    <strong><?php echo $item['preco'] === 0 ? 'Inicial' : number_format($item['preco'], 0, ',', '.') . ' moedas'; ?></strong>
+                                    <strong><?php echo $item['preco'] === 0 ? 'Inicial' : iconeMoeda() . number_format($item['preco'], 0, ',', '.') . ' moedas'; ?></strong>
                                     <?php if ($emUso) { ?>
                                         <span class="loja-em-uso">Em uso</span>
                                     <?php } else { ?>

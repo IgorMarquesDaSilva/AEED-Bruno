@@ -287,3 +287,35 @@ img {
         text-align: left;
     }
 }
+
+/* Ícone de moeda (View/Shared/icone_moeda.php) */
+.icone-moeda {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 0.3em;
+    vertical-align: -0.2em;
+    flex: none;
+}
+
+.menu-saldo .icone-moeda {
+    width: 13px;
+    height: 13px;
+    vertical-align: -2px;
+}
+
+.perfil-saldo .icone-moeda,
+.quiz-recompensa .icone-moeda {
+    width: 0.8em;
+    height: 0.8em;
+    vertical-align: -0.05em;
+}
+
+.perfil-moedas h2 .icone-moeda {
+    width: 0.9em;
+    height: 0.9em;
+}
+
+.quiz-botao .icone-moeda {
+    margin-left: 0.3em;
+}
