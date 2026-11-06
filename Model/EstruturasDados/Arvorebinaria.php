@@ -440,6 +440,17 @@ CSHARP
                 ]
             ],
 
+            "simulador" => [
+                "introducao" => "Monte a sua própria árvore binária. Digite um valor inteiro e escolha uma operação: o simulador mostra, passo a passo, cada comparação feita até encontrar o lugar certo, como nos slides da aula.",
+                "valoresExemplo" => "20, 27, 10, 51, 21, 7, 12",
+                "dicas" => [
+                    "Clique em Exemplo da aula para montar a árvore de 20, 27, 10, 51, 21, 7 e 12.",
+                    "Insira os mesmos valores em ordem crescente (7, 10, 12, 20, 21, 27, 51) e observe a altura: a árvore degenera em uma lista.",
+                    "Remova um nó folha, um nó com um filho e um nó com dois filhos para ver os três casos de remoção.",
+                    "Compare as sequências dos percursos em-ordem, pré-ordem e pós-ordem."
+                ]
+            ],
+
             "exercicios" => [
                 "Desenhe uma árvore binária vazia e insira, em ordem, os valores 20, 27, 10, 51, 21, 7 e 12. Compare com o diagrama da aula.",
                 "Insira os mesmos valores em outra ordem: 7, 10, 12, 20, 21, 27, 51. Desenhe a árvore e informe a altura. O que aconteceu?",
