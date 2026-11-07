@@ -27,6 +27,7 @@
             <a href="#insercoes">Inserção</a>
             <a href="#remocoes">Remoção</a>
             <a href="#percurso">Busca e percurso</a>
+            <a href="#video">Vídeo de apoio</a>
             <a href="#simulador">Simulador interativo</a>
             <a href="#comparacao">Comparação</a>
             <a href="#codigo">Exemplos em C#</a>
@@ -186,6 +187,18 @@
                         <p><?php echo htmlspecialchars($operacao["descricao"]); ?></p>
                     </article>
                 <?php } ?>
+            </div>
+        </section>
+
+        <section id="video" class="secao">
+            <h2>Vídeo de apoio</h2>
+            <p><?php echo htmlspecialchars($conteudo["video"]["descricao"]); ?></p>
+
+            <div class="video-aula">
+                <div class="video-quadro">
+                    <iframe src="https://www.youtube-nocookie.com/embed/<?php echo rawurlencode($conteudo["video"]["id"]); ?>" title="<?php echo htmlspecialchars($conteudo["video"]["titulo"]); ?>" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <p class="video-canal"><?php echo htmlspecialchars($conteudo["video"]["titulo"]); ?> | <?php echo htmlspecialchars($conteudo["video"]["canal"]); ?>. Se o vídeo não carregar, <a href="https://www.youtube.com/watch?v=<?php echo rawurlencode($conteudo["video"]["id"]); ?>" target="_blank" rel="noopener noreferrer">abra no YouTube</a>.</p>
             </div>
         </section>
 

@@ -442,6 +442,24 @@ CSHARP
                 ]
             ],
 
+            "video" => [
+                "titulo" => "Árvores: Árvore Patricia",
+                "id" => "hUoDgzKYOyo",
+                "canal" => "Videoaula de estudantes de Sistemas de Informação da UFG",
+                "descricao" => "Videoaula sobre a Árvore Patricia (Trie compacta). Atenção: a Patricia original trabalha com bits das chaves, e a versão estudada em aula e neste módulo trabalha com caracteres, então os desenhos do vídeo podem diferir um pouco."
+            ],
+
+            "simulador" => [
+                "introducao" => "Monte a sua própria Árvore Patricia. Digite uma palavra (letras de a até z, sem acentos) e escolha uma operação: o simulador mostra a divisão e a fusão de nós, o ponteiro filho (vermelho) e o ponteiro para o próximo irmão (azul), e compara o total de nós com o de uma Trie.",
+                "palavrasExemplo" => "dados, amora, dente, amor, dentista",
+                "dicas" => [
+                    "Clique em Exemplo da aula: a Patricia guarda as cinco palavras com 7 nós, enquanto uma Trie precisaria de 18.",
+                    "Insira \"amora\" e depois \"amor\" para ver a divisão de um nó em \"amor\" e \"a\".",
+                    "No exemplo da aula, remova \"dente\": os nós \"ent\" e \"ista\" são fundidos em \"entista\".",
+                    "Insira \"dentes\" e observe o \"s\" entrar como filho de \"dente\", sem criar um nó por letra."
+                ]
+            ],
+
             "exercicios" => [
                 "Desenhe uma Patricia vazia e insira, em ordem, as palavras: dados, amora, dente, amor e dentista. Confira se o resultado tem 7 nós.",
                 "Insira as palavras casa, caso, cama e bola em uma Patricia e depois em uma Trie. Compare a quantidade de nós de cada uma.",

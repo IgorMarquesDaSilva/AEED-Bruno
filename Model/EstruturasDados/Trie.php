@@ -396,6 +396,24 @@ CSHARP
                 ]
             ],
 
+            "video" => [
+                "titulo" => "Árvores: Árvore Trie",
+                "id" => "-97J-y5fhG8",
+                "canal" => "Videoaula de estudantes de Sistemas de Informação da UFG",
+                "descricao" => "Videoaula sobre a Trie (árvore de prefixos), com inserção, busca e o conceito de fim de palavra. Use o simulador logo abaixo para repetir os mesmos exemplos."
+            ],
+
+            "simulador" => [
+                "introducao" => "Monte a sua própria Trie. Digite uma palavra (letras de a até z, sem acentos) e escolha uma operação: o simulador mostra, letra por letra, o caminho percorrido, os nós criados e o marcador de fim de palavra, como na aula.",
+                "palavrasExemplo" => "casa, caso, cama, bola",
+                "dicas" => [
+                    "Clique em Exemplo da aula e observe o caminho c → a compartilhado por casa, caso e cama.",
+                    "Use Buscar prefixo com \"ca\" e depois Buscar palavra com \"ca\": o prefixo existe, mas a palavra não, pois o nó não é fim de palavra.",
+                    "Remova \"casa\" e veja que o nó \"s\" permanece, pois ainda leva a \"caso\". Depois remova \"caso\" e veja os nós inúteis sendo descartados de baixo para cima.",
+                    "Clique em Listar palavras: elas saem em ordem alfabética, porque os filhos são visitados na ordem das letras."
+                ]
+            ],
+
             "exercicios" => [
                 "Desenhe uma Trie vazia e insira, em ordem, as palavras: rato, rata, rua, bola e bolo. Mostre o estado final e marque os nós de fim de palavra.",
                 "No exercício anterior, quantos nós (sem contar a raiz) a Trie possui? Compare com a quantidade total de letras das cinco palavras e explique a diferença.",

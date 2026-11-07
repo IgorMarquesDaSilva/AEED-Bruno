@@ -622,3 +622,39 @@
         margin-left: 0;
     }
 }
+
+/* ---------- Vídeo de apoio ---------- */
+.pagina-arvorebinaria .video-aula {
+    max-width: 760px;
+    margin: 18px 0 8px;
+}
+
+.pagina-arvorebinaria .video-quadro {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #d4dce5;
+    border-radius: 10px;
+    background-color: #0f2334;
+    box-shadow: 0 12px 30px rgba(15, 35, 52, 0.12);
+}
+
+.pagina-arvorebinaria .video-quadro iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.pagina-arvorebinaria .video-canal {
+    margin: 10px 0 0;
+    color: #526779;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.pagina-arvorebinaria .video-canal a {
+    color: #0f766e;
+}

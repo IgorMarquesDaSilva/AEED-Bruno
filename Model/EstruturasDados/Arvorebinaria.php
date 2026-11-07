@@ -440,6 +440,13 @@ CSHARP
                 ]
             ],
 
+            "video" => [
+                "titulo" => "Árvore Binária de Busca em linguagem C",
+                "id" => "M7cb4HjePJk",
+                "canal" => "Programação Descomplicada (Prof. André Backes)",
+                "descricao" => "Explica como funciona a árvore binária de busca: a regra de menores à esquerda e maiores à direita, que é a mesma usada na inserção da aula. Os exemplos do vídeo estão em C; neste módulo eles aparecem em C#."
+            ],
+
             "simulador" => [
                 "introducao" => "Monte a sua própria árvore binária. Digite um valor inteiro e escolha uma operação: o simulador mostra, passo a passo, cada comparação feita até encontrar o lugar certo, como nos slides da aula.",
                 "valoresExemplo" => "20, 27, 10, 51, 21, 7, 12",
